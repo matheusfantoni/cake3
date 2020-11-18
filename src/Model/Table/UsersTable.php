@@ -42,4 +42,11 @@ class UsersTable extends Table
 
         return $validator;
     }
+
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['email'], 'Este email já está sendo utilizado.'));
+        $rules->add($rules->isUnique(['username', 'Este username já está sendo utilizado.']));
+        return $rules;
+    }
 }

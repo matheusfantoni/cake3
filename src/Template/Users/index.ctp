@@ -17,9 +17,10 @@
                     <td><?php echo $usuario->email; ?></td>
                     <td>
                         <?php
-                        echo $this->Html->link(('Ver'), ['action' => 'view', $usuario->id]);
+                        echo $this->Html->link(('Ver '), ['action' => 'view', $usuario->id]);
+                        echo $this->Html->link((' Editar'), ['action' => 'edit', $usuario->id]);
                         ?>
-                        Editar Apagar</td>
+                        Apagar</td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

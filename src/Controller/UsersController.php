@@ -30,23 +30,40 @@ class UsersController extends AppController
         $this->set(['usuario' => $usuario]);
     }
 
-    public function add(){
+    public function add()
+    {
 
         $user = $this->Users->newEntity();
 
-        if($this->request->is('post')){
+        if ($this->request->is('post')) {
             $this->Users->patchEntity($user, $this->request->getData());
-            
-            if($this->Users->save($user)){
-                $this->Flash->success(__('Usuário cadastrado com sucesso.'));
-                return $this->redirect(['aciton' => 'index']);
-            }else{
-                $this->Flash->success(__('Usuário não foi cadastrado, verifique os dados.'));
 
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('Usuário cadastrado com sucesso.'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('Usuário não foi cadastrado, verifique os dados.'));
             }
         }
 
         $this->set(compact('user'));
+    }
 
+    public function edit($id = null)
+    {
+
+        $user = $this->Users->get($id);
+
+        if ($this->request->is(['post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('Usuário editado com sucesso.'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('Usuário não foi editado, verifique os dados.'));
+            }
+        }
+
+        $this->set(compact('user'));
     }
 }
