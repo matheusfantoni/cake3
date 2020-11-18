@@ -66,4 +66,20 @@ class UsersController extends AppController
 
         $this->set(compact('user'));
     }
+
+    public function delete($id = null)
+    {
+
+        $this->request->allowMethod(['post', 'delete']);
+
+        $user = $this->Users->get($id);
+
+        if ($this->Users->delete($user)) {
+            $this->Flash->success(('Usuário deletado com sucesso.'));
+        } else {
+            $this->Flash->error(__('Usuário não foi apagado com sucesso.'));
+        }
+
+        return $this->redirect(['action' => 'index']);
+    }
 }

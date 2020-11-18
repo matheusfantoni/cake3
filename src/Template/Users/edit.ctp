@@ -9,4 +9,3 @@ echo $this->Form->control('password');
 echo $this->Form->button('Editar');
 echo $this->Form->end();
 ?>
-
