@@ -21,4 +21,11 @@ class UsersController extends AppController{
 
     }
 
+    public function view($id = null){
+        
+        $usuario = $this->Users->get($id);
+
+        $this->set(['usuario' => $usuario]);
+    }
+
 }
