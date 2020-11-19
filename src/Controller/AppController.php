@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -12,6 +13,7 @@
  * @since     0.2.9
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Controller;
 
 use Cake\Controller\Controller;
@@ -61,5 +63,19 @@ class AppController extends Controller
          * see https://book.cakephp.org/3/en/controllers/components/security.html
          */
         //$this->loadComponent('Security');
+    }
+
+    public function beforeRender(Event $event)
+    {
+        $prefix = null;
+        if ($this->request->getParam(['prefix']) !== null) {
+            $prefix = $this->request->getParam(['prefix']);
+        }
+
+        if ($prefix == 'admin') {
+            if (($this->request->getParam(['action']) !== null) and ($this->request->getParam(['action']) == 'login')) {
+                $this->viewBuilder()->setLayout('login');
+            }
+        }
     }
 }
