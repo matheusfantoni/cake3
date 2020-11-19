@@ -1,6 +1,14 @@
-<div class="users index large-12 medium-12 columns content">
+<nav class="large-3 medium-4 columns" id="actions-sidebar">
+    <ul class="side-nav">
+        <li class="heading"><?= __('Ações') ?></li>
+        <li><?= $this->Html->link(__('Novo usuário'), ['action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('Sair'), ['action' => 'logout']) ?></li>
+    </ul>
+</nav>
+
+<div class="users index large-9 medium-8 columns content">
     <h3><?php echo 'Lista de Usuários'; ?></h3>
-    <table>
+    <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
                 <th>ID</th>
@@ -19,9 +27,13 @@
                         <?php
                         echo $this->Html->link(('Ver '), ['action' => 'view', $usuario->id]);
                         echo $this->Html->link((' Editar '), ['action' => 'edit', $usuario->id]);
-                        echo $this->Form->postLink((' Apagar'), ['action' => 'delete', 
-                        $usuario->id], ['confirm' => 'Realmente quer apagar o usuário?', 
-                        $usuario->id]);
+                        echo $this->Form->postLink((' Apagar'), [
+                            'action' => 'delete',
+                            $usuario->id
+                        ], [
+                            'confirm' => 'Realmente quer apagar o usuário?',
+                            $usuario->id
+                        ]);
                         ?>
                     </td>
                 </tr>
