@@ -27,7 +27,7 @@ $cakeDescription = 'Administrativo';
     <?= $this->Flash->render() ?>
     <?= $this->fetch('content') ?>
 
-    <?= $this->Html->script(['jquery-3.5.1.min', 'signin']) ?>
+    <?= $this->Html->script(['jquery-3.5.1.min', 'bootstrap.min']) ?>
 </body>
 
 </html>
