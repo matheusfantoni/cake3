@@ -1,14 +1,27 @@
-<div class="users form large-12 medium-12 columns content">
-    <h1>Login</h1>
-    <?= $this->Form->create() ?>
-    <fieldset>
+<?= $this->Form->create('post', ['class' => 'form-signin']) ?>
 
-        <?php
-        echo $this->Form->control('username');
-        echo $this->Form->control('password');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(_('Acessar')) ?>
-    <?= $this->Form->end(); ?>
+<?= $this->Html->image('logo_celke.png', [
+    'class' => 'mb-4',
+    'alt' => 'Celke',
+    'width' => '72',
+    'height' => '72'
+])
+?>
 
+<h1 class="h3 mb-3 font-weight-normal">Área Restrita</h1>
+
+<div class="form-group">
+    <label>Usuário</label>
+    <?= $this->Form->control('username', ['class' => 'form-control', 'placeholder' => 'Digite o usuário', 'label' => false]) ?>
 </div>
+
+<div class="form-group">
+    <label>Senha</label>
+    <?= $this->Form->control('password', ['class' => 'form-control', 'placeholder' => 'Digite a senha', 'label' => false]) ?>
+</div>
+
+<?= $this->Form->button(_('Acessar'), ['class' => 'btn btn-lg btn-primary btn-block']) ?>
+
+<p class="text-center">Esqueceu a senha?</p>
+
+<?= $this->Form->end(); ?>
