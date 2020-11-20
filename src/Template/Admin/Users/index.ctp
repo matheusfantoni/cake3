@@ -1,29 +1,39 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Ações') ?></li>
-        <li><?= $this->Html->link(__('Novo usuário'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('Sair'), ['action' => 'logout']) ?></li>
-    </ul>
-</nav>
+<div class="d-flex">
+    <div class="mr-auto p-2">
+        <h2 class="display-4 titulo">Listar Usuários</h2>
+    </div>
+    <a href="#">
+        <div class="p-2">
+            <button class="btn btn-outline-success btn-sm">
+                Cadastrar
+            </button>
+        </div>
+    </a>
+</div>
 
-<div class="users index large-9 medium-8 columns content">
-    <h3><?php echo 'Lista de Usuários'; ?></h3>
-    <table cellpadding="0" cellspacing="0">
+<?= $this->Flash->render() ?>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Nome</th>
-                <th>E-mail</th>
-                <th>Ações</th>
+                <th class="d-none d-sm-table-cell">E-mail</th>
+                <th class="d-none d-lg-table-cell">Data do Cadastro</th>
+                <th class="text-center">Ações</th>
             </tr>
         </thead>
         <tbody>
+
             <?php foreach ($usuarios as $usuario) : ?>
+
                 <tr>
                     <td><?php echo $usuario->id; ?></td>
                     <td><?php echo $usuario->name; ?></td>
-                    <td><?php echo $usuario->email; ?></td>
-                    <td>
+                    <td class="d-none d-sm-table-cell"><?php echo $usuario->email; ?></td>
+                    <td class="d-none d-lg-table-cell"><?php echo $usuario->created; ?></td>
+                    <td class="text-center">
                         <?php
                         echo $this->Html->link(('Ver '), ['action' => 'view', $usuario->id]);
                         echo $this->Html->link((' Editar '), ['action' => 'edit', $usuario->id]);
@@ -35,12 +45,15 @@
                             $usuario->id
                         ]);
                         ?>
-                    </td>
+                    <td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
-    <?= $this->Html->link(__('Cadastrar usuário'),  ['action' => 'add']) ?>
+</div>
+
+<div class="users index large-9 medium-8 columns content">
+    <h3><?php echo 'Lista de Usuários'; ?></h3>
     <div class="paginator">
         <ul class="pagination">
             <?php echo $this->Paginator->first('<< ' . __('Primeira')); ?>
