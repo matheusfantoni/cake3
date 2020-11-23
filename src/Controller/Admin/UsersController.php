@@ -11,10 +11,8 @@ class UsersController extends AppController
     {
 
         $this->paginate = [
-            'limit' => 25,
-            'order' => [
-                'Users.id' => 'asc'
-            ]
+            'limit' => 40
+            
         ];
 
         $usuarios = $this->paginate($this->Users);
@@ -41,7 +39,7 @@ class UsersController extends AppController
                 $this->Flash->success(__('Usuário cadastrado com sucesso.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('Usuário não foi cadastrado, verifique os dados.'));
+                $this->Flash->danger(__('Usuário não foi cadastrado, verifique os dados.'));
             }
         }
 

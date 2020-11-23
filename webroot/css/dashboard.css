@@ -61,3 +61,7 @@ body {
 .titulo{
     font-size: 2.0rem !important;
 }
+
+.error-message{
+    color: #FF0000;
+}

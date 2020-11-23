@@ -1,15 +1,51 @@
-<div class="users form large-12 medium-12 columns content">
-    <h1>Cadastrar Usuário</h1>
+<div class="d-flex">
+    <div class="mr-auto p-2">
+        <h2 class="display-4 titulo">Cadastrar Usuário</h2>
+    </div>
 
-    <?php
-    echo $this->Form->create($user);
-    echo $this->Form->control('name');
-    echo $this->Form->control('email');
-    echo $this->Form->control('username');
-    echo $this->Form->control('password');
-    echo $this->Form->button('Cadastrar');
-    echo $this->Form->end();
+    <div class="p-2">
+        <?= $this->Html->link(
+            __('Listar'),
+            ['controller' => 'users', 'action' => 'index'],
+            ['class' => 'btn btn-outline-info btn-sm']
+        ) ?>
 
-    ?>
+    </div>
 
 </div>
+<hr>
+
+<?= $this->Flash->render() ?>
+
+<?= $this->Form->create($user); ?>
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label><span class="text-danger">*</span> Nome</label>
+        <?= $this->Form->control('name', ['class' => 'form-control', 'placeholder' => 'Nome completo', 'label' => false]) ?>
+    </div>
+    <div class="form-group col-md-6">
+        <label><span class="text-danger">*</span> E-mail</label>
+        <?= $this->Form->control('email', ['class' => 'form-control', 'placeholder' => 'Seu e-mail', 'label' => false]) ?>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label><span class="text-danger">*</span> Usuário</label>
+        <?= $this->Form->control('username', ['class' => 'form-control', 'placeholder' => 'Nome de usuário', 'label' => false]) ?>
+    </div>
+    <div class="form-group col-md-6">
+        <label><span class="text-danger">*</span> Senha</label>
+        <?= $this->Form->control('password', ['class' => 'form-control', 'placeholder' => 'A senha deve ter no mínimo 6 caracteres', 'label' => false]) ?>
+    </div>
+</div>
+
+<p>
+    <span class="text-danger">* </span>Campo obrigatório
+</p>
+<?= $this->Form->button(
+    __('Cadastrar'),
+    ['class' => 'btn btn-success']
+) ?>
+
+<?= $this->Form->end(); ?>
