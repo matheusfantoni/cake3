@@ -11,12 +11,11 @@ class UsersController extends AppController
     {
 
         $this->paginate = [
-            'limit' => 20,
+            'limit' => 25,
             'order' => [
                 'Users.id' => 'asc'
             ]
         ];
-
 
         $usuarios = $this->paginate($this->Users);
         $this->set(compact('usuarios'));

@@ -77,7 +77,7 @@ $cakeDescription = 'Administrativo';
 
         <div class="content p-1">
             <div class="list-group-item">
-                <?= $this->Flash->render() ?>
+                
                 <?= $this->fetch('content') ?>
             </div>
         </div>

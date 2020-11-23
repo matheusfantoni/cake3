@@ -4,9 +4,14 @@
     </div>
     <a href="#">
         <div class="p-2">
-            <button class="btn btn-outline-success btn-sm">
-                Cadastrar
-            </button>
+            <?=
+                $this->Html->link(
+                    __('Cadastrar'),
+                    ['controller' => 'users', 'action' => 'add'],
+                    ['class' => 'btn btn-outline-success btn-sm']
+                );
+            ?>
+
         </div>
     </a>
 </div>
@@ -50,27 +55,5 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-</div>
-
-<div class="users index large-9 medium-8 columns content">
-    <h3><?php echo 'Lista de Usuários'; ?></h3>
-    <div class="paginator">
-        <ul class="pagination">
-            <?php echo $this->Paginator->first('<< ' . __('Primeira')); ?>
-            <?php echo $this->Paginator->prev('< ' . __('Anterior')); ?>
-            <?php echo $this->Paginator->numbers(); ?>
-            <?php echo $this->Paginator->next(__('Próxima') . ' >'); ?>
-            <?php echo $this->Paginator->last(__('Última') . ' >>'); ?>
-        </ul>
-        <p>
-            <?php
-            echo $this->Paginator->counter(['format' => __('Página {{page}} de {{pages}}, mostrado 
-                {{current}} registro(s) do total de {{count}}')]);
-            ?>
-        </p>
-    </div>
-
-    <?php
-    echo $this->Html->link(('Lista Usuários'), ['controller' => 'users', 'action' => 'index']);
-    ?>
+    <?= $this->element('pagination'); ?>
 </div>
