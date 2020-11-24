@@ -74,7 +74,7 @@ class UsersController extends AppController
         if ($this->Users->delete($user)) {
             $this->Flash->success(('Usuário deletado com sucesso.'));
         } else {
-            $this->Flash->error(__('Usuário não foi apagado com sucesso.'));
+            $this->Flash->danger(__('Usuário não foi apagado com sucesso.'));
         }
 
         return $this->redirect(['action' => 'index']);

@@ -1,33 +1,62 @@
-<div class="users view large-12 medium-12 columns content">
+<div class="d-flex">
+    <div class="mr-auto p-2">
+        <h2 class="display-4 titulo">Usuário</h2>
+    </div>
+    <div class="p-2">
+        <span class="d-none d-md-block">
+            <?= $this->Html->link(__('Listar'), ['controller' => 'users', 'action' => 'index'], ['class' => 'btn btn-outline-info btn-sm']) ?>
 
-    <h3><?php echo 'Detalhes do usuário ' . $usuario->name; ?> </h3>
+            <?= $this->Html->link(__('Editar'), ['controller' => 'users', 'action' => 'edit', $usuario->id], ['class' => 'btn btn-outline-warning btn-sm']) ?>
 
-    <table class="vertical-table">
-        <tr>
-            <th>ID</th>
-            <td><?php echo $usuario->id; ?></td>
-        </tr>
-        <tr>
-            <th>Name</th>
-            <td><?php echo $usuario->name; ?></td>
-        </tr>
-        <tr>
-            <th>Email</th>
-            <td><?php echo $usuario->email; ?></td>
-        </tr>
-        <tr>
-            <th>Username</th>
-            <td><?php echo $usuario->username; ?></td>
-        </tr>
-        <tr>
-            <th>Cadastrado</th>
-            <td><?php echo $usuario->created; ?></td>
-        </tr>
-        <tr>
-            <th>Alterado</th>
-            <td><?php echo $usuario->modified; ?></td>
-        </tr>
+            <?= $this->Form->postlink(__('Apagar'), [
+                'controller' => 'users', 'action' => 'delete',
+                $usuario->id
+            ], [
+                'class' => 'btn btn-outline-danger btn-sm',
+                'confirm' => __('Deseja realmente apagar o usuário # {0}?', $usuario->id)
+            ]) ?>
+        </span>
+        <div class="dropdown d-block d-md-none">
+            <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="acoesListar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Ações
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="acoesListar">
 
-    </table>
+                <?= $this->Html->link(__('Listar'), ['controller' => 'users', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
 
+                <?= $this->Html->link(__('Editar'), ['controller' => 'users', 'action' => 'edit', $usuario->id], ['class' => 'dropdown-item']) ?>
+
+                <?= $this->Form->postlink(__('Apagar'), [
+                    'controller' => 'users', 'action' => 'delete',
+                    $usuario->id
+                ], [
+                    'class' => 'dropdown-item',
+                    'confirm' => __('Deseja realmente apagar o usuário # {0}?', $usuario->id)
+                ]) ?>
+
+            </div>
+        </div>
+    </div>
 </div>
+<hr>
+
+<dl class="row">
+    <dt class="col-sm-3">ID</dt>
+    <dd class="col-sm-9"><?= $this->Number->format($usuario->id) ?></dd>
+
+    <dt class="col-sm-3">Nome</dt>
+    <dd class="col-sm-9"><?= h($usuario->name) ?></dd>
+
+    <dt class="col-sm-3">E-mail</dt>
+    <dd class="col-sm-9"><?= h($usuario->email) ?></dd>
+
+    <dt class="col-sm-3">Username</dt>
+    <dd class="col-sm-9"><?= h($usuario->username) ?></dd>
+
+    <dt class="col-sm-3 text-truncate">Cadastro</dt>
+    <dd class="col-sm-9"><?= h($usuario->created) ?></dd>
+
+    <dt class="col-sm-3 text-truncate">Alteração</dt>
+    <dd class="col-sm-9"><?= h($usuario->modified) ?></dd>
+
+</dl>

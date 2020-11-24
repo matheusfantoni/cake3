@@ -40,7 +40,7 @@
                     <td class="d-none d-lg-table-cell"><?php echo $usuario->created; ?></td>
                     <td class="text-center">
                         <?php
-                        echo $this->Html->link(('Ver '), ['action' => 'view', $usuario->id]);
+                        echo $this->Html->link(('Visualizar '), ['controller' => 'users', 'action' => 'view', $usuario->id], ['class' => 'btn btn-outline-primary btn-sm']);
                         echo $this->Html->link((' Editar '), ['action' => 'edit', $usuario->id]);
                         echo $this->Form->postLink((' Apagar'), [
                             'action' => 'delete',
