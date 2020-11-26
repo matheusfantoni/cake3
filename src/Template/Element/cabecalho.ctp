@@ -18,8 +18,29 @@
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#"><i class="fas fa-user"></i> Perfil</a>
-                    <a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                    <?= $this->Html->link(
+                        '<i class="fas fa-user"></i> Perfil',
+                        [
+                            'controller' => 'Users',
+                            'action' => 'perfil'
+                        ],
+                        [
+                            'class' => 'dropdown-item',
+                            'escape' => false
+                        ]
+                    ) ?>
+
+                    <?= $this->Html->link(
+                        '<i class="fas fa-sign-out-alt"></i> Sair',
+                        [
+                            'controller' => 'Users',
+                            'action' => 'logout'
+                        ],
+                        [
+                            'class' => 'dropdown-item',
+                            'escape' => false
+                        ]
+                    ) ?>
                 </div>
             </li>
         </ul>

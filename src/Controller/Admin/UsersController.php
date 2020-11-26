@@ -12,7 +12,7 @@ class UsersController extends AppController
 
         $this->paginate = [
             'limit' => 40
-            
+
         ];
 
         $usuarios = $this->paginate($this->Users);
@@ -25,6 +25,14 @@ class UsersController extends AppController
         $usuario = $this->Users->get($id);
 
         $this->set(['usuario' => $usuario]);
+    }
+
+    public function perfil()
+    {
+
+        $usuario = $this->Auth->user();
+
+        $this->set(compact('usuario'));
     }
 
     public function add()
