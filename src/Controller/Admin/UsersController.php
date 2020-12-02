@@ -189,6 +189,38 @@ class UsersController extends AppController
             'contain' => []
         ]);
 
+        if ($this->request->is(['patch', 'post', 'put'])) {
+
+            $nomeImg = $this->request->getData()['imagem']['name'];
+            $imgTmp = $this->request->getData()['imagem']['tmp_name'];
+
+            $user = $this->Users->newEntity();
+            $user->id = $user_id;
+            $user->imagem = $nomeImg;
+
+
+            $destino = "files\user\\" . $user_id . "\\$nomeImg";
+
+            if (move_uploaded_file($imgTmp, WWW_ROOT . $destino)) {
+
+
+                if ($this->Users->save($user)) {
+                    if ($this->Auth->user('id') === $user->id) {
+                        $user = $this->Users->get($user_id, [
+                            'contain' => []
+                        ]);
+
+                        $this->Auth->setUser($user);
+                    }
+
+                    $this->Flash->success(('Foto editada com sucesso.'));
+                    return $this->redirect(['controller' => 'Users', 'action' => 'perfil']);
+                } else {
+                    $this->Flash->danger(('Erro: Foto não foi editada com sucesso.'));
+                }
+            }
+        }
+
         $this->set(compact('user'));
     }
 }
