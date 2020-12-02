@@ -189,6 +189,8 @@ class UsersController extends AppController
             'contain' => []
         ]);
 
+        $imagemAntiga = $user->imagem;
+
         if ($this->request->is(['patch', 'post', 'put'])) {
 
             $nomeImg = $this->request->getData()['imagem']['name'];
@@ -203,6 +205,9 @@ class UsersController extends AppController
 
             if (move_uploaded_file($imgTmp, WWW_ROOT . $destino)) {
 
+                if(($imagemAntiga !== null) AND ($imagemAntiga !== $user->imagem)){
+                    unlink(WWW_ROOT. "files\user\\".$user_id."\\".$imagemAntiga);
+                }
 
                 if ($this->Users->save($user)) {
                     if ($this->Auth->user('id') === $user->id) {
