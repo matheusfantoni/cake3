@@ -6,7 +6,7 @@
         <span class="d-none d-md-block">
             <?= $this->Html->link(__('Listar'), ['controller' => 'users', 'action' => 'index'], ['class' => 'btn btn-outline-info btn-sm']) ?>
 
-            <?= $this->Html->link(__('Editar'), ['controller' => 'users', 'action' => 'edit', $usuario['id']], ['class' => 'btn btn-outline-warning btn-sm']) ?>
+            <?= $this->Html->link(__('Editar'), ['controller' => 'users', 'action' => 'editPerfil'], ['class' => 'btn btn-outline-warning btn-sm']) ?>
 
         </span>
         <div class="dropdown d-block d-md-none">
@@ -17,13 +17,15 @@
 
                 <?= $this->Html->link(__('Listar'), ['controller' => 'users', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
 
-                <?= $this->Html->link(__('Editar'), ['controller' => 'users', 'action' => 'edit', $usuario['id']], ['class' => 'dropdown-item']) ?>
+                <?= $this->Html->link(__('Editar'), ['controller' => 'users', 'action' => 'editPerfil'], ['class' => 'dropdown-item']) ?>
 
             </div>
         </div>
     </div>
 </div>
 <hr>
+
+<?= $this->Flash->render() ?>
 
 <dl class="row">
     <dt class="col-sm-3">ID</dt>
