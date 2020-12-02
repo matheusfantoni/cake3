@@ -8,6 +8,8 @@
 
             <?= $this->Html->link(__('Editar'), ['controller' => 'users', 'action' => 'edit', $usuario->id], ['class' => 'btn btn-outline-warning btn-sm']) ?>
 
+            <?= $this->Html->link(__('Editar Senha'), ['controller' => 'users', 'action' => 'editSenha', $usuario->id], ['class' => 'btn btn-outline-warning btn-sm']) ?>
+
             <?= $this->Form->postlink(__('Apagar'), [
                 'controller' => 'users', 'action' => 'delete',
                 $usuario->id
@@ -25,6 +27,8 @@
                 <?= $this->Html->link(__('Listar'), ['controller' => 'users', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
 
                 <?= $this->Html->link(__('Editar'), ['controller' => 'users', 'action' => 'edit', $usuario->id], ['class' => 'dropdown-item']) ?>
+
+                <?= $this->Html->link(__('Editar Senha'), ['controller' => 'users', 'action' => 'editSenha', $usuario->id], ['class' => 'dropdown-item']) ?>
 
                 <?= $this->Form->postlink(__('Apagar'), [
                     'controller' => 'users', 'action' => 'delete',

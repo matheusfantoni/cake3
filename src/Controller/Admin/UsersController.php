@@ -74,6 +74,27 @@ class UsersController extends AppController
         $this->set(compact('user'));
     }
 
+
+    public function editSenha($id = null)
+    {
+
+        $user = $this->Users->get($id, [
+            'contain' => []
+        ]);
+
+        if ($this->request->is(['post', 'put', 'patch'])) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('Senha do usuário editada com sucesso.'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('Erro: A senha do usuário não foi editada, verifique os dados.'));
+            }
+        }
+
+        $this->set(compact('user'));
+    }
+
     public function delete($id = null)
     {
 
@@ -123,19 +144,40 @@ class UsersController extends AppController
         if ($this->request->is(['post', 'put', 'patch'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
-                
-                if($this->Auth->user('id') === $user->id){
+
+                if ($this->Auth->user('id') === $user->id) {
                     $data = $user->toArray();
                     $this->Auth->setUser($data);
                 }
                 $this->Flash->success(__('Perfil editado com sucesso.'));
                 return $this->redirect(['controller' => 'Users', 'action' => 'perfil']);
-            
             } else {
                 $this->Flash->error(__('Perfil não foi editado, verifique os dados.'));
             }
         }
 
+        $this->set(compact('user'));
+    }
+
+    public function editSenhaPerfil()
+    {
+
+        $user_id = $this->Auth->user('id');
+        $user = $this->Users->get($user_id, [
+            'contain' => []
+        ]);
+
+
+        if ($this->request->is(['post', 'put', 'patch'])) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            if ($this->Users->save($user)) 
+
+                $this->Flash->success(__('Senha editada com sucesso.'));
+                return $this->redirect(['controller' => 'Users', 'action' => 'perfil']);
+            } else {
+                $this->Flash->error(__('Sua senha não foi editada, verifique os dados.'));
+            }
+        
         $this->set(compact('user'));
     }
 }
