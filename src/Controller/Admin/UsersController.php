@@ -170,14 +170,25 @@ class UsersController extends AppController
 
         if ($this->request->is(['post', 'put', 'patch'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
-            if ($this->Users->save($user)) 
+            if ($this->Users->save($user))
 
                 $this->Flash->success(__('Senha editada com sucesso.'));
-                return $this->redirect(['controller' => 'Users', 'action' => 'perfil']);
-            } else {
-                $this->Flash->error(__('Sua senha não foi editada, verifique os dados.'));
-            }
-        
+            return $this->redirect(['controller' => 'Users', 'action' => 'perfil']);
+        } else {
+            $this->Flash->error(__('Sua senha não foi editada, verifique os dados.'));
+        }
+
+        $this->set(compact('user'));
+    }
+
+    public function alterarFotoPerfil()
+    {
+
+        $user_id = $this->Auth->user('id');
+        $user = $this->Users->get($user_id, [
+            'contain' => []
+        ]);
+
         $this->set(compact('user'));
     }
 }

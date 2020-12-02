@@ -55,8 +55,8 @@ Router::scope('/', function (RouteBuilder $routes) {
     ]));
 
     $routes->applyMiddleware('csrf');
-    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
-    $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
+    $routes->connect('/', ['prefix' => 'admin', 'controller' => 'Welcome', 'action' => 'index']);
+    $routes->connect('/pages/*', ['prefix' => 'admin', 'controller' => 'Welcome', 'action' => 'index']);
     $routes->fallbacks(DashedRoute::class);
 });
 

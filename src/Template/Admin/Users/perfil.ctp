@@ -29,6 +29,17 @@
 <?= $this->Flash->render() ?>
 
 <dl class="row">
+    <dt class="col-sm-3">Foto</dt>
+    <dd class="col-sm-9">
+        <?php if (!empty($perfilUser['imagem'])) { ?>
+            <?= $this->Html->image('../files/user/' . $perfilUser['id'] . '/' . $perfilUser['imagem'], ['class' => 'rounded-circle', 'width' => '120', 'height' => '120']) ?>&nbsp;
+        <?php } else { ?>
+            <?= $this->Html->image('../files/user/icone_usuario.png', ['class' => 'rounded-circle', 'width' => '120', 'height' => '120']) ?>&nbsp;
+        <?php } ?>
+
+        <?= $this->Html->link(__('Alterar Foto'), ['action' => 'alterarFotoPerfil'], ['class' => 'btn btn-outline-primary btn-sm'])?>
+    </dd>
+
     <dt class="col-sm-3">ID</dt>
     <dd class="col-sm-9"><?= $usuario['id'] ?></dd>
 
