@@ -34,10 +34,25 @@
 
 <?= $this->Form->create($user, ['type' => 'file']); ?>
 
+
 <div class="form-row">
-    <div class="form-group col-md-12">
-        <label><span class="text-danger">*</span> Foto</label>
-        <?= $this->Form->file('imagem', ['class' => 'form-control', 'label' => false]) ?>
+    <div class="form-group col-md-6">
+        <label><span class="text-danger">*</span> Foto (150x150)</label>
+        <br>
+        <?= $this->Form->file('imagem', ['label' => false, 'onchange' => 'previewImagem()']) ?>
+    </div>
+
+    <div class="form-group col-md-6">
+        <?php
+
+        if ($user->imagem !== null) {
+            $imagem_antiga = '..\..\files\user\\' . $user->id . '\\' . $user->imagem;
+        } else {
+            $imagem_antiga = '..\..\files\user\preview_img.png';
+        }
+        ?>
+
+        <img src='<?= $imagem_antiga ?>' alt='<?= $user->name ?>'  id='preview-img' class='img-thumbnail' style="width: 150px; height: 150px;">
     </div>
 </div>
 

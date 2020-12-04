@@ -185,9 +185,7 @@ class UsersController extends AppController
     {
 
         $user_id = $this->Auth->user('id');
-        $user = $this->Users->get($user_id, [
-            'contain' => []
-        ]);
+        $user = $this->Users->get($user_id);
 
         $imagemAntiga = $user->imagem;
 
