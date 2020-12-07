@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Behavior;
 
 use Cake\ORM\Behavior;
@@ -16,21 +17,34 @@ class UploadBehavior extends Behavior
      */
     protected $_defaultConfig = [];
 
-    public function singleUpload(array $file, $destino){
-        echo "UploadBehavior";
-        var_dump($file);
-
+    public function singleUpload(array $file, $destino)
+    {
         return $this->upload($file, $destino);
-        
     }
 
-    protected function upload($file, $destino){
+    protected function upload($file, $destino)
+    {
         extract($file);
-        if(move_uploaded_file($tmp_name, $destino . $name)){
+        $name = $this->slug($name);
+        if (move_uploaded_file($tmp_name, $destino . $name)) {
             return true;
-        }else{
+        } else {
             return false;
         }
+    }
 
+    public function slug($name)
+    {
+
+        $formato['a'] = 'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜüÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûýýþÿRr"!@#$%&*()_-+={[}]/?;:,\\\'<>°ºª';
+        $formato['b'] = 'aaaaaaaceeeeiiiidnoooooouuuuuybsaaaaaaaceeeeiiiidnoooooouuuyybyRr                                ';
+        $name = strtr(utf8_decode($name), utf8_decode($formato['a']), $formato['b']);
+        $name = str_replace(' ', '-', $name);
+
+        $name = str_replace(['-----', '----', '---', '--'], '-', $name);
+
+        $name = strtolower($name);
+
+        return $name;
     }
 }
