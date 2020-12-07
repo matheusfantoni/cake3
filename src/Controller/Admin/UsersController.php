@@ -187,8 +187,23 @@ class UsersController extends AppController
         $user_id = $this->Auth->user('id');
         $user = $this->Users->get($user_id);
 
-        $imagemAntiga = $user->imagem;
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->newEntity();
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            $destino = WWW_ROOT . "files" . DS . "user" . DS . $user_id . DS;
+            $user->imagem = $this->Users->singleUpload($this->request->getData()['imagem'], $destino);
 
+            if ($user->imagem) {
+                $this->Flash->success(('Foto editada com sucesso.'));
+            } else {
+                $this->Flash->danger(('Erro: Foto não foi editada com sucesso.'));
+            }
+        }
+
+
+        //$imagemAntiga = $user->imagem;
+
+        /*
         if ($this->request->is(['patch', 'post', 'put'])) {
 
             $nomeImg = $this->request->getData()['imagem']['name'];
@@ -223,7 +238,7 @@ class UsersController extends AppController
                 }
             }
         }
-
+*/
         $this->set(compact('user'));
     }
 }
