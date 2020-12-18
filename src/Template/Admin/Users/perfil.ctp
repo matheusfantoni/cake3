@@ -31,8 +31,8 @@
 <dl class="row">
     <dt class="col-sm-3">Foto</dt>
     <dd class="col-sm-9">
-        <?php if (!empty($perfilUser['imagem'])) { ?>
-            <?= $this->Html->image('../files/user/' . $perfilUser['id'] . '/' . $perfilUser['imagem'], ['class' => 'rounded-circle', 'width' => '120', 'height' => '120']) ?>&nbsp;
+        <?php if (!empty($user->imagem)) { ?>
+            <?= $this->Html->image('../files/user/' . $user->id . '/' . $user->imagem, ['class' => 'rounded-circle', 'width' => '120', 'height' => '120']) ?>&nbsp;
         <?php } else { ?>
             <?= $this->Html->image('../files/user/icone_usuario.png', ['class' => 'rounded-circle', 'width' => '120', 'height' => '120']) ?>&nbsp;
         <?php } ?>
@@ -41,14 +41,14 @@
     </dd>
 
     <dt class="col-sm-3">ID</dt>
-    <dd class="col-sm-9"><?= $usuario['id'] ?></dd>
+    <dd class="col-sm-9"><?= $user->id ?></dd>
 
     <dt class="col-sm-3">Nome</dt>
-    <dd class="col-sm-9"><?= $usuario['name'] ?></dd>
+    <dd class="col-sm-9"><?= $user->name ?></dd>
 
     <dt class="col-sm-3">E-mail</dt>
-    <dd class="col-sm-9"><?= $usuario['email'] ?></dd>
+    <dd class="col-sm-9"><?= $user->email ?></dd>
 
     <dt class="col-sm-3">Username</dt>
-    <dd class="col-sm-9"><?= $usuario['username'] ?></dd>
+    <dd class="col-sm-9"><?= $user->username ?></dd>
 </dl>

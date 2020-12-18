@@ -44,7 +44,7 @@ class UsersTable extends Table
             ->notEmptyString('password')
             ->add('password', [
                 'length' => [
-                    'rule' => ['minLength' , 6],
+                    'rule' => ['minLength', 6],
                     'message' => 'A senha deve ter no mínimo 6 caracteres.',
                 ]
             ]);
@@ -60,4 +60,13 @@ class UsersTable extends Table
         return $rules;
     }
     */
+
+    public function getUserDados($user_id)
+    {
+
+       return $query = $this->find()
+            ->select(['id', 'name', 'email', 'imagem'])
+            ->where(['Users.id' => $user_id])
+            ->first();
+    }
 }

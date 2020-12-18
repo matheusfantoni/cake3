@@ -46,9 +46,9 @@
         <?php
 
         if ($user->imagem !== null) {
-            $imagem_antiga = '..\..\files\user\\' . $user->id . '\\' . $user->imagem;
+            $imagem_antiga = '../../files/user/' . $user->id . '/' . $user->imagem;
         } else {
-            $imagem_antiga = '..\..\files\user\preview_img.png';
+            $imagem_antiga = '../../files/user/preview_img.png';
         }
         ?>
 
