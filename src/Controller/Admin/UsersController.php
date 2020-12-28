@@ -158,27 +158,38 @@ class UsersController extends AppController
         $user = $this->Users->get($user_id);
         $imagemAntiga = $user->imagem;
 
+
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->data);
-            $destino = WWW_ROOT . "files" . DS . "user" . DS . $user_id . DS;
             $user = $this->Users->newEntity();
-            $user->imagem = $this->Users->singleUpload($this->request->getData()['imagem'], $destino);
-            if ($user->imagem) {
-                $user->id = $user_id;
-                if ($this->Users->save($user)) {
+            $user->imagem = $this->Users->slug($this->request->getData()['imagem']['name']);
+            $user->id = $user_id;
+
+
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            if ($this->Users->save($user)) {
+                $destino = WWW_ROOT . "files" . DS . "user" . DS . $user_id . DS;
+                $imgUpload = $this->request->getData()['imagem'];
+                $imgUpload['name'] = $user->imagem;
+
+                if ($this->Users->singleUpload($imgUpload, $destino)) {
                     if (($imagemAntiga !== null) and ($imagemAntiga !== $user->imagem)) {
                         unlink($destino . $imagemAntiga);
                     }
                     $this->Flash->success(__('Foto editada com sucesso'));
                     return $this->redirect(['controller' => 'Users', 'action' => 'perfil']);
+                } else {
+                    $user->imagem = $imagemAntiga;
+                    $this->Users->save($user);
+                    $this->Flash->danger(__('Erro: Foto não foi editada com sucesso. Erro ao realizar o upload.'));
                 }
             } else {
-                $this->Flash->danger(__('Erro: Foto não foi editada com sucesso'));
+                $this->Flash->danger(__('Erro: Foto não foi editada com sucesso.'));
             }
         }
 
         $this->set(compact('user'));
     }
+
 
     /**
      * Delete method

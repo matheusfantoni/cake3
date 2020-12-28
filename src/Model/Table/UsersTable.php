@@ -28,7 +28,6 @@ class UsersTable extends Table
             ->allowEmptyString('id', 'created');
 
         $validator
-            ->requirePresence('name', 'create')
             ->notEmptyString('name');
 
         $validator
@@ -40,13 +39,20 @@ class UsersTable extends Table
             ->notEmptyString('username');
 
         $validator
-            ->requirePresence('password', 'create')
             ->notEmptyString('password')
             ->add('password', [
                 'length' => [
                     'rule' => ['minLength', 6],
                     'message' => 'A senha deve ter no mínimo 6 caracteres.',
                 ]
+            ]);
+
+        $validator
+            ->notEmpty('imagem', 'Necessário selecionar uma imagem')
+            ->add('imagem', 'file', [
+                'rule' => ['mimeType', ['image/jpeg', 'image/png']],
+                'message' => 'Extensão da foto inválida. Selecione foto JPEG ou PNG',
+
             ]);
 
         return $validator;
@@ -64,7 +70,7 @@ class UsersTable extends Table
     public function getUserDados($user_id)
     {
 
-       return $query = $this->find()
+        return $query = $this->find()
             ->select(['id', 'name', 'email', 'imagem'])
             ->where(['Users.id' => $user_id])
             ->first();

@@ -25,9 +25,9 @@ class UploadBehavior extends Behavior
     protected function upload($file, $destino)
     {
         extract($file);
-        $name = $this->slug($name);
+        //$name = $this->slug($name);
         if (move_uploaded_file($tmp_name, $destino . $name)) {
-            return true;
+            return $name;
         } else {
             return false;
         }

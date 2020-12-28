@@ -39,7 +39,7 @@
     <div class="form-group col-md-6">
         <label><span class="text-danger">*</span> Foto (150x150)</label>
         <br>
-        <?= $this->Form->file('imagem', ['label' => false, 'onchange' => 'previewImagem()']) ?>
+        <?= $this->Form->control('imagem', ['type' => 'file', 'label' => false, 'onchange' => 'previewImagem()']) ?>
     </div>
 
     <div class="form-group col-md-6">
