@@ -31,7 +31,58 @@
 </div>
 <hr>
 
+<?= $this->Flash->render() ?>
+
 <dl class="row">
+    <dt class="col-sm-3">Foto</dt>
+    <dd class="col-sm-9">
+        <div class="img-perfil">
+            <?php if (!empty($user->imagem)) { ?>
+                <?= $this->Html->image(
+                    '../files/user/' . $user->id . '/' . $user->imagem,
+                    [
+                        'class' => 'rounded-circle',
+                        'width' => '120',
+                        'height' => '120'
+                    ]
+                ) ?>&nbsp;
+
+                <div class="edit">
+                    <?= $this->Html->link(
+                        '<i class="fas fa-pencil-alt"></i>',
+                        [
+                            'controller' => 'Users',
+                            'action' => 'alterarFotoUsuario',
+                            $user->id
+                        ],
+                        [
+                            'escape' => false
+                        ]
+                    ) ?>
+                </div>
+            <?php } else { ?>
+                <?= $this->Html->image(
+                    '../files/user/icone_usuario.png',
+                    ['class' => 'rounded-circle', 'width' => '120', 'height' => '120']
+                ) ?>&nbsp;
+
+                <div class="edit">
+                    <?= $this->Html->link(
+                        '<i class="fas fa-pencil-alt"></i>',
+                        [
+                            'controller' => 'Users',
+                            'action' => 'alterarFotoUsuario',
+                            $user->id
+                        ],
+                        [
+                            'escape' => false
+                        ]
+                    ) ?>
+                </div>
+
+            <?php } ?>
+        </div>
+    </dd>
     <dt class="col-sm-3">ID</dt>
     <dd class="col-sm-9"><?= $this->Number->format($user->id) ?></dd>
 
