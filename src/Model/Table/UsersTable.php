@@ -19,6 +19,7 @@ class UsersTable extends Table
         $this->setPrimaryKey('id');
         $this->addBehavior('Timestamp');
         $this->addBehavior('Upload');
+        $this->addBehavior('UploadRed');
     }
 
     public function validationDefault(Validator $validator)

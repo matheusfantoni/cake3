@@ -4,21 +4,9 @@ namespace App\Controller\Admin;
 
 use App\Controller\AppController;
 
-/**
- * Users Controller
- *
- * @property \App\Model\Table\UsersTable $Users
- *
- * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
- */
 class UsersController extends AppController
 {
 
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|void
-     */
     public function index()
     {
         $this->paginate = [
@@ -30,13 +18,7 @@ class UsersController extends AppController
         $this->set(compact('users'));
     }
 
-    /**
-     * View method
-     *
-     * @param string|null $id User id.
-     * @return \Cake\Http\Response|void
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
+
     public function view($id = null)
     {
         $user = $this->Users->get($id, [
@@ -53,11 +35,8 @@ class UsersController extends AppController
 
         $this->set(compact('user'));
     }
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
-     */
+
+
     public function add()
     {
         $user = $this->Users->newEntity();
@@ -73,7 +52,6 @@ class UsersController extends AppController
         $this->set(compact('user'));
     }
 
-    
     public function edit($id = null)
     {
         $user = $this->Users->get($id, [
@@ -84,13 +62,82 @@ class UsersController extends AppController
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('Usuário editado com sucesso'));
 
-                
                 return $this->redirect(['controller' => 'Users', 'action' => 'view', $id]);
             }
             $this->Flash->danger(__('Erro: Usuário não foi editado com sucesso'));
         }
         $this->set(compact('user'));
     }
+
+    public function alterarFotoUsuario($id = null)
+    {
+        $user = $this->Users->get($id);
+        $imagemAntiga = $user->imagem;
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->newEntity();
+            $user->imagem = $this->Users->slugUploadImgRed($this->request->getData()['imagem']['name']);
+            $user->id = $id;
+
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            if ($this->Users->save($user)) {
+                $destino = WWW_ROOT . "files" . DS . "user" . DS . $id . DS;
+                $imgUpload = $this->request->getData()['imagem'];
+                $imgUpload['name'] = $user->imagem;
+
+                if ($this->Users->uploadImgRed($imgUpload, $destino, 150, 150)) {
+                    if (($imagemAntiga !== null) and ($imagemAntiga !== $user->imagem)) {
+                        unlink($destino . $imagemAntiga);
+                    }
+                    $this->Flash->success(__('Foto editada com sucesso'));
+                    return $this->redirect(['controller' => 'Users', 'action' => 'view', $id]);
+                } else {
+                    $user->imagem = $imagemAntiga;
+                    $this->Users->save($user);
+                    $this->Flash->danger(__('Erro: Foto não foi editada com sucesso. Erro ao realizar o upload'));
+                }
+            } else {
+                $this->Flash->danger(__('Erro: Foto não foi editada com sucesso.'));
+            }
+        }
+
+        $this->set(compact('user'));
+    }
+
+    /*public function alterarFotoUsuario($id = null)
+    {
+        $user = $this->Users->get($id);
+        $imagemAntiga = $user->imagem;
+
+        if($this->request->is(['patch', 'post', 'put'])){
+            $user = $this->Users->newEntity();
+            $user->imagem = $this->Users->slugSingleUpload($this->request->getData()['imagem']['name']);
+            $user->id = $id;
+
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            if($this->Users->save($user)){
+                $destino = WWW_ROOT. "files" . DS . "user" . DS . $id . DS;
+                $imgUpload = $this->request->getData()['imagem'];
+                $imgUpload['name'] = $user->imagem;
+                
+                if($this->Users->singleUpload($imgUpload, $destino)){
+                    if(($imagemAntiga !== null) AND ($imagemAntiga !== $user->imagem)){
+                        unlink($destino.$imagemAntiga);
+                    }
+                    $this->Flash->success(__('Foto editada com sucesso'));
+                    return $this->redirect(['controller' => 'Users', 'action' => 'view', $id]);
+                }else{
+                    $user->imagem = $imagemAntiga;
+                    $this->Users->save($user);
+                    $this->Flash->danger(__('Erro: Foto não foi editada com sucesso. Erro ao realizar o upload'));
+                }
+            }else{
+                $this->Flash->danger(__('Erro: Foto não foi editada com sucesso.'));
+            }
+        }  
+
+        $this->set(compact('user'));
+    }*/
 
     public function editSenha($id = null)
     {
@@ -153,12 +200,10 @@ class UsersController extends AppController
         $user = $this->Users->get($user_id);
         $imagemAntiga = $user->imagem;
 
-
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->newEntity();
-            $user->imagem = $this->Users->slugSingleUpload($this->request->getData()['imagem']['name']);
+            $user->imagem = $this->Users->slugUploadImgRed($this->request->getData()['imagem']['name']);
             $user->id = $user_id;
-
 
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
@@ -166,7 +211,7 @@ class UsersController extends AppController
                 $imgUpload = $this->request->getData()['imagem'];
                 $imgUpload['name'] = $user->imagem;
 
-                if ($this->Users->singleUpload($imgUpload, $destino)) {
+                if ($this->Users->uploadImgRed($imgUpload, $destino, 150, 150)) {
                     if (($imagemAntiga !== null) and ($imagemAntiga !== $user->imagem)) {
                         unlink($destino . $imagemAntiga);
                     }
@@ -175,7 +220,7 @@ class UsersController extends AppController
                 } else {
                     $user->imagem = $imagemAntiga;
                     $this->Users->save($user);
-                    $this->Flash->danger(__('Erro: Foto não foi editada com sucesso. Erro ao realizar o upload.'));
+                    $this->Flash->danger(__('Erro: Foto não foi editada com sucesso. Erro ao realizar o upload'));
                 }
             } else {
                 $this->Flash->danger(__('Erro: Foto não foi editada com sucesso.'));
@@ -185,44 +230,42 @@ class UsersController extends AppController
         $this->set(compact('user'));
     }
 
-
-    public function alterarFotoUsuario($id = null)
+    /*public function alterarFotoPerfil()
     {
-
-        $user = $this->Users->get($id);
+        $user_id = $this->Auth->user('id');
+        $user = $this->Users->get($user_id);
         $imagemAntiga = $user->imagem;
 
-
-        if ($this->request->is(['patch', 'post', 'put'])) {
+        if($this->request->is(['patch', 'post', 'put'])){
             $user = $this->Users->newEntity();
             $user->imagem = $this->Users->slugSingleUpload($this->request->getData()['imagem']['name']);
-            $user->id = $id;
-
+            $user->id = $user_id;
 
             $user = $this->Users->patchEntity($user, $this->request->getData());
-            if ($this->Users->save($user)) {
-                $destino = WWW_ROOT . "files" . DS . "user" . DS . $id . DS;
+            if($this->Users->save($user)){
+                $destino = WWW_ROOT. "files" . DS . "user" . DS . $user_id . DS;
                 $imgUpload = $this->request->getData()['imagem'];
                 $imgUpload['name'] = $user->imagem;
-
-                if ($this->Users->singleUpload($imgUpload, $destino)) {
-                    if (($imagemAntiga !== null) and ($imagemAntiga !== $user->imagem)) {
-                        unlink($destino . $imagemAntiga);
+                
+                if($this->Users->singleUpload($imgUpload, $destino)){
+                    if(($imagemAntiga !== null) AND ($imagemAntiga !== $user->imagem)){
+                        unlink($destino.$imagemAntiga);
                     }
                     $this->Flash->success(__('Foto editada com sucesso'));
-                    return $this->redirect(['controller' => 'Users', 'action' => 'view', $id]);
-                } else {
+                    return $this->redirect(['controller' => 'Users', 'action' => 'perfil']);
+                }else{
                     $user->imagem = $imagemAntiga;
                     $this->Users->save($user);
-                    $this->Flash->danger(__('Erro: Foto não foi editada com sucesso. Erro ao realizar o upload.'));
+                    $this->Flash->danger(__('Erro: Foto não foi editada com sucesso. Erro ao realizar o upload'));
                 }
-            } else {
+            }else{
                 $this->Flash->danger(__('Erro: Foto não foi editada com sucesso.'));
             }
-        }
+        }    
 
         $this->set(compact('user'));
-    }
+    }*/
+
 
     public function delete($id = null)
     {
