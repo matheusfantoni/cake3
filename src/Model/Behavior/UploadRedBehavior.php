@@ -21,31 +21,62 @@ class UploadRedBehavior extends Behavior
 
         $this->verExtensaoImg($file, $destino, $largura, $altura);
         // return $this->upload($file, $destino);
-        return false;
+        return true;
     }
 
     public function verExtensaoImg(array $file, $destino, $largura, $altura)
     {
 
         extract($file);
-        var_dump($file);
+
         switch ($type) {
             case 'image/jpeg';
             case 'image/pjpeg';
 
-                echo "Imagem Jpeg";
+                $imagem = imagecreatefromjpeg($tmp_name);
+                $imgRedimens = $this->redimensImg($imagem, $largura, $altura);
+                imagejpeg($imgRedimens, $destino . $name);
+
                 break;
 
 
             case 'image/png';
             case 'image/x-png';
 
+                $imagem = imagecreatefrompng($tmp_name);
+                $imgRedimens = $this->redimensImg($imagem, $largura, $altura);
+                imagepng($imgRedimens, $destino . $name);
+
                 echo "Imagem PNG";
                 break;
         }
     }
 
-    public function criarDiretorioImgRed($destino)
+    protected function redimensImg($imagem, $largura, $altura)
+    {
+
+        $largura_original = imagesx($imagem);
+        $altura_original = imagesy($imagem);
+
+        $imgRedimens = imagecreatetruecolor($largura, $altura);
+
+        imagecopyresampled(
+            $imgRedimens,
+            $imagem,
+            0,
+            0,
+            0,
+            0,
+            $largura,
+            $altura,
+            $largura_original,
+            $altura_original
+        );
+
+        return $imgRedimens;
+    }
+
+    protected function criarDiretorioImgRed($destino)
     {
 
         $diretorio = new Folder($destino);

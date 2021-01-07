@@ -1,12 +1,23 @@
 <?php
-
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
 
+/**
+ * Users Controller
+ *
+ * @property \App\Model\Table\UsersTable $Users
+ *
+ * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ */
 class UsersController extends AppController
 {
 
+    /**
+     * Index method
+     *
+     * @return \Cake\Http\Response|void
+     */
     public function index()
     {
         $this->paginate = [
@@ -18,7 +29,13 @@ class UsersController extends AppController
         $this->set(compact('users'));
     }
 
-
+    /**
+     * View method
+     *
+     * @param string|null $id User id.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
     public function view($id = null)
     {
         $user = $this->Users->get($id, [
@@ -35,8 +52,11 @@ class UsersController extends AppController
 
         $this->set(compact('user'));
     }
-
-
+    /**
+     * Add method
+     *
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     */
     public function add()
     {
         $user = $this->Users->newEntity();
@@ -52,6 +72,13 @@ class UsersController extends AppController
         $this->set(compact('user'));
     }
 
+    /**
+     * Edit method
+     *
+     * @param string|null $id User id.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     */
     public function edit($id = null)
     {
         $user = $this->Users->get($id, [
@@ -74,32 +101,32 @@ class UsersController extends AppController
         $user = $this->Users->get($id);
         $imagemAntiga = $user->imagem;
 
-        if ($this->request->is(['patch', 'post', 'put'])) {
+        if($this->request->is(['patch', 'post', 'put'])){
             $user = $this->Users->newEntity();
             $user->imagem = $this->Users->slugUploadImgRed($this->request->getData()['imagem']['name']);
             $user->id = $id;
 
             $user = $this->Users->patchEntity($user, $this->request->getData());
-            if ($this->Users->save($user)) {
-                $destino = WWW_ROOT . "files" . DS . "user" . DS . $id . DS;
+            if($this->Users->save($user)){
+                $destino = WWW_ROOT. "files" . DS . "user" . DS . $id . DS;
                 $imgUpload = $this->request->getData()['imagem'];
                 $imgUpload['name'] = $user->imagem;
-
-                if ($this->Users->uploadImgRed($imgUpload, $destino, 150, 150)) {
-                    if (($imagemAntiga !== null) and ($imagemAntiga !== $user->imagem)) {
-                        unlink($destino . $imagemAntiga);
+                
+                if($this->Users->uploadImgRed($imgUpload, $destino, 150, 150)){
+                    if(($imagemAntiga !== null) AND ($imagemAntiga !== $user->imagem)){
+                        unlink($destino.$imagemAntiga);
                     }
                     $this->Flash->success(__('Foto editada com sucesso'));
                     return $this->redirect(['controller' => 'Users', 'action' => 'view', $id]);
-                } else {
+                }else{
                     $user->imagem = $imagemAntiga;
                     $this->Users->save($user);
                     $this->Flash->danger(__('Erro: Foto não foi editada com sucesso. Erro ao realizar o upload'));
                 }
-            } else {
+            }else{
                 $this->Flash->danger(__('Erro: Foto não foi editada com sucesso.'));
             }
-        }
+        }  
 
         $this->set(compact('user'));
     }
@@ -200,32 +227,32 @@ class UsersController extends AppController
         $user = $this->Users->get($user_id);
         $imagemAntiga = $user->imagem;
 
-        if ($this->request->is(['patch', 'post', 'put'])) {
+        if($this->request->is(['patch', 'post', 'put'])){
             $user = $this->Users->newEntity();
             $user->imagem = $this->Users->slugUploadImgRed($this->request->getData()['imagem']['name']);
             $user->id = $user_id;
 
             $user = $this->Users->patchEntity($user, $this->request->getData());
-            if ($this->Users->save($user)) {
-                $destino = WWW_ROOT . "files" . DS . "user" . DS . $user_id . DS;
+            if($this->Users->save($user)){
+                $destino = WWW_ROOT. "files" . DS . "user" . DS . $user_id . DS;
                 $imgUpload = $this->request->getData()['imagem'];
                 $imgUpload['name'] = $user->imagem;
-
-                if ($this->Users->uploadImgRed($imgUpload, $destino, 150, 150)) {
-                    if (($imagemAntiga !== null) and ($imagemAntiga !== $user->imagem)) {
-                        unlink($destino . $imagemAntiga);
+                
+                if($this->Users->uploadImgRed($imgUpload, $destino, 150, 150)){
+                    if(($imagemAntiga !== null) AND ($imagemAntiga !== $user->imagem)){
+                        unlink($destino.$imagemAntiga);
                     }
                     $this->Flash->success(__('Foto editada com sucesso'));
                     return $this->redirect(['controller' => 'Users', 'action' => 'perfil']);
-                } else {
+                }else{
                     $user->imagem = $imagemAntiga;
                     $this->Users->save($user);
                     $this->Flash->danger(__('Erro: Foto não foi editada com sucesso. Erro ao realizar o upload'));
                 }
-            } else {
+            }else{
                 $this->Flash->danger(__('Erro: Foto não foi editada com sucesso.'));
             }
-        }
+        }    
 
         $this->set(compact('user'));
     }
@@ -266,7 +293,13 @@ class UsersController extends AppController
         $this->set(compact('user'));
     }*/
 
-
+    /**
+     * Delete method
+     *
+     * @param string|null $id User id.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
@@ -282,15 +315,15 @@ class UsersController extends AppController
 
     public function login()
     {
-        if ($this->request->is('post')) {
+       if($this->request->is('post')){
             $user = $this->Auth->identify();
-            if ($user) {
+            if($user){
                 $this->Auth->setUser($user);
                 return $this->redirect($this->Auth->redirectUrl());
-            } else {
+            }else{
                 $this->Flash->danger(__('Erro: login ou senha incorreto'));
             }
-        }
+       }
     }
 
     public function logout()
