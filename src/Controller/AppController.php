@@ -75,7 +75,8 @@ class AppController extends Controller
         }
 
         if ($prefix == 'admin') {
-            if (($this->request->getParam(['action']) !== null) and ($this->request->getParam(['action']) == 'login')) {
+            if (($this->request->getParam(['action']) !== null) and (($this->request->getParam(['action']) == 'login') or ($this->request->getParam(['action']) == 'cadastrar'))) {
+
                 $this->viewBuilder()->setLayout('login');
             } else {
                 //$perfilUser = $this->Auth->user();

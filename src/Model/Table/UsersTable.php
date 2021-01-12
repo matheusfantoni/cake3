@@ -31,15 +31,16 @@ class UsersTable extends Table
             ->allowEmptyString('id', 'created');
 
         $validator
-            ->notEmptyString('name');
+            ->notEmptyString('name', 'O campo nome é obrigatório.')
+            ->maxLength('name', 220);
 
         $validator
             ->requirePresence('email', 'create')
-            ->notEmptyString('email');
+            ->notEmptyString('email', 'O campo email é obrigatório.');
 
         $validator
             ->requirePresence('username', 'create')
-            ->notEmptyString('username');
+            ->notEmptyString('username', 'O campo usuário é obrigatório.');
 
         $validator
             ->notEmptyString('password')
