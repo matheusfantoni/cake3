@@ -27,10 +27,11 @@
 <br>
 <p class="text-center">
     <?= $this->Html->link(__('Cadastrar'), ['controller' => 'Users', 'action' => 'cadastrar']) ?>
-
+   
 </p>
 <p>
-    Esqueceu a senha?
+<?= $this->Html->link(__('Esqueceu a senha?'), ['controller' => 'Users', 'action' => 'recuperarSenha']) ?>
 </p>
+
 
 <?= $this->Form->end(); ?>

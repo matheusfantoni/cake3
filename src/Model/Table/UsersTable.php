@@ -17,7 +17,7 @@ class UsersTable extends Table
         $this->setTable('users');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
-        
+
         $this->addBehavior('Timestamp');
         $this->addBehavior('Upload');
         $this->addBehavior('UploadRed');
@@ -78,5 +78,14 @@ class UsersTable extends Table
             ->select(['id', 'name', 'email', 'imagem'])
             ->where(['Users.id' => $user_id])
             ->first();
+    }
+
+    public function getRecuperarSenha($email)
+    {
+
+        $query = $this->find()
+            ->select(['id', 'recuperar_senha'])
+            ->where(['Users.email' => $email]);
+        return $query->first();
     }
 }
