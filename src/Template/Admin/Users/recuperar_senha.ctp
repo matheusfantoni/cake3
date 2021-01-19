@@ -9,7 +9,7 @@
 
 <div class="form-group">
     <label>E-mail</label>
-    <?= $this->Form->control('email', ['class' => 'form-control', 'placeholder' => 'Digite seu email', 'label' => false]) ?>
+    <?= $this->Form->control('email', ['class' => 'form-control', 'placeholder' => 'Digite o email cadastrado', 'label' => false]) ?>
 </div>
 
 

@@ -21,7 +21,7 @@ class UsersController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['cadastrar', 'logout', 'recuperarSenha']);
+        $this->Auth->allow(['cadastrar', 'logout', 'recuperarSenha', 'atualizarSenha']);
     }
     /**
      * Index method
@@ -198,6 +198,32 @@ class UsersController extends AppController
         }
 
         $this->set(compact('user'));
+    }
+
+    public function atualizarSenha($recuperar_senha = null)
+    {
+
+
+        $userTable = TableRegistry::get('Users');
+        $user = $userTable->getAtualizarSenha($recuperar_senha);
+
+        if ($user) {
+            if ($this->request->is(['patch', 'post', 'put'])) {
+                $user = $this->Users->patchEntity($user, $this->request->getData());
+                $user->recuperar_senha = null;
+                if ($this->Users->save($user)) {
+                    $this->Flash->success(__('Senha alterada com'));
+                    return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+                } else {
+                    $this->Flash->danger(__('Erro: A senha não foi editada com sucesso!'));
+                }
+            }
+
+            $this->set(compact('user'));
+        } else {
+            $this->Flash->danger(__('Erro: Link inválido!'));
+            return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+        }
     }
 
     public function editSenha($id = null)

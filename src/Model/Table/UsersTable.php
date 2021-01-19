@@ -88,4 +88,13 @@ class UsersTable extends Table
             ->where(['Users.email' => $email]);
         return $query->first();
     }
+
+    public function getAtualizarSenha($recuperar_senha)
+    {
+
+        $query = $this->find()
+            ->select(['id'])
+            ->where(['Users.recuperar_senha' => $recuperar_senha]);
+        return $query->first();
+    }
 }
