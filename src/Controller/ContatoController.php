@@ -5,15 +5,14 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Event\Event;
 
-
 /**
- * Home Controller
+ * Contato Controller
  *
- * @property \App\Model\Table\HomeTable $Home
+ * @property \App\Model\Table\ContatoTable $Contato
  *
- * @method \App\Model\Entity\Home[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Contato[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class HomeController extends AppController
+class ContatoController extends AppController
 {
 
 
@@ -31,8 +30,8 @@ class HomeController extends AppController
     public function index()
     {
 
-        $home = "Bem vindo";
+        $contato = "Contato";
 
-        $this->set(compact('home'));
+        $this->set(compact('contato'));
     }
 }
