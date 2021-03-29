@@ -13,6 +13,11 @@ use Cake\Filesystem\File;
 class UploadRedBehavior extends Behavior
 {
 
+    /**
+     * Default configuration.
+     *
+     * @var array
+     */
     protected $_defaultConfig = [];
 
     public function uploadImgRed(array $file, $destino, $largura, $altura)
@@ -20,65 +25,43 @@ class UploadRedBehavior extends Behavior
         $this->criarDiretorioImgRed($destino);
 
         $this->verExtensaoImg($file, $destino, $largura, $altura);
-        // return $this->upload($file, $destino);
+        //return $this->upload($file, $destino);    	
         return true;
     }
 
-    public function verExtensaoImg(array $file, $destino, $largura, $altura)
+    public function verExtensaoImg($file, $destino, $largura, $altura)
     {
-
         extract($file);
-
         switch ($type) {
             case 'image/jpeg';
             case 'image/pjpeg';
-
                 $imagem = imagecreatefromjpeg($tmp_name);
                 $imgRedimens = $this->redimensImg($imagem, $largura, $altura);
                 imagejpeg($imgRedimens, $destino . $name);
-
                 break;
-
-
             case 'image/png';
             case 'image/x-png';
-
                 $imagem = imagecreatefrompng($tmp_name);
                 $imgRedimens = $this->redimensImg($imagem, $largura, $altura);
                 imagepng($imgRedimens, $destino . $name);
-
-                echo "Imagem PNG";
                 break;
         }
     }
 
     protected function redimensImg($imagem, $largura, $altura)
     {
-
         $largura_original = imagesx($imagem);
         $altura_original = imagesy($imagem);
 
         $imgRedimens = imagecreatetruecolor($largura, $altura);
 
-        imagecopyresampled(
-            $imgRedimens,
-            $imagem,
-            0,
-            0,
-            0,
-            0,
-            $largura,
-            $altura,
-            $largura_original,
-            $altura_original
-        );
+        imagecopyresampled($imgRedimens, $imagem, 0, 0, 0, 0, $largura, $altura, $largura_original, $altura_original);
 
         return $imgRedimens;
     }
 
     protected function criarDiretorioImgRed($destino)
     {
-
         $diretorio = new Folder($destino);
 
         if (is_null($diretorio->path)) {
@@ -99,7 +82,6 @@ class UploadRedBehavior extends Behavior
 
     public function slugUploadImgRed($name)
     {
-
         $formato['a'] = 'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜüÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûýýþÿRr"!@#$%&*()_-+={[}]/?;:,\\\'<>°ºª';
         $formato['b'] = 'aaaaaaaceeeeiiiidnoooooouuuuuybsaaaaaaaceeeeiiiidnoooooouuuyybyRr                                ';
         $name = strtr(utf8_decode($name), utf8_decode($formato['a']), $formato['b']);

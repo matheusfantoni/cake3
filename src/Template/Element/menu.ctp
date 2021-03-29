@@ -15,7 +15,21 @@
             <?= $this->Html->link(
                 '<i class="fas fa-users"></i> Usuários',
                 [
-                    'controller' => 'users',
+                    'controller' => 'Users',
+                    'action' => 'index'
+                ],
+                [
+                    'escape' => false
+                ]
+            ); ?>
+
+        </li>
+
+        <li>
+            <?= $this->Html->link(
+                '<i class="fas fa-sliders-h"></i> Carousel',
+                [
+                    'controller' => 'Carousels',
                     'action' => 'index'
                 ],
                 [
