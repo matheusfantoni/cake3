@@ -4,7 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
-use Cake\ORM\TableRegistry;
 use Cake\Utility\Security;
 
 /**
@@ -180,15 +179,16 @@ class UsersController extends AppController
 
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
-            $userTable = TableRegistry::get('Users');
-            $recupSenha = $userTable->getRecuperarSenha($this->request->getData()['email']);
+            $this->loadModel('Users');
+
+            $recupSenha = $this->Users->getRecuperarSenha($this->request->getData()['email']);
             if ($recupSenha) {
                 if ($recupSenha->recuperar_senha == "") {
                     $user->id = $recupSenha->id;
                     $user->recuperar_senha = Security::hash($this->request->getData()['email'] .
                         $recupSenha->id, 'sha256', false);
 
-                    $userTable->save($user);
+                    $this->Users->save($user);
                 }
                 $this->Flash->success(__('E-mail enviado com sucesso, verifique a sua caixa de entrada.'));
                 return $this->redirect(['controller' => 'Users', 'action' => 'login']);
@@ -202,10 +202,10 @@ class UsersController extends AppController
 
     public function atualizarSenha($recuperar_senha = null)
     {
-
-
-        $userTable = TableRegistry::get('Users');
-        $user = $userTable->getAtualizarSenha($recuperar_senha);
+        
+        $this->loadModel('Users');
+        
+        $user = $this->Users->getAtualizarSenha($recuperar_senha);
 
         if ($user) {
             if ($this->request->is(['patch', 'post', 'put'])) {

@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
-use Cake\ORM\TableRegistry;
 
 /**
  * Home Controller
@@ -30,9 +29,9 @@ class HomeController extends AppController
      */
     public function index()
     {
+        $this->loadModel('Carousels');
 
-        $carouselTable = TableRegistry::get('Carousels');
-        $carousels = $carouselTable->getListarSlidesHome();
+        $carousels = $this->Carousels->getListarSlidesHome();
 
         $this->set(compact('carousels'));
     }

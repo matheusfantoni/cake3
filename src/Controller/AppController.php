@@ -18,7 +18,6 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
-use Cake\ORM\TableRegistry;
 
 /**
  * Application Controller
@@ -76,19 +75,19 @@ class AppController extends Controller
 
         if ($prefix == 'admin') {
             if (($this->request->getParam(['action']) !== null) and (($this->request->getParam(['action']) == 'login') or ($this->request->getParam(['action']) == 'cadastrar')
-            or ($this->request->getParam(['action']) == 'recuperarSenha') or ($this->request->getParam(['action']) == 'atualizarSenha')
-            )) {
+                or ($this->request->getParam(['action']) == 'recuperarSenha') or ($this->request->getParam(['action']) == 'atualizarSenha'))) {
 
                 $this->viewBuilder()->setLayout('login');
             } else {
                 //$perfilUser = $this->Auth->user();
-                $user = TableRegistry::get('Users');
-                $perfilUser = $user->getUserDados($this->Auth->user('id'));
+                $this->loadModel('Users');
+
+                $perfilUser = $this->Users->getUserDados($this->Auth->user('id'));
                 $this->set(compact('perfilUser'));
 
                 $this->viewBuilder()->setLayout('admin');
             }
-        }else{
+        } else {
             $this->viewBuilder()->setLayout('guiabairro');
         }
     }

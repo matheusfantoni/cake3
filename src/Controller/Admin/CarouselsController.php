@@ -3,8 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
-use Cake\Event\Event;
-use Cake\ORM\TableRegistry;
 
 /**
  * Carousels Controller
@@ -50,11 +48,13 @@ class CarouselsController extends AppController
 
     public function altOrdemCarousel($id = null)
     {
-        $carouselTable = TableRegistry::get('Carousels');
-        $slideAtual = $carouselTable->getSlideAtual($id);
+
+        $this->loadModel('Carousels');
+
+        $slideAtual = $this->Carousels->getSlideAtual($id);
 
         $ordemMenor = $slideAtual->ordem - 1;
-        $slideMenor = $carouselTable->getSlideMenor($ordemMenor);
+        $slideMenor = $this->Carousels->getSlideMenor($ordemMenor);
 
         if ($slideMenor) {
 
@@ -91,8 +91,9 @@ class CarouselsController extends AppController
             if (!$carousel->errors()) {
                 $carousel->imagem = $this->Carousels->slugUploadImgRed($this->request->getData()['imagem']['name']);
 
-                $carouselTable = TableRegistry::get('Carousels');
-                $ultimoSlide = $carouselTable->getUltimoSlide();
+                $this->loadModel('Carousels');
+
+                $ultimoSlide = $this->Carousels->getUltimoSlide();
                 $carousel->ordem = $ultimoSlide->ordem + 1;
 
                 if ($resultSave = $this->Carousels->save($carousel)) {
@@ -197,8 +198,9 @@ class CarouselsController extends AppController
         $destino = WWW_ROOT . "files" . DS . "carousel" . DS . $carousel->id . DS;
         $this->Carousels->deleteArq($destino);
 
-        $carouselTable = TableRegistry::get('Carousels');
-        $listaSlideProx = $carouselTable->getListaSlideProx($carousel->ordem);
+        $this->loadModel('Carousels');
+
+        $listaSlideProx = $this->Carousels->getListaSlideProx($carousel->ordem);
 
         if ($this->Carousels->delete($carousel)) {
             foreach ($listaSlideProx as $slideProx) {
