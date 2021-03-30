@@ -48,6 +48,35 @@ class CarouselsController extends AppController
         $this->set('carousel', $carousel);
     }
 
+    public function altOrdemCarousel($id = null)
+    {
+        $carouselTable = TableRegistry::get('Carousels');
+        $slideAtual = $carouselTable->getSlideAtual($id);
+
+        $ordemMenor = $slideAtual->ordem - 1;
+        $slideMenor = $carouselTable->getSlideMenor($ordemMenor);
+
+        if ($slideMenor) {
+
+            $carouselAtual = $this->Carousels->newEntity();
+            $carouselAtual->id = $slideAtual->id;
+            $carouselAtual->ordem = $slideAtual->ordem - 1;
+            $this->Carousels->save($carouselAtual);
+
+            $carouselMenor = $this->Carousels->newEntity();
+            $carouselMenor->id = $slideMenor->id;
+            $carouselMenor->ordem = $slideMenor->ordem + 1;
+            $this->Carousels->save($carouselMenor);
+
+            $this->Flash->success(__('Alterado a ordem com sucesso.'));
+            return $this->redirect(['controller' => 'Carousels', 'action' => 'index']);
+        } else {
+            $this->Flash->danger(__('Erro: A ordem não foi alterada com sucesso.'));
+            return $this->redirect(['controller' => 'Carousels', 'action' => 'index']);
+        }
+    }
+
+
     /**
      * Add method
      *

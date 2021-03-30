@@ -150,4 +150,22 @@ class CarouselsTable extends Table
             ->order(['Carousels.ordem' => 'ASC']);
         return $query;
     }
+
+    public function getSlideAtual($id)
+    {
+        $query = $this->find()
+            ->select(['id', 'ordem'])
+            ->where(['Carousels.id =' => $id])
+            ->order(['Carousels.ordem' => 'DESC']);
+        return $query->first();
+    }
+
+    public function getSlideMenor($ordemMenor)
+    {
+        $query = $this->find()
+            ->select(['id', 'ordem'])
+            ->where(['Carousels.ordem =' => $ordemMenor])
+            ->order(['Carousels.ordem' => 'DESC']);
+        return $query->first();
+    }
 }

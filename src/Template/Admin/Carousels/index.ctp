@@ -38,6 +38,19 @@
                     </td>
                     <td>
                         <span class="d-none d-md-block">
+                            
+                            <?= $this->Html->link(__('<i class="fas fa-angle-double-up"></i>'),
+                            [
+                                'controller' => 'Carousels',
+                                'action' => 'altOrdemCarousel',
+                                $carousel->id
+                            ],
+                            [
+                                'class' => 'btn btn-outline-info btn-sm',
+                                'escape' => false
+                            
+                            ]); ?>
+
                             <?= $this->Html->link(__('Visualizar'), ['controller' => 'Carousels', 'action' => 'view', $carousel->id], ['class' => 'btn btn-outline-primary btn-sm']) ?>
 
                             <?= $this->Html->link(__('Editar'), ['controller' => 'Carousels', 'action' => 'edit', $carousel->id], ['class' => 'btn btn-outline-warning btn-sm']) ?>
