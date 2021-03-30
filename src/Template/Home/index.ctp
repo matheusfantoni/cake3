@@ -1,46 +1,54 @@
 <main role="main">
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
+            <?php
+            $cont_marc = 0;
+            foreach ($carousels as $carousel) {
+                if ($cont_marc == 0) {
+                    echo '<li data-target="#myCarousel" data-slide-to="' . $cont_marc . '" class="active"></li>';
+                } else {
+                    echo '<li data-target="#myCarousel" data-slide-to="' . $cont_marc . '"></li>';
+                }
+                $cont_marc++;
+            }
+            ?>
+
+
         </ol>
         <div class="carousel-inner">
 
-            <div class="carousel-item active">
-                <img class="first-slide img-fluid" src="imagens/imagem_um.jpg" alt="Slide um">
-                <div class="container">
-                    <div class="carousel-caption text-left">
-                        <h1 class="d-none d-md-block">Example headline.</h1>
-                        <p class="d-none d-md-block">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit
-                            non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                        <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
-                    </div>
-                </div>
-            </div>
+            <?php
+            $cont_slide = 0;
+            foreach ($carousels as $carousel) {
+                if ($cont_slide == 0) {
+                    echo '<div class="carousel-item active">';
+                } else {
+                    echo '<div class="carousel-item">';
+                }
 
-            <div class="carousel-item">
-                <img class="second-slide img-fluid" src="imagens/imagem_dois.jpg" alt="Slide um">
-                <div class="container">
-                    <div class="carousel-caption">
-                        <h1 class="d-none d-md-block">Another example headline.</h1>
-                        <p class="d-none d-md-block">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit
-                            non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                        <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img class="third-slide img-fluid" src="imagens/imagem_tres.jpg" alt="Slide um">
-                <div class="container">
-                    <div class="carousel-caption text-right">
-                        <h1 class="d-none d-md-block">One more for good measure.</h1>
-                        <p class="d-none d-md-block">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit
-                            non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                        <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
-                    </div>
-                </div>
-            </div>
+                echo $this->Html->image('../files/carousel/' . $carousel->id . '/' . $carousel->imagem, ['class' => 'first-slide img-fluid', 'alt' => 'Slide um']);
+
+
+                echo '<div class="container">';
+                echo '<div class="carousel-caption ' . $carousel->position->posicao . '">';
+                if ($carousel->titulo != "") {
+                    echo '<h1 class="d-none d-md-block">' . $carousel->titulo . '</h1>';
+                }
+
+                if ($carousel->descricao != "") {
+                    echo '<p class="d-none d-md-block">' . $carousel->descricao . '</p>';
+                }
+
+                if (($carousel->titulo_botao != "") and ($carousel->link != "") and ($carousel->color->cor != "")) {
+                    echo '<p><a class="btn btn-lg btn-' . $carousel->color->cor . '" href="' . $carousel->link . '" role="button">' . $carousel->titulo_botao . '</a></p>';
+                }
+
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+                $cont_slide++;
+            }
+            ?>
         </div>
         <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -179,8 +187,7 @@
             </div>
             <div class="col-sm-12 col-md-6 propag-dest-text p-4">
                 <h2 class="display-4">Propaganda destaque</h2>
-                <p class="lead">Praesent in tellus lorem. Praesent vehicula ut est ut imperdiet. Maecenas sed finibus neque,
-                    id pulvinar turpis.</p>
+                <p class="lead">Praesent in tellus lorem. Praesent vehicula ut est ut imperdiet. Maecenas sed finibus neque, id pulvinar turpis.</p>
             </div>
         </div>
     </div>
@@ -198,8 +205,7 @@
                             <a href="#">
                                 <h5 class="card-title text-center">Anúncio um</h5>
                             </a>
-                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                                content.</p>
+                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
                         </div>
                     </div>
                 </div>
@@ -225,8 +231,7 @@
                             <a href="#">
                                 <h5 class="card-title text-center">Anúncio três</h5>
                             </a>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-                                content. </p>
+                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. </p>
                         </div>
                     </div>
                 </div>
@@ -239,8 +244,7 @@
                             <a href="#">
                                 <h5 class="card-title text-center">Anúncio quatro</h5>
                             </a>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-                                content. </p>
+                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. </p>
                         </div>
                     </div>
                 </div>

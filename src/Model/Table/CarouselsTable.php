@@ -139,4 +139,15 @@ class CarouselsTable extends Table
             ->order(['Carousels.ordem' => 'ASC']);
         return $query;
     }
+
+    public function getListarSlidesHome()
+    {
+        $query = $this->find()
+            ->select(['id', 'imagem' ,'titulo', 'descricao', 'titulo_botao', 'link',
+            'ordem', 'position_id', 'color_id', 'Positions.posicao', 'Colors.cor'])
+            ->contain(['Positions', 'Colors', 'Situations'])
+            ->where(['Carousels.situation_id =' => 1])
+            ->order(['Carousels.ordem' => 'ASC']);
+        return $query;
+    }
 }
