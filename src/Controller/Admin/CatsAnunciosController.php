@@ -170,4 +170,29 @@ class CatsAnunciosController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public function altCatDestHome($id = null)
+    {
+        $this->loadModel('CatsAnuncios');
+        $catAnuncioDetHome = $this->CatsAnuncios->getCatDestHome($id);
+
+        if ($catAnuncioDetHome->destaque_home == 2) {
+            $altCatAnuncDetHome = $this->CatsAnuncios->newEntity();
+            $altCatAnuncDetHome->destaque_home = 1;
+            $altCatAnuncDetHome->id = $catAnuncioDetHome->id;
+            $this->CatsAnuncios->save($altCatAnuncDetHome);
+            $this->Flash->success(__('Categoria de anúncio alterada com sucesso.'));
+            return $this->redirect(['controller' => 'CatsAnuncios', 'action' => 'index']);
+        } else {
+            $altCatAnuncDetHome = $this->CatsAnuncios->newEntity();
+            $altCatAnuncDetHome->destaque_home = 2;
+            $altCatAnuncDetHome->id = $catAnuncioDetHome->id;
+            $this->CatsAnuncios->save($altCatAnuncDetHome);
+            $this->Flash->success(__('Categoria de anúncio alterada com sucesso.'));
+            return $this->redirect(['controller' => 'CatsAnuncios', 'action' => 'index']);
+        }
+
+        $this->Flash->error(__('Erro: A categoria de anúncio não foi alterada com sucesso.'));
+        return $this->redirect(['controller' => 'CatsAnuncios', 'action' => 'index']);
+    }
 }

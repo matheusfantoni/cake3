@@ -1,6 +1,8 @@
 <?php
+
 namespace App\Model\Table;
 
+use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -107,35 +109,44 @@ class CatsAnunciosTable extends Table
     public function getUltimaCatAnuncio()
     {
         $query = $this->find()
-                    ->select(['id', 'ordem'])
-                    ->order(['CatsAnuncios.ordem' => 'DESC']);
+            ->select(['id', 'ordem'])
+            ->order(['CatsAnuncios.ordem' => 'DESC']);
         return $query->first();
     }
 
     public function getListCatAnuncioProx($ordem)
     {
         $query = $this->find()
-                    ->select(['id', 'ordem'])
-                    ->where(['CatsAnuncios.ordem >' => $ordem])
-                    ->order(['CatsAnuncios.ordem' => 'ASC']);
+            ->select(['id', 'ordem'])
+            ->where(['CatsAnuncios.ordem >' => $ordem])
+            ->order(['CatsAnuncios.ordem' => 'ASC']);
         return $query;
     }
 
     public function getCatAnuncioAtual($id)
     {
         $query = $this->find()
-                    ->select(['id', 'ordem'])
-                    ->where(['CatsAnuncios.id =' => $id])
-                    ->order(['CatsAnuncios.ordem' => 'DESC']);
+            ->select(['id', 'ordem'])
+            ->where(['CatsAnuncios.id =' => $id])
+            ->order(['CatsAnuncios.ordem' => 'DESC']);
         return $query->first();
     }
 
     public function getCatAnuncioMenor($ordemMenor)
     {
         $query = $this->find()
-                    ->select(['id', 'ordem'])
-                    ->where(['CatsAnuncios.ordem =' => $ordemMenor])
-                    ->order(['CatsAnuncios.ordem' => 'DESC']);
+            ->select(['id', 'ordem'])
+            ->where(['CatsAnuncios.ordem =' => $ordemMenor])
+            ->order(['CatsAnuncios.ordem' => 'DESC']);
+        return $query->first();
+    }
+
+    public function getCatDestHome($id)
+    {
+        $query = $this->find()
+            ->select(['id', 'destaque_home'])
+            ->where(['CatsAnuncios.id =' => $id])
+            ->order(['CatsAnuncios.id' => 'DESC']);
         return $query->first();
     }
 }

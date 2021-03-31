@@ -74,14 +74,12 @@ class AppController extends Controller
         }
 
         if ($prefix == 'admin') {
-            if (($this->request->getParam(['action']) !== null) and (($this->request->getParam(['action']) == 'login') or ($this->request->getParam(['action']) == 'cadastrar')
-                or ($this->request->getParam(['action']) == 'recuperarSenha') or ($this->request->getParam(['action']) == 'atualizarSenha'))) {
-
+            if (($this->request->getParam(['action']) !== null) and (($this->request->getParam(['action']) == 'login') or ($this->request->getParam(['action']) == 'cadastrar') or ($this->request->getParam(['action']) == 'recuperarSenha') or ($this->request->getParam(['action']) == 'atualizarSenha'))) {
                 $this->viewBuilder()->setLayout('login');
             } else {
                 //$perfilUser = $this->Auth->user();
-                $this->loadModel('Users');
 
+                $this->loadModel('Users');
                 $perfilUser = $this->Users->getUserDados($this->Auth->user('id'));
                 $this->set(compact('perfilUser'));
 

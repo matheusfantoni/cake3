@@ -41,6 +41,20 @@
 
         <li>
             <?= $this->Html->link(
+                '<i class="fas fa-paste"></i> Categoria Anúncio',
+                [
+                    'controller' => 'CatsAnuncios',
+                    'action' => 'index'
+                ],
+                [
+                    'escape' => false
+                ]
+            ); ?>
+
+        </li>
+
+        <li>
+            <?= $this->Html->link(
                 '<i class="fas fa-sign-out-alt"></i> Sair',
                 [
                     'controller' => 'users',

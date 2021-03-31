@@ -33,9 +33,11 @@
                     <td class="d-none d-lg-table-cell">
                         <?php
                         if ($catsAnuncio->destaque_home == 1) {
-                            echo "<span class='badge badge-success'>Sim</span>";
+                            $badgeDestaque = "<span class='badge badge-success'>Sim</span>";
+                            echo $this->Html->link(__($badgeDestaque), ['controller' => 'CatsAnuncios', 'action' => 'altCatDestHome', $catsAnuncio->id], ['escape' => false]);
                         } else {
-                            echo "<span class='badge badge-danger'>Não</span>";
+                            $badgeDestaque = "<span class='badge badge-danger'>Não</span>";
+                            echo $this->Html->link(__($badgeDestaque), ['controller' => 'CatsAnuncios', 'action' => 'altCatDestHome', $catsAnuncio->id], ['escape' => false]);
                         }
                         ?>
                     </td>
