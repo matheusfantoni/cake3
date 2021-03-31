@@ -3,14 +3,13 @@
 namespace App\Model\Behavior;
 
 use Cake\ORM\Behavior;
-use Cake\Filesystem\Folder;
-
 
 /**
- * Upload behavior
+ * SlugUrl behavior
  */
-class UploadBehavior extends Behavior
+class SlugUrlBehavior extends Behavior
 {
+
     /**
      * Default configuration.
      *
@@ -18,36 +17,10 @@ class UploadBehavior extends Behavior
      */
     protected $_defaultConfig = [];
 
-    public function singleUpload(array $file, $destino)
+
+
+    public function slugUrlSimples($name)
     {
-        $this->criarDiretorio($destino);
-
-        return $this->upload($file, $destino);
-    }
-
-    public function criarDiretorio($destino){
-
-        $diretorio = new Folder($destino);
-
-        if(is_null($diretorio->path)){
-            $diretorio->create($destino);
-        }
-    }
-
-    protected function upload($file, $destino)
-    {
-        extract($file);
-        //$name = $this->slug($name);
-        if (move_uploaded_file($tmp_name, $destino . $name)) {
-            return $name;
-        } else {
-            return false;
-        }
-    }
-
-    public function slugSingleUpload($name)
-    {
-
         $formato['a'] = 'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜüÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûýýþÿRr"!@#$%&*()_-+={[}]/?;:,\\\'<>°ºª';
         $formato['b'] = 'aaaaaaaceeeeiiiidnoooooouuuuuybsaaaaaaaceeeeiiiidnoooooouuuyybyRr                                ';
         $name = strtr(utf8_decode($name), utf8_decode($formato['a']), $formato['b']);

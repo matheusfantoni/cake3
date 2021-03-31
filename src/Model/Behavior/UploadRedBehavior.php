@@ -3,9 +3,8 @@
 namespace App\Model\Behavior;
 
 use Cake\ORM\Behavior;
-use Cake\ORM\Table;
 use Cake\Filesystem\Folder;
-use Cake\Filesystem\File;
+
 
 /**
  * UploadRed behavior
