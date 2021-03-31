@@ -195,4 +195,14 @@ class CatsAnunciosController extends AppController
         $this->Flash->error(__('Erro: A categoria de anúncio não foi alterada com sucesso.'));
         return $this->redirect(['controller' => 'CatsAnuncios', 'action' => 'index']);
     }
+
+    public function listCatDestaqueHome(){
+
+        $this->loadModel('CatsAnuncios');
+
+        $catAnuncioDests = $this->CatsAnuncios->getListCatAnuncioDest();
+
+        $this->set(compact('catAnuncioDests'));
+
+    }
 }

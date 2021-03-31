@@ -149,4 +149,13 @@ class CatsAnunciosTable extends Table
             ->order(['CatsAnuncios.id' => 'DESC']);
         return $query->first();
     }
+
+    public function getListCatAnuncioDest()
+    {
+        $query = $this->find()
+            ->select(['id', 'nome', 'destaque_home'])
+            ->where(['CatsAnuncios.destaque_home =' => 1])
+            ->order(['CatsAnuncios.ordem' => 'ASC']);
+        return $query;
+    }
 }

@@ -3,9 +3,25 @@
         <h2 class="display-4 titulo">Listar Categorias de Anúncios</h2>
     </div>
     <div class="p-2">
-        <?= $this->Html->link(__('Cadastrar'), ['controller' => 'CatsAnuncios', 'action' => 'add'], ['class' => 'btn btn-outline-success btn-sm']);
-        ?>
+        <span class="d-none d-md-block">
+            <?= $this->Html->link(__('Cadastrar'), ['controller' => 'CatsAnuncios', 'action' => 'add'], ['class' => 'btn btn-outline-success btn-sm']) ?>
+
+            <?= $this->Html->link(__('Listar Destaque'), ['controller' => 'CatsAnuncios', 'action' => 'listCatDestaqueHome'], ['class' => 'btn btn-outline-info btn-sm']) ?>
+
+        </span>
+        <div class="dropdown d-block d-md-none">
+            <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="acoesListar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Ações
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="acoesListar">
+                <?= $this->Html->link(__('Cadastrar'), ['controller' => 'CatsAnuncios', 'action' => 'add'], ['class' => 'dropdown-item']) ?>
+
+                <?= $this->Html->link(__('Listar Destaque'), ['controller' => 'CatsAnuncios', 'action' => 'listCatDestaqueHome', $catsAnuncio->id], ['class' => 'dropdown-item']) ?>
+
+            </div>
+        </div>
     </div>
+</div>
 </div>
 <?= $this->Flash->render() ?>
 <div class="table-responsive">
