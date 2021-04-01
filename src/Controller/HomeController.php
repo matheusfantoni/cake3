@@ -30,9 +30,11 @@ class HomeController extends AppController
     public function index()
     {
         $this->loadModel('Carousels');
-
         $carousels = $this->Carousels->getListarSlidesHome();
 
-        $this->set(compact('carousels'));
+        $this->loadModel('CatsAnuncios');
+        $catAnuncios = $this->CatsAnuncios->getListCatAnuncHome();
+
+        $this->set(compact('carousels', 'catAnuncios'));
     }
 }

@@ -11,16 +11,14 @@ use App\Controller\AppController;
  *
  * @method \App\Model\Entity\Carousel[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class CarouselsController extends AppController
-{
+class CarouselsController extends AppController {
 
     /**
      * Index method
      *
      * @return \Cake\Http\Response|void
      */
-    public function index()
-    {
+    public function index() {
         $this->paginate = [
             'contain' => ['Positions', 'Colors', 'Situations'],
             'order' => ['Carousels.ordem' => 'ASC']
@@ -37,8 +35,7 @@ class CarouselsController extends AppController
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $carousel = $this->Carousels->get($id, [
             'contain' => ['Positions', 'Colors', 'Situations']
         ]);
@@ -46,8 +43,7 @@ class CarouselsController extends AppController
         $this->set('carousel', $carousel);
     }
 
-    public function altOrdemCarousel($id = null)
-    {
+    public function altOrdemCarousel($id = null) {
 
         $this->loadModel('Carousels');
 
@@ -76,14 +72,12 @@ class CarouselsController extends AppController
         }
     }
 
-
     /**
      * Add method
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $carousel = $this->Carousels->newEntity();
         if ($this->request->is('post')) {
 
@@ -129,8 +123,7 @@ class CarouselsController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $carousel = $this->Carousels->get($id, [
             'contain' => []
         ]);
@@ -148,8 +141,7 @@ class CarouselsController extends AppController
         $this->set(compact('carousel', 'positions', 'colors', 'situations'));
     }
 
-    public function alterarFotoCarousel($id = null)
-    {
+    public function alterarFotoCarousel($id = null) {
         $carousel = $this->Carousels->get($id);
         $imagemAntiga = $carousel->imagem;
 
@@ -191,8 +183,7 @@ class CarouselsController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $carousel = $this->Carousels->get($id);
         $destino = WWW_ROOT . "files" . DS . "carousel" . DS . $carousel->id . DS;
@@ -215,4 +206,5 @@ class CarouselsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

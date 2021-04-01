@@ -30,6 +30,7 @@
             <tr>
                 <th>ID</th>
                 <th>Nome</th>
+                <th class="d-none d-lg-table-cell">Situação</th>
                 <th class="d-none d-lg-table-cell">Destaque Home</th>
                 <th class="text-center">Ações</th>
             </tr>
@@ -39,6 +40,13 @@
                 <tr>
                     <td><?= $this->Number->format($catAnuncioDest->id) ?></td>
                     <td><?= h($catAnuncioDest->nome) ?></td>
+                    <td class="d-none d-lg-table-cell">
+
+                        <?php
+
+                        echo "<span class='badge badge-" . $catAnuncioDest->situation->color->cor . "'>" . $catAnuncioDest->situation->nome_situacao . "</span>";
+                        ?>
+                    </td>
 
                     <td class="d-none d-lg-table-cell">
                         <?php

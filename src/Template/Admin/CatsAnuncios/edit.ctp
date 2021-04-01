@@ -1,36 +1,53 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\CatsAnuncio $catsAnuncio
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $catsAnuncio->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $catsAnuncio->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Cats Anuncios'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Situations'), ['controller' => 'Situations', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Situation'), ['controller' => 'Situations', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="catsAnuncios form large-9 medium-8 columns content">
-    <?= $this->Form->create($catsAnuncio) ?>
-    <fieldset>
-        <legend><?= __('Edit Cats Anuncio') ?></legend>
-        <?php
-            echo $this->Form->control('nome');
-            echo $this->Form->control('icone');
-            echo $this->Form->control('ordem');
-            echo $this->Form->control('destaque_home');
-            echo $this->Form->control('slug');
-            echo $this->Form->control('situation_id', ['options' => $situations]);
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<div class="d-flex">
+    <div class="mr-auto p-2">
+        <h2 class="display-4 titulo">Editar Categoria de Anúncio</h2>
+    </div>
+    <div class="p-2">
+        <span class="d-none d-md-block">
+            <?= $this->Html->link(__('Listar'), ['controller' => 'CatsAnuncios', 'action' => 'index'], ['class' => 'btn btn-outline-info btn-sm']) ?>
+
+            <?= $this->Html->link(__('Visualizar'), ['controller' => 'CatsAnuncios', 'action' => 'view', $catsAnuncio->id], ['class' => 'btn btn-outline-primary btn-sm']) ?>
+
+            <?= $this->Form->postLink(__('Apagar'), ['controller' => 'CatsAnuncios', 'action' => 'delete', $catsAnuncio->id], ['class' => 'btn btn-outline-danger btn-sm', 'confirm' => __('Relamente deseja apagar a categoria de anúncio # {0}?', $catsAnuncio->id)]) ?>
+        </span>
+        <div class="dropdown d-block d-md-none">
+            <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="acoesListar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Ações
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="acoesListar">
+                <?= $this->Html->link(__('Listar'), ['controller' => 'CatsAnuncios', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
+
+                <?= $this->Html->link(__('Visualizar'), ['controller' => 'CatsAnuncios', 'action' => 'view', $catsAnuncio->id], ['class' => 'dropdown-item']) ?>
+
+                <?= $this->Form->postLink(__('Apagar'), ['controller' => 'CatsAnuncios', 'action' => 'delete', $catsAnuncio->id], ['class' => 'dropdown-item', 'confirm' => __('Relamente deseja apagar a categoria de anúncio # {0}?', $catsAnuncio->id)]) ?>
+            </div>
+        </div>
+    </div>
 </div>
+<hr>
+<?= $this->Flash->render() ?>
+
+<?= $this->Form->create($catsAnuncio) ?>
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label><span class="text-danger">*</span> Nome</label>
+        <?= $this->Form->control('nome', ['class' => 'form-control', 'placeholder' => 'Nome da Categoria', 'label' => false]) ?>
+    </div>
+    <div class="form-group col-md-6">
+        <label><span class="text-danger">*</span> Ícone</label>
+        <?= $this->Form->control('icone', ['class' => 'form-control', 'placeholder' => 'Nome do Ícone', 'label' => false]) ?>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-12">
+        <label><span class="text-danger">*</span> Situação</label>
+        <?= $this->Form->control('situation_id', ['options' => $situations, 'class' => 'form-control', 'label' => false]) ?>
+    </div>
+</div>
+
+<p>
+    <span class="text-danger">* </span>Campo obrigatório
+</p>
+<?= $this->Form->button(__('Salvar'), ['class' => 'btn btn-warning']) ?>
+<?= $this->Form->end() ?>

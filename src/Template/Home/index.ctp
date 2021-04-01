@@ -64,117 +64,50 @@
         <div class="container">
             <h1 class="display-4 text-center titulo-cat-home">Categorias em Destaque</h1>
             <div class="row">
-                <div class="col-12 col-sm-6 col-md-3 cat-dest">
-                    <div class="card shadow">
-                        <div class="card-body text-center">
-                            <a href="#">
+                <?php
+                foreach ($catAnuncios as $catAnuncio) {
+                    echo '<div class="col-12 col-sm-6 col-md-3 cat-dest">';
+                    echo '<div class="card shadow">';
+                    echo ' <div class="card-body text-center">';
+                    $texto_link =  '<div class="tamanho-icone"> <i class="' . $catAnuncio->icone . '"></i>
+                                            </div> <h5>' . $catAnuncio->nome . '</h5>';
+                    echo $this->Html->link(
+                        __($texto_link),
+                        [
+                            'controller' => 'CategoriasAnuncios',
+                            'action' => 'index'
+                        ],
+                        [
+                            'escape' => false
+                        ]
+                    );
 
-                                <div class="tamanho-icone">
-                                    <i class="fas fa-graduation-cap"></i>
-                                </div>
-                                <h5>Educação</h5>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                    echo ' </div>';
+                    echo ' </div>';
+                    echo ' </div>';
+                }
 
-                <div class="col-12 col-sm-6 col-md-3 cat-dest">
-                    <div class="card shadow">
-                        <div class="card-body text-center">
-                            <a href="#">
+                echo '<div class="col-12 col-sm-6 col-md-3 cat-dest">';
+                echo '<div class="card shadow">';
+                echo ' <div class="card-body text-center">';
+                $texto_link =  '<div class="tamanho-icone"> <i class="fas fa-ellipsis-h"></i>
+                                            </div> <h5>Mais Categorias<h5>';
+                echo $this->Html->link(
+                    __($texto_link),
+                    [
+                        'controller' => 'CategoriasAnuncios',
+                        'action' => 'index'
+                    ],
+                    [
+                        'escape' => false
+                    ]
+                );
 
-                                <div class="tamanho-icone">
-                                    <i class="fas fa-utensils"></i>
-                                </div>
-                                <h5>Restaurante</h5>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                echo ' </div>';
+                echo ' </div>';
+                echo ' </div>';
 
-                <div class="col-12 col-sm-6 col-md-3 cat-dest">
-                    <div class="card shadow">
-                        <div class="card-body text-center">
-                            <a href="#">
-
-                                <div class="tamanho-icone">
-                                    <i class="fas fa-car"></i>
-                                </div>
-                                <h5>Automotivo</h5>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-6 col-md-3 cat-dest">
-                    <div class="card shadow">
-                        <div class="card-body text-center">
-                            <a href="#">
-
-                                <div class="tamanho-icone">
-                                    <i class="fas fa-bed"></i>
-                                </div>
-                                <h5>Hospedagem</h5>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-6 col-md-3 cat-dest">
-                    <div class="card shadow">
-                        <div class="card-body text-center">
-                            <a href="#">
-
-                                <div class="tamanho-icone">
-                                    <i class="fas fa-home"></i>
-                                </div>
-                                <h5>Casa e Decoração</h5>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-6 col-md-3 cat-dest">
-                    <div class="card shadow">
-                        <div class="card-body text-center">
-                            <a href="#">
-
-                                <div class="tamanho-icone">
-                                    <i class="fas fa-eye"></i>
-                                </div>
-                                <h5>Beleza e Estética</h5>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-6 col-md-3 cat-dest">
-                    <div class="card shadow">
-                        <div class="card-body text-center">
-                            <a href="#">
-
-                                <div class="tamanho-icone">
-                                    <i class="fas fa-medkit"></i>
-                                </div>
-                                <h5>Saúde</h5>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-6 col-md-3 cat-dest">
-                    <div class="card shadow">
-                        <div class="card-body text-center">
-                            <a href="#">
-
-                                <div class="tamanho-icone">
-                                    <i class="fas fa-ellipsis-h"></i>
-                                </div>
-                                <h5>Mais Categorias</h5>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                ?>
             </div>
         </div>
     </div>
@@ -187,7 +120,8 @@
             </div>
             <div class="col-sm-12 col-md-6 propag-dest-text p-4">
                 <h2 class="display-4">Propaganda destaque</h2>
-                <p class="lead">Praesent in tellus lorem. Praesent vehicula ut est ut imperdiet. Maecenas sed finibus neque, id pulvinar turpis.</p>
+                <p class="lead">Praesent in tellus lorem. Praesent vehicula ut est ut imperdiet. Maecenas sed finibus
+                    neque, id pulvinar turpis.</p>
             </div>
         </div>
     </div>
@@ -205,7 +139,8 @@
                             <a href="#">
                                 <h5 class="card-title text-center">Anúncio um</h5>
                             </a>
-                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
+                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in
+                                to additional content.</p>
                         </div>
                     </div>
                 </div>
@@ -218,7 +153,8 @@
                             <a href="#">
                                 <h5 class="card-title text-center">Anúncio dois</h5>
                             </a>
-                            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                            <p class="card-text">This card has supporting text below as a natural lead-in to additional
+                                content.</p>
                         </div>
                     </div>
                 </div>
@@ -231,7 +167,8 @@
                             <a href="#">
                                 <h5 class="card-title text-center">Anúncio três</h5>
                             </a>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. </p>
+                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                                additional content. </p>
                         </div>
                     </div>
                 </div>
@@ -244,7 +181,8 @@
                             <a href="#">
                                 <h5 class="card-title text-center">Anúncio quatro</h5>
                             </a>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. </p>
+                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                                additional content. </p>
                         </div>
                     </div>
                 </div>

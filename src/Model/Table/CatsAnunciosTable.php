@@ -153,9 +153,24 @@ class CatsAnunciosTable extends Table
     public function getListCatAnuncioDest()
     {
         $query = $this->find()
-            ->select(['id', 'nome', 'destaque_home'])
+            ->select(['id', 'nome', 'destaque_home', 'Situations.nome_situacao', 'Colors.cor'])
+            ->contain(['Situations', 'Situations.Colors'])
             ->where(['CatsAnuncios.destaque_home =' => 1])
             ->order(['CatsAnuncios.ordem' => 'ASC']);
+        return $query;
+    }
+
+    public function getListCatAnuncHome()
+    {
+        $query = $this->find()
+            ->select(['id', 'nome', 'icone', 'slug'])
+            ->where([
+                'CatsAnuncios.destaque_home =' => 1,
+                'CatsAnuncios.situation_id =' => 1
+            ])
+            ->order(['CatsAnuncios.ordem' => 'ASC'])
+            ->limit(7);
+
         return $query;
     }
 }
