@@ -74,8 +74,8 @@
                     echo $this->Html->link(
                         __($texto_link),
                         [
-                            'controller' => 'CategoriasAnuncios',
-                            'action' => 'index'
+                            'controller' => 'ListsAnuncios',
+                            'action' => 'index', $catAnuncio->slug
                         ],
                         [
                             'escape' => false

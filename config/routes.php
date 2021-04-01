@@ -60,6 +60,18 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->fallbacks(DashedRoute::class);
 });
 
+Router::scope('/', function ($routes) {
+
+    $routes->connect(
+        '/lists-anuncios/:slug',
+        ['controller' => 'ListsAnuncios', 'action' => 'index']
+    )
+
+        ->setPass(['slug']);
+
+    $routes->fallbacks(DashedRoute::class);
+});
+
 Router::prefix('admin', function (RouteBuilder $routes) {
 
     $routes->fallbacks(DashedRoute::class);
