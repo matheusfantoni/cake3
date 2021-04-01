@@ -173,4 +173,15 @@ class CatsAnunciosTable extends Table
 
         return $query;
     }
+
+    public function getListCatAnuncio()
+    {
+        $query = $this->find()
+            ->select(['id', 'nome', 'icone', 'slug'])
+            ->where(['CatsAnuncios.situation_id =' => 1])
+            ->order(['CatsAnuncios.ordem' => 'ASC'])
+            ->limit(50);
+
+        return $query;
+    }
 }

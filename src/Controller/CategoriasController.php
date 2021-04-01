@@ -30,8 +30,9 @@ class CategoriasController extends AppController
     public function index()
     {
 
-        $categorias = "Categorias";
+        $catAnuncioTable = $this->loadModel('CatsAnuncios');
+        $catAnuncios = $this->CatsAnuncios->getListCatAnuncio();
 
-        $this->set(compact('categorias'));
+        $this->set(compact('catAnuncios'));
     }
 }
