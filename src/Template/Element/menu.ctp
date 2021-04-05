@@ -55,6 +55,20 @@
 
         <li>
             <?= $this->Html->link(
+                '<i class="fas fa-clipboard"></i> Anúncio',
+                [
+                    'controller' => 'Anuncios',
+                    'action' => 'index'
+                ],
+                [
+                    'escape' => false
+                ]
+            ); ?>
+
+        </li>
+
+        <li>
+            <?= $this->Html->link(
                 '<i class="fas fa-sign-out-alt"></i> Sair',
                 [
                     'controller' => 'users',
