@@ -10,11 +10,10 @@ use Cake\Event\Event;
  *
  * @property \App\Model\Table\ListsAnunciosTable $ListsAnuncios
  *
- * @method \App\Model\Entity\ListsAnuncios[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class ListsAnunciosController extends AppController
 {
-
 
     public function beforeFilter(Event $event)
     {
@@ -29,27 +28,29 @@ class ListsAnunciosController extends AppController
      */
     public function index($slug = null)
     {
-
+        //echo "<br><br><br><br>" ;
+        //echo $slug;
+        
         $this->loadModel('CatsAnuncios');
         $catAnuncio = $this->CatsAnuncios->getVerCatAnuncio($slug);
 
         if ($catAnuncio) {
-            $anunciosTable = $this->loadModel('Anuncios');
+            $anuncioTable = $this->loadModel('Anuncios');
             $this->paginate = [
                 'limit' => 6,
                 'conditions' => [
                     'Anuncios.cats_anuncio_id = ' => $catAnuncio->id
                 ],
                 'order' => [
-                    'Anuncios.id' => 'DESC',
-
+                    'Anuncios.id' => 'desc',
                 ]
             ];
-
-            $anuncios = $this->paginate($anunciosTable);
+            $anuncios = $this->paginate($anuncioTable);
         } else {
             echo "Vazio";
         }
+
+
 
         $this->set(compact('anuncios'));
     }

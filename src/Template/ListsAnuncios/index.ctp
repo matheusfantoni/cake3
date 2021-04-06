@@ -5,105 +5,100 @@
             <div class="row">
                 <div class="col-md-8">
 
-                    <div class="row featurette shadow bg-white p-1 mb-3">
-                        <div class="col-md-7 order-md-2">
-                            <div class="anunc-title">
-                                <h2 class="featurette-heading">
-                                    <a href="#">
-                                        Oh yeah, it’s that good.
-                                    </a>
-                                </h2>
+                    <?php foreach ($anuncios as $anuncio) { ?>
+                        <div class="row featurette shadow bg-white p-1 mb-3">
+                            <div class="col-md-7 order-md-2">
+                                <div class="anunc-title">
+                                    <h2 class="featurette-heading">
+                                        <?= $this->Html->link(__($anuncio->titulo), ['controller' => 'Anuncio', 'action' => 'view', $anuncio->slug]) ?>
+                                    </h2>
+                                </div>
+                                <p class="lead"><?= $anuncio->descricao ?></p>
                             </div>
-                            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula
-                                porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl
-                                consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-                        </div>
-                        <div class="col-md-5 order-md-1">
-                            <a href="#">
-                                <img src="imagens/empresa1.jpg" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto">
-                            </a>
-                        </div>
-                    </div>
+                            <div class="col-md-5 order-md-1">
+                                <a href="#">
+                                    <?php
+                                    $imagem = $this->Html->image('../files/anuncio/' . $anuncio->id . '/' . $anuncio->imagem, ['class' => 'bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto']);
 
-                    <div class="row featurette shadow bg-white p-1 mb-3">
-                        <div class="col-md-7 order-md-2">
-                            <div class="anunc-title">
-                                <h2 class="featurette-heading">
-                                    <a href="#">
-                                        Oh yeah, it’s that good.
-                                    </a>
-                                </h2>
-                            </div>
-                            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula
-                                porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl
-                                consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-                        </div>
-                        <div class="col-md-5 order-md-1">
-                            <a href="#">
-                                <img src="imagens/empresa1.jpg" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto">
-                            </a>
-                        </div>
-                    </div>
+                                    echo $this->Html->link(__($imagem), ['controller' => 'Anuncio', 'action' => 'view', $anuncio->slug], ['escape' => false]);
 
-                    <div class="row featurette shadow bg-white p-1 mb-3">
-                        <div class="col-md-7 order-md-2">
-                            <div class="anunc-title">
-                                <h2 class="featurette-heading">
-                                    <a href="#">
-                                        Oh yeah, it’s that good.
-                                    </a>
-                                </h2>
+                                    ?>
+                                </a>
                             </div>
-                            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula
-                                porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl
-                                consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
                         </div>
-                        <div class="col-md-5 order-md-1">
-                            <a href="#">
-                                <img src="imagens/empresa1.jpg" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto">
-                            </a>
-                        </div>
-                    </div>
+                    <?php } ?>
 
-                    <div class="row featurette shadow bg-white p-1 mb-3">
-                        <div class="col-md-7 order-md-2">
-                            <div class="anunc-title">
-                                <h2 class="featurette-heading">
-                                    <a href="#">
-                                        Oh yeah, it’s that good.
-                                    </a>
-                                </h2>
-                            </div>
-                            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula
-                                porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl
-                                consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-                        </div>
-                        <div class="col-md-5 order-md-1">
-                            <a href="#">
-                                <img src="imagens/empresa1.jpg" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto">
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="row featurette shadow bg-white p-1 mb-3">
-                        <div class="col-md-7 order-md-2">
-                            <div class="anunc-title">
-                                <h2 class="featurette-heading">
-                                    <a href="#">
-                                        Oh yeah, it’s that good.
-                                    </a>
-                                </h2>
-                            </div>
-                            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula
-                                porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl
-                                consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-                        </div>
-                        <div class="col-md-5 order-md-1">
-                            <a href="#">
-                                <img src="imagens/empresa1.jpg" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto">
-                            </a>
-                        </div>
-                    </div>
+                    <!--<div class="row featurette shadow bg-white p-1 mb-3">
+            <div class="col-md-7 order-md-2">
+              <div class="anunc-title">
+                <h2 class="featurette-heading">
+                  <a href="#">
+                    Oh yeah, it’s that good.
+                  </a>
+                </h2>
+              </div>
+              <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+            </div>
+            <div class="col-md-5 order-md-1">
+              <a href="#">
+                <img src="imagens/empresa1.jpg" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto">
+              </a>
+            </div>
+          </div>
+          
+          <div class="row featurette shadow bg-white p-1 mb-3">
+            <div class="col-md-7 order-md-2">
+              <div class="anunc-title">
+                <h2 class="featurette-heading">
+                  <a href="#">
+                    Oh yeah, it’s that good.
+                  </a>
+                </h2>
+              </div>
+              <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+            </div>
+            <div class="col-md-5 order-md-1">
+              <a href="#">
+                <img src="imagens/empresa1.jpg" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto">
+              </a>
+            </div>
+          </div>
+          
+          <div class="row featurette shadow bg-white p-1 mb-3">
+            <div class="col-md-7 order-md-2">
+              <div class="anunc-title">
+                <h2 class="featurette-heading">
+                  <a href="#">
+                    Oh yeah, it’s that good.
+                  </a>
+                </h2>
+              </div>
+              <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+            </div>
+            <div class="col-md-5 order-md-1">
+              <a href="#">
+                <img src="imagens/empresa1.jpg" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto">
+              </a>
+            </div>
+          </div>
+          
+          <div class="row featurette shadow bg-white p-1 mb-3">
+            <div class="col-md-7 order-md-2">
+              <div class="anunc-title">
+                <h2 class="featurette-heading">
+                  <a href="#">
+                    Oh yeah, it’s that good.
+                  </a>
+                </h2>
+              </div>
+              <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+            </div>
+            <div class="col-md-5 order-md-1">
+              <a href="#">
+                <img src="imagens/empresa1.jpg" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto">
+              </a>
+            </div>
+          </div>-->
 
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-center">
@@ -252,4 +247,5 @@
             </div>
         </div>
     </div>
+
 </main>
