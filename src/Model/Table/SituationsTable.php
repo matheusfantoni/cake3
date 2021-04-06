@@ -62,13 +62,13 @@ class SituationsTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmptyString('id', 'create');
 
         $validator
             ->scalar('nome_situacao')
             ->maxLength('nome_situacao', 45)
             ->requirePresence('nome_situacao', 'create')
-            ->notEmpty('nome_situacao');
+            ->notEmptyString('nome_situacao');
 
         return $validator;
     }

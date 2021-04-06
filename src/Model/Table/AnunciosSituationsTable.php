@@ -65,8 +65,8 @@ class AnunciosSituationsTable extends Table
         $validator
             ->scalar('nome_situacao')
             ->maxLength('nome_situacao', 45)
-            ->requirePresence('nome_situacao', 'create')
-            ->notEmptyString('nome_situacao');
+            /*->requirePresence('nome_situacao', 'create')*/
+            ->notEmptyString('nome_situacao', 'Necessário preencher o campo nome da situação.');
 
         return $validator;
     }

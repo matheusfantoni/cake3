@@ -1,57 +1,64 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\AnunciosSituation[]|\Cake\Collection\CollectionInterface $anunciosSituations
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Anuncios Situation'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Colors'), ['controller' => 'Colors', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Color'), ['controller' => 'Colors', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Anuncios'), ['controller' => 'Anuncios', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Anuncio'), ['controller' => 'Anuncios', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="anunciosSituations index large-9 medium-8 columns content">
-    <h3><?= __('Anuncios Situations') ?></h3>
-    <table cellpadding="0" cellspacing="0">
+<div class="d-flex">
+    <div class="mr-auto p-2">
+        <h2 class="display-4 titulo">Listar Situação de Anúncios</h2>
+    </div>
+    <div class="p-2">
+        <span class="d-none d-md-block">
+            <?= $this->Html->link(__('Cadastrar'), ['controller' => 'AnunciosSituations', 'action' => 'add'], ['class' => 'btn btn-outline-success btn-sm']) ?>
+        </span>
+        <div class="dropdown d-block d-md-none">
+            <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="acoesListar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Ações
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="acoesListar">
+                <?= $this->Html->link(__('Cadastrar'), ['controller' => 'AnunciosSituations', 'action' => 'add'], ['class' => 'dropdown-item']) ?>
+            </div>
+        </div>
+    </div>
+</div>
+<?= $this->Flash->render() ?>
+<div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('nome_situacao') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('color_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
+                <th>ID</th>
+                <th>Nome</th>
+                <th class="text-center">Ações</th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($anunciosSituations as $anunciosSituation): ?>
-            <tr>
-                <td><?= $this->Number->format($anunciosSituation->id) ?></td>
-                <td><?= h($anunciosSituation->nome_situacao) ?></td>
-                <td><?= $anunciosSituation->has('color') ? $this->Html->link($anunciosSituation->color->nome_cor, ['controller' => 'Colors', 'action' => 'view', $anunciosSituation->color->id]) : '' ?></td>
-                <td><?= h($anunciosSituation->created) ?></td>
-                <td><?= h($anunciosSituation->modified) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $anunciosSituation->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $anunciosSituation->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $anunciosSituation->id], ['confirm' => __('Are you sure you want to delete # {0}?', $anunciosSituation->id)]) ?>
-                </td>
-            </tr>
+            <?php foreach ($anunciosSituations as $anunciosSituation) : ?>
+                <tr>
+                    <td><?= $this->Number->format($anunciosSituation->id) ?></td>
+                    <td class="d-none d-lg-table-cell">
+                        <?php
+                        echo "<span class='badge badge-" . $anunciosSituation->color->cor . "'>" . $anunciosSituation->nome_situacao . "</span>";
+                        ?>
+                    </td>
+                    <td class="text-center">
+                        <span class="d-none d-md-block">
+
+                            <?= $this->Html->link(__('Visualizar'), ['controller' => 'AnunciosSituations', 'action' => 'view', $anunciosSituation->id], ['class' => 'btn btn-outline-primary btn-sm']) ?>
+
+                            <?= $this->Html->link(__('Editar'), ['controller' => 'AnunciosSituations', 'action' => 'edit', $anunciosSituation->id], ['class' => 'btn btn-outline-warning btn-sm']) ?>
+
+                            <?= $this->Form->postLink(__('Apagar'), ['controller' => 'AnunciosSituations', 'action' => 'delete', $anunciosSituation->id], ['class' => 'btn btn-outline-danger btn-sm', 'confirm' => __('Relamente deseja apagar a situação de anúncio # {0}?', $anunciosSituation->id)]) ?>
+                        </span>
+                        <div class="dropdown d-block d-md-none">
+                            <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="acoesListar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Ações
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="acoesListar">
+                                <?= $this->Html->link(__('Visualizar'), ['controller' => 'AnunciosSituations', 'action' => 'view', $anunciosSituation->id], ['class' => 'dropdown-item']) ?>
+
+                                <?= $this->Html->link(__('Editar'), ['controller' => 'AnunciosSituations', 'action' => 'edit', $anunciosSituation->id], ['class' => 'dropdown-item']) ?>
+
+                                <?= $this->Form->postLink(__('Apagar'), ['controller' => 'AnunciosSituations', 'action' => 'delete', $anunciosSituation->id], ['class' => 'dropdown-item', 'confirm' => __('Relamente deseja apagar a situação de anúncio # {0}?', $anunciosSituation->id)]) ?>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
-    </div>
 </div>

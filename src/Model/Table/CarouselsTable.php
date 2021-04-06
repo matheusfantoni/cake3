@@ -69,15 +69,15 @@ class CarouselsTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmptyString('id', 'create');
 
         $validator
             ->scalar('nome_carousel')
             ->maxLength('nome_carousel', 220)
-            ->notEmpty('nome_carousel', 'Nome do carousel é obrigatório');
+            ->notEmptyString('nome_carousel', 'Nome do carousel é obrigatório');
 
         $validator
-            ->notEmpty('imagem', 'Necessário selecionar a foto')
+            ->notEmptyString('imagem', 'Necessário selecionar a foto')
             ->add('imagem', 'file', [
                 'rule' => ['mimeType', ['image/jpeg', 'image/png']],
                 'message' => 'Extensão da foto inválida. Selecione foto JPEG ou PNG',
@@ -86,22 +86,22 @@ class CarouselsTable extends Table
         $validator
             ->scalar('titulo')
             ->maxLength('titulo', 220)
-            ->allowEmpty('titulo');
+            ->allowEmptyString('titulo');
 
         $validator
             ->scalar('descricao')
             ->maxLength('descricao', 220)
-            ->allowEmpty('descricao');
+            ->allowEmptyString('descricao');
 
         $validator
             ->scalar('titulo_botao')
             ->maxLength('titulo_botao', 220)
-            ->allowEmpty('titulo_botao');
+            ->allowEmptyString('titulo_botao');
 
         $validator
             ->scalar('link')
             ->maxLength('link', 220)
-            ->allowEmpty('link');
+            ->allowEmptyString('link');
 
         return $validator;
     }

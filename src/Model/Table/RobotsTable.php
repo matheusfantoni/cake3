@@ -60,14 +60,14 @@ class RobotsTable extends Table
         $validator
             ->scalar('nome')
             ->maxLength('nome', 220)
-            ->requirePresence('nome', 'create')
-            ->notEmptyString('nome');
+            /*->requirePresence('nome', 'create')*/
+            ->notEmptyString('nome', 'Necessário preencher o campo nome');
 
         $validator
             ->scalar('tipo')
             ->maxLength('tipo', 45)
-            ->requirePresence('tipo', 'create')
-            ->notEmptyString('tipo');
+            /*->requirePresence('tipo', 'create')*/
+            ->notEmptyString('tipo', 'Necessário preencher o campo tipo');
 
         return $validator;
     }

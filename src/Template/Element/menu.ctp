@@ -69,6 +69,34 @@
 
         <li>
             <?= $this->Html->link(
+                '<i class="far fa-check-square"></i> Situação do Anúncio',
+                [
+                    'controller' => 'AnunciosSituations',
+                    'action' => 'index'
+                ],
+                [
+                    'escape' => false
+                ]
+            ); ?>
+        </li>
+
+        <li>
+            <?= $this->Html->link(
+                '<i class="fas fa-search"></i> Buscadores',
+                [
+                    'controller' => 'Robots',
+                    'action' => 'index'
+                ],
+                [
+                    'escape' => false
+                ]
+            ); ?>
+        </li>
+
+
+
+        <li>
+            <?= $this->Html->link(
                 '<i class="fas fa-sign-out-alt"></i> Sair',
                 [
                     'controller' => 'users',

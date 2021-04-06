@@ -1,28 +1,38 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\AnunciosSituation $anunciosSituation
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Anuncios Situations'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Colors'), ['controller' => 'Colors', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Color'), ['controller' => 'Colors', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Anuncios'), ['controller' => 'Anuncios', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Anuncio'), ['controller' => 'Anuncios', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="anunciosSituations form large-9 medium-8 columns content">
-    <?= $this->Form->create($anunciosSituation) ?>
-    <fieldset>
-        <legend><?= __('Add Anuncios Situation') ?></legend>
-        <?php
-            echo $this->Form->control('nome_situacao');
-            echo $this->Form->control('color_id', ['options' => $colors]);
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<div class="d-flex">
+    <div class="mr-auto p-2">
+        <h2 class="display-4 titulo">Cadastrar Situação de Anúncio</h2>
+    </div>
+    <div class="p-2">
+        <span class="d-none d-md-block">
+            <?= $this->Html->link(__('Listar'), ['controller' => 'AnunciosSituations', 'action' => 'index'], ['class' => 'btn btn-outline-info btn-sm']) ?>
+        </span>
+        <div class="dropdown d-block d-md-none">
+            <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="acoesListar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Ações
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="acoesListar">
+                <?= $this->Html->link(__('Listar'), ['controller' => 'AnunciosSituations', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
+            </div>
+        </div>
+    </div>
 </div>
+<hr>
+<?= $this->Flash->render() ?>
+
+<?= $this->Form->create($anunciosSituation) ?>
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label><span class="text-danger">*</span> Nome</label>
+        <?= $this->Form->control('nome_situacao', ['class' => 'form-control', 'placeholder' => 'Nome da Situação', 'label' => false]) ?>
+    </div>
+    <div class="form-group col-md-6">
+        <label><span class="text-danger">*</span> Cor</label>
+        <?= $this->Form->control('color_id', ['options' => $colors, 'class' => 'form-control', 'label' => false]) ?>
+    </div>
+</div>
+
+<p>
+    <span class="text-danger">* </span>Campo obrigatório
+</p>
+<?= $this->Form->button(__('Cadastrar'), ['class' => 'btn btn-success']) ?>
+<?= $this->Form->end() ?>
