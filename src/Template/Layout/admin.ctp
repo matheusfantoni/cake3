@@ -1,6 +1,6 @@
 <?php
 
-$cakeDescription = 'Administrativo';
+$cakeDescription = 'SDAU - Administrativo';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -17,7 +17,7 @@ $cakeDescription = 'Administrativo';
     <?= $this->Html->css(['bootstrap.min']) ?>
     <?= $this->Html->css(['fontawesome-all.min', 'dashboard']) ?>
     <?= $this->Html->script(['fontawesome-all.min']) ?>
-
+    <?= $this->Html->css(['/trumbowyg/dist/ui/trumbowyg.min']) ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
@@ -39,6 +39,11 @@ $cakeDescription = 'Administrativo';
     </div>
 
     <?= $this->Html->script(['jquery-3.5.1.min', 'popper.min', 'bootstrap.min', 'dashboard']) ?>
+    <?= $this->Html->script(['/trumbowyg/dist/trumbowyg.min']) ?>
+
+    <script>
+        $('.trumbowyg-um').trumbowyg();
+    </script>
 </body>
 
 </html>

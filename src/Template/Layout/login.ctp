@@ -1,6 +1,6 @@
 <?php
 
-$cakeDescription = 'Administrativo';
+$cakeDescription = 'SDAU - Login Administrativo';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

@@ -46,7 +46,7 @@
 <div class="form-row">
     <div class="form-group col-md-12">
         <label> Conteúdo</label>
-        <?= $this->Form->control('conteudo', ['class' => 'form-control', 'placeholder' => 'Conteúdo do Anúncio', 'label' => false]) ?>
+        <?= $this->Form->control('conteudo', ['class' => 'form-control trumbowyg-um', 'placeholder' => 'Conteúdo do Anúncio', 'label' => false]) ?>
     </div>
 </div>
 

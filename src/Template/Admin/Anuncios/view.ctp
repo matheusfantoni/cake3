@@ -79,7 +79,7 @@
     <dd class="col-sm-9"><?= h($anuncio->descricao) ?></dd>
 
     <dt class="col-sm-3">Conteúdo</dt>
-    <dd class="col-sm-9"><?= h($anuncio->conteudo) ?></dd>
+    <dd class="col-sm-9"><?= ($anuncio->conteudo) ?></dd>
 
     <dt class="col-sm-3">Nome na URL</dt>
     <dd class="col-sm-9"><?= h($anuncio->slug) ?></dd>
