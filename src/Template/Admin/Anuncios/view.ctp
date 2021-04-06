@@ -1,119 +1,116 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Anuncio $anuncio
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Anuncio'), ['action' => 'edit', $anuncio->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Anuncio'), ['action' => 'delete', $anuncio->id], ['confirm' => __('Are you sure you want to delete # {0}?', $anuncio->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Anuncios'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Anuncio'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Robots'), ['controller' => 'Robots', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Robot'), ['controller' => 'Robots', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Anuncios Situations'), ['controller' => 'AnunciosSituations', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Anuncios Situation'), ['controller' => 'AnunciosSituations', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Cats Anuncios'), ['controller' => 'CatsAnuncios', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Cats Anuncio'), ['controller' => 'CatsAnuncios', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Situations'), ['controller' => 'Situations', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Situation'), ['controller' => 'Situations', 'action' => 'add']) ?> </li>
-    </ul>
-</nav>
-<div class="anuncios view large-9 medium-8 columns content">
-    <h3><?= h($anuncio->id) ?></h3>
-    <table class="vertical-table">
-        <tr>
-            <th scope="row"><?= __('Titulo') ?></th>
-            <td><?= h($anuncio->titulo) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Imagem') ?></th>
-            <td><?= h($anuncio->imagem) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Slug') ?></th>
-            <td><?= h($anuncio->slug) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Keywords') ?></th>
-            <td><?= h($anuncio->keywords) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Description') ?></th>
-            <td><?= h($anuncio->description) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Robot') ?></th>
-            <td><?= $anuncio->has('robot') ? $this->Html->link($anuncio->robot->id, ['controller' => 'Robots', 'action' => 'view', $anuncio->robot->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('User') ?></th>
-            <td><?= $anuncio->has('user') ? $this->Html->link($anuncio->user->name, ['controller' => 'Users', 'action' => 'view', $anuncio->user->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Anuncios Situation') ?></th>
-            <td><?= $anuncio->has('anuncios_situation') ? $this->Html->link($anuncio->anuncios_situation->id, ['controller' => 'AnunciosSituations', 'action' => 'view', $anuncio->anuncios_situation->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Cats Anuncio') ?></th>
-            <td><?= $anuncio->has('cats_anuncio') ? $this->Html->link($anuncio->cats_anuncio->id, ['controller' => 'CatsAnuncios', 'action' => 'view', $anuncio->cats_anuncio->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($anuncio->id) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Qnt Acesso') ?></th>
-            <td><?= $this->Number->format($anuncio->qnt_acesso) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Created') ?></th>
-            <td><?= h($anuncio->created) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Modified') ?></th>
-            <td><?= h($anuncio->modified) ?></td>
-        </tr>
-    </table>
-    <div class="row">
-        <h4><?= __('Descricao') ?></h4>
-        <?= $this->Text->autoParagraph(h($anuncio->descricao)); ?>
+<div class="d-flex">
+    <div class="mr-auto p-2">
+        <h2 class="display-4 titulo">Anúncio</h2>
     </div>
-    <div class="row">
-        <h4><?= __('Conteudo') ?></h4>
-        <?= $this->Text->autoParagraph(h($anuncio->conteudo)); ?>
-    </div>
-    <div class="related">
-        <h4><?= __('Related Situations') ?></h4>
-        <?php if (!empty($anuncio->situations)): ?>
-        <table cellpadding="0" cellspacing="0">
-            <tr>
-                <th scope="col"><?= __('Id') ?></th>
-                <th scope="col"><?= __('Nome Situacao') ?></th>
-                <th scope="col"><?= __('Color Id') ?></th>
-                <th scope="col"><?= __('Created') ?></th>
-                <th scope="col"><?= __('Modified') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-            <?php foreach ($anuncio->situations as $situations): ?>
-            <tr>
-                <td><?= h($situations->id) ?></td>
-                <td><?= h($situations->nome_situacao) ?></td>
-                <td><?= h($situations->color_id) ?></td>
-                <td><?= h($situations->created) ?></td>
-                <td><?= h($situations->modified) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'Situations', 'action' => 'view', $situations->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'Situations', 'action' => 'edit', $situations->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Situations', 'action' => 'delete', $situations->id], ['confirm' => __('Are you sure you want to delete # {0}?', $situations->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
-        <?php endif; ?>
+    <div class="p-2">
+        <span class="d-none d-md-block">
+            <?= $this->Html->link(__('Listar'), ['controller' => 'Anuncios', 'action' => 'index'], ['class' => 'btn btn-outline-info btn-sm']) ?>
+
+            <?= $this->Html->link(__('Editar'), ['controller' => 'Anuncios', 'action' => 'edit', $anuncio->id], ['class' => 'btn btn-outline-warning btn-sm']) ?>
+
+            <?= $this->Form->postLink(__('Apagar'), ['controller' => 'Anuncios', 'action' => 'delete', $anuncio->id], ['class' => 'btn btn-outline-danger btn-sm', 'confirm' => __('Realmente deseja apagar o anúncio # {0}?', $anuncio->id)]) ?>
+
+        </span>
+        <div class="dropdown d-block d-md-none">
+            <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="acoesListar" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Ações
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="acoesListar">
+                <?= $this->Html->link(__('Listar'), ['controller' => 'Anuncios', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
+
+                <?= $this->Html->link(__('Editar'), ['controller' => 'Anuncios', 'action' => 'edit', $anuncio->id], ['class' => 'dropdown-item']) ?>
+
+                <?= $this->Form->postLink(__('Apagar'), ['controller' => 'Anuncios', 'action' => 'delete', $anuncio->id], ['class' => 'dropdown-item', 'confirm' => __('Realmente deseja apagar o anúncio # {0}?', $anuncio->id)]) ?>
+            </div>
+        </div>
     </div>
 </div>
+<hr>
+<?= $this->Flash->render() ?>
+<dl class="row">
+    <dt class="col-sm-3">Imagem</dt>
+    <dd class="col-sm-9">
+        <div class="img-perfil">
+            <?php if(!empty($anuncio->imagem)){ ?>
+            <?= $this->Html->image('../files/anuncio/'.$anuncio->id.'/'.$anuncio->imagem, ['width' => '250', 'height' => '200']) ?>&nbsp;
+
+            <div class="edit">
+                <?= $this->Html->link(
+                        '<i class="fas fa-pencil-alt"></i>',
+                        [
+                            'controller' => 'Anuncios',
+                            'action' => 'alterarFotoAnuncio',
+                            $anuncio->id
+                        ],
+                        [
+                            'escape'=> false
+                        ]
+                    ); ?>
+            </div>
+
+            <?php } else { ?>
+            <?= $this->Html->image('../files/anuncio/preview_img.jpg', ['width' => '250', 'height' => '200']) ?>&nbsp;
+
+            <div class="edit">
+                <?= $this->Html->link(
+                        '<i class="fas fa-pencil-alt"></i>',
+                        [
+                            'controller' => 'Anuncios',
+                            'action' => 'alterarFotoAnuncio',
+                            $anuncio->id
+                        ],
+                        [
+                            'escape'=> false
+                        ]
+                    ); ?>
+            </div>
+            <?php } ?>
+        </div>
+    </dd>
+
+    <dt class="col-sm-3">ID</dt>
+    <dd class="col-sm-9"><?= $this->Number->format($anuncio->id) ?></dd>
+
+    <dt class="col-sm-3">Titulo</dt>
+    <dd class="col-sm-9"><?= h($anuncio->titulo) ?></dd>
+
+    <dt class="col-sm-3">Descrição</dt>
+    <dd class="col-sm-9"><?= h($anuncio->descricao) ?></dd>
+
+    <dt class="col-sm-3">Conteúdo</dt>
+    <dd class="col-sm-9"><?= h($anuncio->conteudo) ?></dd>
+
+    <dt class="col-sm-3">Nome na URL</dt>
+    <dd class="col-sm-9"><?= h($anuncio->slug) ?></dd>
+
+    <dt class="col-sm-3">Palavra Chave</dt>
+    <dd class="col-sm-9"><?= h($anuncio->keywords) ?></dd>
+
+    <dt class="col-sm-3">Descrição para os buscadores</dt>
+    <dd class="col-sm-9"><?= h($anuncio->description) ?></dd>
+
+    <dt class="col-sm-3">Acessos</dt>
+    <dd class="col-sm-9"><?= h($anuncio->qnt_acesso) ?></dd>
+
+    <dt class="col-sm-3">Buscadores</dt>
+    <dd class="col-sm-9"><?= h($anuncio->robot->nome) ?></dd>
+
+    <dt class="col-sm-3">Usuário</dt>
+    <dd class="col-sm-9"><?= h($anuncio->user->name) ?></dd>
+
+    <dt class="col-sm-3">Situação do Anúncio</dt>
+    <dd class="col-sm-9">
+        <?php echo "<span class='badge badge-". $anuncio->anuncios_situation->color->cor."'>".$anuncio->anuncios_situation->nome_situacao."</span>"; ?>
+    </dd>
+
+    <dt class="col-sm-3">Categoria</dt>
+    <dd class="col-sm-9"><?= h($anuncio->cats_anuncio->nome) ?></dd>
+
+    <dt class="col-sm-3 text-truncate">Cadastro</dt>
+    <dd class="col-sm-9"><?= h($anuncio->created) ?></dd>
+
+    <dt class="col-sm-3 text-truncate">Alteração</dt>
+    <dd class="col-sm-9"><?= h($anuncio->modified) ?></dd>
+
+</dl>

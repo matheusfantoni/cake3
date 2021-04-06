@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-sm-12 col-md-4">
-                <h5>Fantoni</h5>
+                <h5>Sistema de Anúncios - SDAU</h5>
                 <ul class="list-unstyled">
                     <li>
                         <?= $this->Html->link(
@@ -45,10 +45,10 @@
             <div class="col-12 col-sm-12 col-md-4">
                 <h5>Redes Sociais</h5>
                 <ul class="list-unstyled">
-                    <li><a class="link-rodape" href="https://www.instagram.com/celkecursos" target="_blank">Instagram</a></li>
-                    <li><a class="link-rodape" href="https://www.facebook.com/celkecursos/" target="_blank">Facebook</a></li>
-                    <li><a class="link-rodape" href="https://www.youtube.com/channel/UC5ClMRHFl8o_MAaO4w7ZYug" target="_blank">YouTube</a></li>
-                    <li><a class="link-rodape" href="https://twitter.com/celkecursos" target="_blank">Twiter</a></li>
+                    <li><a class="link-rodape" href="#" target="_blank">Instagram</a></li>
+                    <li><a class="link-rodape" href="#" target="_blank">Facebook</a></li>
+                    <li><a class="link-rodape" href="#" target="_blank">YouTube</a></li>
+                    <li><a class="link-rodape" href="#" target="_blank">Twiter</a></li>
                 </ul>
             </div>
         </div>

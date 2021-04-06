@@ -37,7 +37,7 @@ class CatsAnunciosTable extends Table
         parent::initialize($config);
 
         $this->setTable('cats_anuncios');
-        $this->setDisplayField('id');
+        $this->setDisplayField('nome');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');

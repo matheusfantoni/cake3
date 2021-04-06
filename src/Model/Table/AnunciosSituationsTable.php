@@ -1,7 +1,6 @@
 <?php
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -36,7 +35,7 @@ class AnunciosSituationsTable extends Table
         parent::initialize($config);
 
         $this->setTable('anuncios_situations');
-        $this->setDisplayField('id');
+        $this->setDisplayField('nome_situacao');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');

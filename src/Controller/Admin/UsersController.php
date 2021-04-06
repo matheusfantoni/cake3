@@ -4,7 +4,11 @@ namespace App\Controller\Admin;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\Mailer\Email;
+use Cake\Mailer\MailerAwareTrait;
 use Cake\Utility\Security;
+use Cake\Routing\Router;
+use Cake\ORM\TableRegistry;
 
 /**
  * Users Controller
@@ -16,12 +20,12 @@ use Cake\Utility\Security;
 class UsersController extends AppController
 {
 
-
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['cadastrar', 'logout', 'recuperarSenha', 'atualizarSenha']);
+        $this->Auth->allow(['cadastrar', 'logout', 'confEmail', 'recuperarSenha', 'atualizarSenha']);
     }
+
     /**
      * Index method
      *
@@ -81,6 +85,50 @@ class UsersController extends AppController
         $this->set(compact('user'));
     }
 
+    use MailerAwareTrait;
+    public function cadastrar()
+    {
+        $user = $this->Users->newEntity();
+        if ($this->request->is('post')) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            $user->cod_val_email = Security::hash($this->request->getData('password') . $this->request->getData('email'), 'sha256', false);
+            if ($this->Users->save($user)) {
+
+                $user->host_name = Router::fullBaseUrl() . $this->request->getAttribute("webroot") . $this->request->getParam('prefix');
+
+                //$this->getMailer('User')->send('cadastroUser', [$user]);
+
+                $this->Flash->success(__('Cadastrado realizado com sucesso. Para enviar o e-mail retire o comentário no arquivo UsersController no método cadastrar a parte de enviar o email ($this->getMailer...)'));
+
+                return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+            }
+            $this->Flash->danger(__('Erro: Cadastrado não foi realizado com sucesso'));
+        }
+        $this->set(compact('user'));
+    }
+
+    public function confEmail($cod_val_email = null)
+    {
+        $this->loadModel('Users');
+                
+        $confEmail = $this->Users->getConfEmail($cod_val_email);
+        if ($confEmail) {
+            $user = $this->Users->newEntity();
+            $user->id = $confEmail->id;
+            $user->email_val = '1';
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('E-mail confirmado com sucesso!'));
+                return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+            } else {
+                $this->Flash->danger(__('Erro: Não foi possivel confirmar o e-mail!'));
+                return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+            }
+        } else {
+            $this->Flash->danger(__('Erro: Não foi possivel confirmar o e-mail!'));
+            return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+        }
+    }
+
     /**
      * Edit method
      *
@@ -122,7 +170,6 @@ class UsersController extends AppController
                 $imgUpload['name'] = $user->imagem;
 
                 if ($this->Users->uploadImgRed($imgUpload, $destino, 150, 150)) {
-
                     $this->Users->deleteFile($destino, $imagemAntiga, $user->imagem);
                     $this->Flash->success(__('Foto editada com sucesso'));
                     return $this->redirect(['controller' => 'Users', 'action' => 'view', $id]);
@@ -139,86 +186,49 @@ class UsersController extends AppController
         $this->set(compact('user'));
     }
 
-    /*public function alterarFotoUsuario($id = null)
-    {
-        $user = $this->Users->get($id);
-        $imagemAntiga = $user->imagem;
-
-        if($this->request->is(['patch', 'post', 'put'])){
-            $user = $this->Users->newEntity();
-            $user->imagem = $this->Users->slugSingleUpload($this->request->getData()['imagem']['name']);
-            $user->id = $id;
-
-            $user = $this->Users->patchEntity($user, $this->request->getData());
-            if($this->Users->save($user)){
-                $destino = WWW_ROOT. "files" . DS . "user" . DS . $id . DS;
-                $imgUpload = $this->request->getData()['imagem'];
-                $imgUpload['name'] = $user->imagem;
-                
-                if($this->Users->singleUpload($imgUpload, $destino)){
-                    if(($imagemAntiga !== null) AND ($imagemAntiga !== $user->imagem)){
-                        unlink($destino.$imagemAntiga);
-                    }
-                    $this->Flash->success(__('Foto editada com sucesso'));
-                    return $this->redirect(['controller' => 'Users', 'action' => 'view', $id]);
-                }else{
-                    $user->imagem = $imagemAntiga;
-                    $this->Users->save($user);
-                    $this->Flash->danger(__('Erro: Foto não foi editada com sucesso. Erro ao realizar o upload'));
-                }
-            }else{
-                $this->Flash->danger(__('Erro: Foto não foi editada com sucesso.'));
-            }
-        }  
-
-        $this->set(compact('user'));
-    }*/
-
     public function recuperarSenha()
     {
-
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $this->loadModel('Users');
-
             $recupSenha = $this->Users->getRecuperarSenha($this->request->getData()['email']);
             if ($recupSenha) {
                 if ($recupSenha->recuperar_senha == "") {
                     $user->id = $recupSenha->id;
-                    $user->recuperar_senha = Security::hash($this->request->getData()['email'] .
-                        $recupSenha->id, 'sha256', false);
-
+                    $user->recuperar_senha = Security::hash($this->request->getData()['email'] . $recupSenha->id . date("Y-m-d H:i:s"), 'sha256', false);
                     $this->Users->save($user);
+                    $recupSenha->recuperar_senha = $user->recuperar_senha;
                 }
-                $this->Flash->success(__('E-mail enviado com sucesso, verifique a sua caixa de entrada.'));
+                $recupSenha->host_name = Router::fullBaseUrl() . $this->request->getAttribute('webroot') . $this->request->getParam('prefix');
+                //$this->getMailer('User')->send('recuperarSenha',[$recupSenha]);
+                //var_dump($recupSenha);
+                //exit;
+                $this->Flash->success(__('E-mail encontrado, para enviar o e-mail retire o comentário no arquivo UsersController no método recuperarSenha a parte de enviar o email ($this->getMailer...)!'));
+                //$this->Flash->success(__('E-mail enviado com sucesso, verifique a sua caixa de entrada!'));
                 return $this->redirect(['controller' => 'Users', 'action' => 'login']);
             } else {
-                $this->Flash->danger(__('Erro: Nenhum usuário encontrado com este e-mail.'));
+                $this->Flash->danger(__('Erro: Nenhum usuário encontrado com esse e-mail!'));
             }
         }
-
         $this->set(compact('user'));
     }
 
     public function atualizarSenha($recuperar_senha = null)
     {
-        
         $this->loadModel('Users');
-        
-        $user = $this->Users->getAtualizarSenha($recuperar_senha);
+        $user = $this->Users->getAtulizarSenha($recuperar_senha);
 
         if ($user) {
             if ($this->request->is(['patch', 'post', 'put'])) {
                 $user = $this->Users->patchEntity($user, $this->request->getData());
                 $user->recuperar_senha = null;
                 if ($this->Users->save($user)) {
-                    $this->Flash->success(__('Senha alterada com'));
+                    $this->Flash->success(__('Senha alterada com sucesso!'));
                     return $this->redirect(['controller' => 'Users', 'action' => 'login']);
                 } else {
                     $this->Flash->danger(__('Erro: A senha não foi editada com sucesso!'));
                 }
             }
-
             $this->set(compact('user'));
         } else {
             $this->Flash->danger(__('Erro: Link inválido!'));
@@ -316,42 +326,6 @@ class UsersController extends AppController
         $this->set(compact('user'));
     }
 
-    /*public function alterarFotoPerfil()
-    {
-        $user_id = $this->Auth->user('id');
-        $user = $this->Users->get($user_id);
-        $imagemAntiga = $user->imagem;
-
-        if($this->request->is(['patch', 'post', 'put'])){
-            $user = $this->Users->newEntity();
-            $user->imagem = $this->Users->slugSingleUpload($this->request->getData()['imagem']['name']);
-            $user->id = $user_id;
-
-            $user = $this->Users->patchEntity($user, $this->request->getData());
-            if($this->Users->save($user)){
-                $destino = WWW_ROOT. "files" . DS . "user" . DS . $user_id . DS;
-                $imgUpload = $this->request->getData()['imagem'];
-                $imgUpload['name'] = $user->imagem;
-                
-                if($this->Users->singleUpload($imgUpload, $destino)){
-                    if(($imagemAntiga !== null) AND ($imagemAntiga !== $user->imagem)){
-                        unlink($destino.$imagemAntiga);
-                    }
-                    $this->Flash->success(__('Foto editada com sucesso'));
-                    return $this->redirect(['controller' => 'Users', 'action' => 'perfil']);
-                }else{
-                    $user->imagem = $imagemAntiga;
-                    $this->Users->save($user);
-                    $this->Flash->danger(__('Erro: Foto não foi editada com sucesso. Erro ao realizar o upload'));
-                }
-            }else{
-                $this->Flash->danger(__('Erro: Foto não foi editada com sucesso.'));
-            }
-        }    
-
-        $this->set(compact('user'));
-    }*/
-
     /**
      * Delete method
      *
@@ -366,7 +340,6 @@ class UsersController extends AppController
         $destino = WWW_ROOT . "files" . DS . "user" . DS . $user->id . DS;
         $this->Users->deleteArq($destino);
 
-
         if ($this->Users->delete($user)) {
             $this->Flash->success(__('Usuário apagado com sucesso'));
         } else {
@@ -375,7 +348,6 @@ class UsersController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
-
 
     public function login()
     {
@@ -394,21 +366,5 @@ class UsersController extends AppController
     {
         $this->Flash->success(__('Deslogado com sucesso!'));
         return $this->redirect($this->Auth->logout());
-    }
-
-    public function cadastrar()
-    {
-
-        $user = $this->Users->newEntity();
-        if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
-            if ($this->Users->save($user)) {
-                $this->Flash->success(__('Cadastro realizado com sucesso.'));
-
-                return $this->redirect(['controller' => 'Users', 'action' => 'login']);
-            }
-            $this->Flash->danger(__('Erro: Cadastro não foi realizado com sucesso.'));
-        }
-        $this->set(compact('user'));
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
@@ -9,17 +10,17 @@ use Cake\Validation\Validator;
 /**
  * Anuncios Model
  *
- * @property \App\Model\Table\RobotsTable&\Cake\ORM\Association\BelongsTo $Robots
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
- * @property \App\Model\Table\AnunciosSituationsTable&\Cake\ORM\Association\BelongsTo $AnunciosSituations
- * @property \App\Model\Table\CatsAnunciosTable&\Cake\ORM\Association\BelongsTo $CatsAnuncios
- * @property \App\Model\Table\SituationsTable&\Cake\ORM\Association\BelongsToMany $Situations
+ * @property \App\Model\Table\RobotsTable|\Cake\ORM\Association\BelongsTo $Robots
+ * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
+ * @property \App\Model\Table\AnunciosSituationsTable|\Cake\ORM\Association\BelongsTo $AnunciosSituations
+ * @property \App\Model\Table\CatsAnunciosTable|\Cake\ORM\Association\BelongsTo $CatsAnuncios
+ * @property \App\Model\Table\SituationsTable|\Cake\ORM\Association\BelongsToMany $Situations
  *
  * @method \App\Model\Entity\Anuncio get($primaryKey, $options = [])
  * @method \App\Model\Entity\Anuncio newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Anuncio[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Anuncio|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Anuncio saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Anuncio|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Anuncio|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Anuncio patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Anuncio[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Anuncio findOrCreate($search, callable $callback = null, $options = [])
@@ -28,6 +29,7 @@ use Cake\Validation\Validator;
  */
 class AnunciosTable extends Table
 {
+
     /**
      * Initialize method
      *
@@ -43,27 +45,26 @@ class AnunciosTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->addBehavior('Upload');
+        $this->addBehavior('UploadRed');
+        $this->addBehavior('DeleteArq');
+        $this->addBehavior('SlugUrl');
 
         $this->belongsTo('Robots', [
             'foreignKey' => 'robot_id',
-            'joinType' => 'INNER',
+            'joinType' => 'INNER'
         ]);
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
-            'joinType' => 'INNER',
+            'joinType' => 'INNER'
         ]);
         $this->belongsTo('AnunciosSituations', [
             'foreignKey' => 'anuncios_situation_id',
-            'joinType' => 'INNER',
+            'joinType' => 'INNER'
         ]);
         $this->belongsTo('CatsAnuncios', [
             'foreignKey' => 'cats_anuncio_id',
-            'joinType' => 'INNER',
-        ]);
-        $this->belongsToMany('Situations', [
-            'foreignKey' => 'anuncio_id',
-            'targetForeignKey' => 'situation_id',
-            'joinTable' => 'anuncios_situations',
+            'joinType' => 'INNER'
         ]);
     }
 
@@ -77,50 +78,52 @@ class AnunciosTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmptyString('id', null, 'create');
+            ->allowEmptyString('id', 'create');
 
         $validator
             ->scalar('titulo')
             ->maxLength('titulo', 220)
-            ->requirePresence('titulo', 'create')
-            ->notEmptyString('titulo');
+            //->requirePresence('titulo', 'create')
+            ->notEmptyString('titulo', 'Necessário preencher o campo titulo');
 
         $validator
             ->scalar('descricao')
-            ->requirePresence('descricao', 'create')
-            ->notEmptyString('descricao');
+            //->requirePresence('descricao', 'create')
+            ->notEmptyString('descricao', 'Necessário preencher o campo descrição');
 
         $validator
             ->scalar('conteudo')
-            ->requirePresence('conteudo', 'create')
-            ->notEmptyString('conteudo');
+            //->requirePresence('conteudo', 'create')
+            ->notEmptyString('conteudo', 'Necessário preencher o campo conteúdo');
 
         $validator
-            ->scalar('imagem')
-            ->maxLength('imagem', 220)
-            ->requirePresence('imagem', 'create')
-            ->notEmptyFile('imagem');
+            ->notEmptyString('imagem', 'Necessário selecionar a foto')
+            ->add('imagem', 'file', [
+                'rule' => ['mimeType', ['image/jpeg', 'image/png']],
+                'message' => 'Extensão da foto inválida. Selecione foto JPEG ou PNG',
+            ]);
 
         $validator
             ->scalar('slug')
             ->maxLength('slug', 220)
-            ->requirePresence('slug', 'create')
-            ->notEmptyString('slug');
+            //->requirePresence('slug', 'create')
+            ->notEmptyString('slug', 'Necessário preencher o campo slug');
 
         $validator
             ->scalar('keywords')
             ->maxLength('keywords', 220)
-            ->requirePresence('keywords', 'create')
-            ->notEmptyString('keywords');
+            //->requirePresence('keywords', 'create')
+            ->notEmptyString('keywords', 'Necessário preencher o campo palavras chaves');
 
         $validator
             ->scalar('description')
             ->maxLength('description', 220)
-            ->requirePresence('description', 'create')
-            ->notEmptyString('description');
+            //->requirePresence('description', 'create')
+            ->notEmptyString('description', 'Necessário preencher o campo resumo do anúncio');
 
         $validator
             ->integer('qnt_acesso')
+            //->requirePresence('qnt_acesso', 'create')
             ->notEmptyString('qnt_acesso');
 
         return $validator;

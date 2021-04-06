@@ -2,7 +2,7 @@
     <a class="sidebar-toggle text-light mr-3">
         <span class="navbar-toggler-icon"></span>
     </a>
-    <a class="navbar-brand" href="#">Fantoni</a>
+    <a class="navbar-brand" href="#">Sistema de Anúncios Udemy - SDAU</a>
 
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
