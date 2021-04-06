@@ -29,16 +29,28 @@ class ListsAnunciosController extends AppController
      */
     public function index($slug = null)
     {
- 
-        //echo "<br><br><br><br><br>";
-        //echo $slug;
 
-        /*
-        $catAnuncioTable = $this->loadModel('CatsAnuncios');
-        $catAnuncios = $this->CatsAnuncios->getListCatAnuncio();*/
+        $this->loadModel('CatsAnuncios');
+        $catAnuncio = $this->CatsAnuncios->getVerCatAnuncio($slug);
 
-        $listsAnuncios = "Anuncios";
+        if ($catAnuncio) {
+            $anunciosTable = $this->loadModel('Anuncios');
+            $this->paginate = [
+                'limit' => 6,
+                'conditions' => [
+                    'Anuncios.cats_anuncio_id = ' => $catAnuncio->id
+                ],
+                'order' => [
+                    'Anuncios.id' => 'DESC',
 
-        $this->set(compact('listsAnuncios'));
+                ]
+            ];
+
+            $anuncios = $this->paginate($anunciosTable);
+        } else {
+            echo "Vazio";
+        }
+
+        $this->set(compact('anuncios'));
     }
 }

@@ -59,19 +59,19 @@ class CatsAnunciosTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmptyString('id', 'create');
 
         $validator
             ->scalar('nome')
             ->maxLength('nome', 45)
             //->requirePresence('nome', 'create')
-            ->notEmpty('nome', 'Nome da categoria de anúncio é obrigatório');
+            ->notEmptyString('nome', 'Nome da categoria de anúncio é obrigatório');
 
         $validator
             ->scalar('icone')
             ->maxLength('icone', 45)
             //->requirePresence('icone', 'create')
-            ->notEmpty('icone', 'Ícone da categoria de anúncio é obrigatório');
+            ->notEmptyString('icone', 'Ícone da categoria de anúncio é obrigatório');
 
         /*$validator
             ->integer('ordem')
@@ -184,4 +184,14 @@ class CatsAnunciosTable extends Table
 
         return $query;
     }
+    
+    public function getVerCatAnuncio($slug = null)
+    {
+        $query = $this->find()
+            ->select(['id'])
+            ->where(['CatsAnuncios.slug =' => $slug])
+            ->order(['CatsAnuncios.ordem' => 'DESC']);
+        return $query->first();
+    }
+    
 }
