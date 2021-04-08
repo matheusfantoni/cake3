@@ -39,60 +39,38 @@
                             Anúncios Destaques
                         </div>
                         <div class="p-3">
-                            <li class="media mb-2">
-                                <a href="#">
-                                    <img src="imagens/empresa1.jpg" width="64" height="64" class="mr-3" alt="...">
-                                </a>
-                                <div class="media-body anunc-title">
+                            <?php
+                            foreach ($anunciosDests as $anunciosDest) { ?>
+                                <li class="media mb-2">
                                     <a href="#">
-                                        Oh yeah, it’s that good.
-                                    </a>
-                                </div>
-                            </li>
 
-                            <li class="media mb-2">
-                                <a href="#">
-                                    <img src="imagens/empresa1.jpg" width="64" height="64" class="mr-3" alt="...">
-                                </a>
-                                <div class="media-body anunc-title">
-                                    <a href="#">
-                                        Oh yeah, it’s that good.
-                                    </a>
-                                </div>
-                            </li>
+                                        <?php
 
-                            <li class="media mb-2">
-                                <a href="#">
-                                    <img src="imagens/empresa1.jpg" width="64" height="64" class="mr-3" alt="...">
-                                </a>
-                                <div class="media-body anunc-title">
-                                    <a href="#">
-                                        Oh yeah, it’s that good.
-                                    </a>
-                                </div>
-                            </li>
+                                        $imagem = $this->Html->image(
+                                            '../files/anuncio/' .
+                                            $anunciosDest->id . '/' . $anunciosDest->imagem,
+                                            ['class' => 'mr-3', 'width' => '64', 'height' => '64']
+                                        );
 
-                            <li class="media mb-2">
-                                <a href="#">
-                                    <img src="imagens/empresa1.jpg" width="64" height="64" class="mr-3" alt="...">
-                                </a>
-                                <div class="media-body anunc-title">
-                                    <a href="#">
-                                        Oh yeah, it’s that good.
-                                    </a>
-                                </div>
-                            </li>
+                                        echo $this->Html->link(__($imagem), [
+                                            'controller' => 'Anuncio',
+                                            'action' => 'view', $anunciosDest->slug
+                                        ], ['escape' => false]);
 
-                            <li class="media mb-2">
-                                <a href="#">
-                                    <img src="imagens/empresa1.jpg" width="64" height="64" class="mr-3" alt="...">
-                                </a>
-                                <div class="media-body anunc-title">
-                                    <a href="#">
-                                        Oh yeah, it’s that good.
+                                        ?>
+
                                     </a>
-                                </div>
-                            </li>
+                                    <div class="media-body anunc-title">
+
+                                        <?= $this->Html->link(__($anunciosDest->titulo), [
+                                            'controller' => 'Anuncio',
+                                            'action' => 'view', $anunciosDest->slug
+                                        ]); ?>
+
+                                    </div>
+                                </li>
+
+                            <?php } ?>
 
                         </div>
                     </div>
@@ -107,7 +85,7 @@
                             foreach ($anunciosUltimos as $anunciosUltimo) { ?>
                                 <li class="media mb-2">
                                     <a href="#">
-                                        
+
                                         <?php
 
                                         $imagem = $this->Html->image(
