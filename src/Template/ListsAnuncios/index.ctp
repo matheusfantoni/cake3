@@ -6,116 +6,32 @@
                 <div class="col-md-8">
 
                     <?php foreach ($anuncios as $anuncio) { ?>
-                        <div class="row featurette shadow bg-white p-1 mb-3">
-                            <div class="col-md-7 order-md-2">
-                                <div class="anunc-title">
-                                    <h2 class="featurette-heading">
-                                        <?= $this->Html->link(__($anuncio->titulo), ['controller' => 'Anuncio', 'action' => 'view', $anuncio->slug]) ?>
-                                    </h2>
-                                </div>
-                                <p class="lead"><?= $anuncio->descricao ?></p>
+                    <div class="row featurette shadow bg-white p-1 mb-3">
+                        <div class="col-md-7 order-md-2">
+                            <div class="anunc-title">
+                                <h2 class="featurette-heading">
+                                    <?= $this->Html->link(__($anuncio->titulo), ['controller' => 'Anuncio', 'action' => 'view', $anuncio->slug]) ?>
+                                </h2>
                             </div>
-                            <div class="col-md-5 order-md-1">
-                                <a href="#">
-                                    <?php
+                            <p class="lead"><?= $anuncio->descricao ?></p>
+                        </div>
+                        <div class="col-md-5 order-md-1">
+                            <a href="#">
+                                <?php
                                     $imagem = $this->Html->image('../files/anuncio/' . $anuncio->id . '/' . $anuncio->imagem, ['class' => 'bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto']);
 
                                     echo $this->Html->link(__($imagem), ['controller' => 'Anuncio', 'action' => 'view', $anuncio->slug], ['escape' => false]);
 
                                     ?>
-                                </a>
-                            </div>
+                            </a>
                         </div>
+                    </div>
                     <?php } ?>
 
-                    <!--<div class="row featurette shadow bg-white p-1 mb-3">
-            <div class="col-md-7 order-md-2">
-              <div class="anunc-title">
-                <h2 class="featurette-heading">
-                  <a href="#">
-                    Oh yeah, it’s that good.
-                  </a>
-                </h2>
-              </div>
-              <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-            </div>
-            <div class="col-md-5 order-md-1">
-              <a href="#">
-                <img src="imagens/empresa1.jpg" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto">
-              </a>
-            </div>
-          </div>
-          
-          <div class="row featurette shadow bg-white p-1 mb-3">
-            <div class="col-md-7 order-md-2">
-              <div class="anunc-title">
-                <h2 class="featurette-heading">
-                  <a href="#">
-                    Oh yeah, it’s that good.
-                  </a>
-                </h2>
-              </div>
-              <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-            </div>
-            <div class="col-md-5 order-md-1">
-              <a href="#">
-                <img src="imagens/empresa1.jpg" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto">
-              </a>
-            </div>
-          </div>
-          
-          <div class="row featurette shadow bg-white p-1 mb-3">
-            <div class="col-md-7 order-md-2">
-              <div class="anunc-title">
-                <h2 class="featurette-heading">
-                  <a href="#">
-                    Oh yeah, it’s that good.
-                  </a>
-                </h2>
-              </div>
-              <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-            </div>
-            <div class="col-md-5 order-md-1">
-              <a href="#">
-                <img src="imagens/empresa1.jpg" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto">
-              </a>
-            </div>
-          </div>
-          
-          <div class="row featurette shadow bg-white p-1 mb-3">
-            <div class="col-md-7 order-md-2">
-              <div class="anunc-title">
-                <h2 class="featurette-heading">
-                  <a href="#">
-                    Oh yeah, it’s that good.
-                  </a>
-                </h2>
-              </div>
-              <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-            </div>
-            <div class="col-md-5 order-md-1">
-              <a href="#">
-                <img src="imagens/empresa1.jpg" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto">
-              </a>
-            </div>
-          </div>-->
+                    <?= $this->element('pagination_bairro'); ?>
 
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                            </li>
-                        </ul>
-                    </nav>
 
                 </div>
-
 
                 <aside class="col-md-4">
                     <div class="card shadow p-0 mb-3 bg-white">

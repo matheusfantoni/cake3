@@ -28,8 +28,6 @@ class ListsAnunciosController extends AppController
      */
     public function index($slug = null)
     {
-        //echo "<br><br><br><br>" ;
-        //echo $slug;
         
         $this->loadModel('CatsAnuncios');
         $catAnuncio = $this->CatsAnuncios->getVerCatAnuncio($slug);
