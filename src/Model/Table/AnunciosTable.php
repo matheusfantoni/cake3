@@ -145,4 +145,16 @@ class AnunciosTable extends Table
 
         return $rules;
     }
+
+    public function getAnuncioUltimos()
+    {
+
+        $query = $this->find()
+            ->select(['id', 'titulo', 'imagem', 'slug'])
+            ->where(['Anuncios.anuncios_situation_id =' => 1])
+            ->order(['Anuncios.id' => 'DESC'])
+            ->limit(5);
+
+        return $query;
+    }
 }

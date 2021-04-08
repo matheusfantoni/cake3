@@ -48,8 +48,9 @@ class ListsAnunciosController extends AppController
             echo "Vazio";
         }
 
+        $this->loadModel('Anuncios');
+        $anunciosUltimos = $this->Anuncios->getAnuncioUltimos();
 
-
-        $this->set(compact('anuncios'));
+        $this->set(compact('anuncios', 'anunciosUltimos'));
     }
 }
