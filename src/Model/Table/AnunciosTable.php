@@ -169,4 +169,16 @@ class AnunciosTable extends Table
 
         return $query;
     }
+
+    public function getListAnuncioDest()
+    {
+
+        $query = $this->find()
+            ->select(['id', 'titulo','descricao', 'imagem', 'slug'])
+            ->where(['Anuncios.anuncios_situation_id =' => 1])
+            ->order(['Anuncios.id' => 'DESC'])
+            ->limit(5);
+
+        return $query;
+    }
 }

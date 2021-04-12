@@ -28,12 +28,15 @@ class ListsAnunciosController extends AppController
      */
     public function index($slug = null)
     {
-        
+
         $this->loadModel('CatsAnuncios');
         $catAnuncio = $this->CatsAnuncios->getVerCatAnuncio($slug);
+        
+        $anuncios = null;
+        $anunciosListDests = null;
 
         if ($catAnuncio) {
-            $anuncioTable = $this->loadModel('Anuncios');
+            $anuncios = $this->loadModel('Anuncios');
             $this->paginate = [
                 'limit' => 6,
                 'conditions' => [
@@ -43,15 +46,17 @@ class ListsAnunciosController extends AppController
                     'Anuncios.id' => 'desc',
                 ]
             ];
-            $anuncios = $this->paginate($anuncioTable);
+            $anuncios = $this->paginate($anuncios);
         } else {
-            echo "Vazio";
-        }
-        
-        $this->loadModel('Anuncios');
-        $anunciosDests = $this->Anuncios->getAnuncioDest($catAnuncio->id);
-        $anunciosUltimos = $this->Anuncios->getAnuncioUltimos();
 
-        $this->set(compact('anuncios', 'anunciosUltimos', 'anunciosDests'));
+            $this->loadModel('Anuncios');
+            $anunciosDests = $this->Anuncios->getAnuncioDest($catAnuncio->id);
+            $anunciosUltimos = $this->Anuncios->getAnuncioUltimos();
+            $anunciosListDests = $this->Anuncios->getListAnuncioDest();
+
+            $anuncios = null;
+        }
+
+        $this->set(compact('anuncios', 'anunciosUltimos', 'anunciosDests', 'anunciosListDests'));
     }
 }
