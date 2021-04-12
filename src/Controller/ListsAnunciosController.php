@@ -1,10 +1,8 @@
 <?php
-
 namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
-
 /**
  * ListsAnuncios Controller
  *
@@ -27,34 +25,37 @@ class ListsAnunciosController extends AppController
      * @return \Cake\Http\Response|void
      */
     public function index($slug = null)
-    {
-
+    {       
+        //echo "<br><br><br><br>" ;
+        //echo "ID: " . $page;
         $this->loadModel('CatsAnuncios');
         $catAnuncio = $this->CatsAnuncios->getVerCatAnuncio($slug);
         
         $anuncios = null;
         $anunciosListDests = null;
-
-        if ($catAnuncio) {
-            $anuncios = $this->loadModel('Anuncios');
+        if($catAnuncio){
+            $anuncioTable = $this->loadModel('Anuncios');
             $this->paginate = [
                 'limit' => 6,
                 'conditions' => [
-                    'Anuncios.cats_anuncio_id = ' => $catAnuncio->id
+                    'Anuncios.cats_anuncio_id = ' => $catAnuncio->id,
+                    'Anuncios.anuncios_situation_id = ' => 1
                 ],
                 'order' => [
                     'Anuncios.id' => 'desc',
                 ]
             ];
-            $anuncios = $this->paginate($anuncios);
-        } else {
+            $anuncios = $this->paginate($anuncioTable);
+            $anunciosUltimos = $this->Anuncios->getCatAnuncioUltimos($catAnuncio->id);
 
+            $anunciosDests = $this->Anuncios->getCatAnuncioDest($catAnuncio->id);
+            //$anunciosDests = $anuncioTable->getAnuncioDest();
+        }else{
+            
             $this->loadModel('Anuncios');
-            $anunciosDests = $this->Anuncios->getAnuncioDest($catAnuncio->id);
             $anunciosUltimos = $this->Anuncios->getAnuncioUltimos();
-            $anunciosListDests = $this->Anuncios->getListAnuncioDest();
-
-            $anuncios = null;
+            $anunciosDests = $this->Anuncios->getAnuncioDest();
+            $anunciosListDests = $this->Anuncios->getListAnuncioDest();            
         }
 
         $this->set(compact('anuncios', 'anunciosUltimos', 'anunciosDests', 'anunciosListDests'));

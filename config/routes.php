@@ -60,6 +60,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->fallbacks(DashedRoute::class);
 });
 
+//Slug listar artigos
 Router::scope('/', function ($routes) {
 
     $routes->connect(
@@ -71,6 +72,20 @@ Router::scope('/', function ($routes) {
 
     $routes->fallbacks(DashedRoute::class);
 });
+
+//Slug ver anuncio
+Router::scope('/', function ($routes) {
+
+    $routes->connect(
+        '/anuncio/:slug',
+        ['controller' => 'Anuncios', 'action' => 'view']
+    )
+
+        ->setPass(['slug']);
+
+    $routes->fallbacks(DashedRoute::class);
+});
+
 
 Router::prefix('admin', function (RouteBuilder $routes) {
 

@@ -10,7 +10,7 @@
                                 <div class="col-md-7 order-md-2">
                                     <div class="anunc-title">
                                         <h2 class="featurette-heading">
-                                            <?= $this->Html->link(__($anuncio->titulo), ['controller' => 'Anuncio', 'action' => 'view', $anuncio->slug]) ?>
+                                            <?= $this->Html->link(__($anuncio->titulo), ['controller' => 'Anuncios', 'action' => 'view', $anuncio->slug]) ?>
                                         </h2>
                                     </div>
                                     <p class="lead"><?= $anuncio->descricao ?></p>
@@ -20,7 +20,7 @@
                                         <?php
                                         $imagem = $this->Html->image('../files/anuncio/' . $anuncio->id . '/' . $anuncio->imagem, ['class' => 'bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto']);
 
-                                        echo $this->Html->link(__($imagem), ['controller' => 'Anuncio', 'action' => 'view', $anuncio->slug], ['escape' => false]);
+                                        echo $this->Html->link(__($imagem), ['controller' => 'Anuncios', 'action' => 'view', $anuncio->slug], ['escape' => false]);
 
                                         ?>
                                     </a>
@@ -39,7 +39,7 @@
                                 <div class="col-md-7 order-md-2">
                                     <div class="anunc-title">
                                         <h2 class="featurette-heading">
-                                            <?= $this->Html->link(__($anunciosListDest->titulo), ['controller' => 'Anuncio', 'action' => 'view', $anunciosListDest->slug]) ?>
+                                            <?= $this->Html->link(__($anunciosListDest->titulo), ['controller' => 'Anuncios', 'action' => 'view', $anunciosListDest->slug]) ?>
                                         </h2>
                                     </div>
                                     <p class="lead"><?= $anunciosListDest->descricao ?></p>
@@ -49,7 +49,7 @@
                                         <?php
                                         $imagem = $this->Html->image('../files/anuncio/' . $anunciosListDest->id . '/' . $anunciosListDest->imagem, ['class' => 'bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto']);
 
-                                        echo $this->Html->link(__($imagem), ['controller' => 'Anuncio', 'action' => 'view', $anunciosListDest->slug], ['escape' => false]);
+                                        echo $this->Html->link(__($imagem), ['controller' => 'Anuncios', 'action' => 'view', $anunciosListDest->slug], ['escape' => false]);
 
                                         ?>
                                     </a>
@@ -72,11 +72,11 @@
                                         <?php
                                         $imagem = $this->Html->image('../files/anuncio/' . $anunciosDest->id . '/' . $anunciosDest->imagem, ['class' => 'mr-3', 'width' => '64', 'height' => '64']);
 
-                                        echo $this->Html->link(__($imagem), ['controller' => 'Anuncio', 'action' => 'view', $anunciosDest->slug], ['escape' => false]);
+                                        echo $this->Html->link(__($imagem), ['controller' => 'Anuncios', 'action' => 'view', $anunciosDest->slug], ['escape' => false]);
                                         ?>
                                     </a>
                                     <div class="media-body anunc-title">
-                                        <?= $this->Html->link(__($anunciosDest->titulo), ['controller' => 'Anuncio', 'action' => 'view', $anunciosDest->slug]) ?>
+                                        <?= $this->Html->link(__($anunciosDest->titulo), ['controller' => 'Anuncios', 'action' => 'view', $anunciosDest->slug]) ?>
                                     </div>
                                 </li>
                             <?php } ?>
@@ -96,11 +96,11 @@
                                         <?php
                                         $imagem = $this->Html->image('../files/anuncio/' . $anunciosUltimo->id . '/' . $anunciosUltimo->imagem, ['class' => 'mr-3', 'width' => '64', 'height' => '64']);
 
-                                        echo $this->Html->link(__($imagem), ['controller' => 'Anuncio', 'action' => 'view', $anunciosUltimo->slug], ['escape' => false]);
+                                        echo $this->Html->link(__($imagem), ['controller' => 'Anuncios', 'action' => 'view', $anunciosUltimo->slug], ['escape' => false]);
                                         ?>
                                     </a>
                                     <div class="media-body anunc-title">
-                                        <?= $this->Html->link(__($anunciosUltimo->titulo), ['controller' => 'Anuncio', 'action' => 'view', $anunciosUltimo->slug]) ?>
+                                        <?= $this->Html->link(__($anunciosUltimo->titulo), ['controller' => 'Anuncios', 'action' => 'view', $anunciosUltimo->slug]) ?>
                                     </div>
                                 </li>
                             <?php } ?>

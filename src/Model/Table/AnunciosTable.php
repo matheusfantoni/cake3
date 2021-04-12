@@ -148,7 +148,6 @@ class AnunciosTable extends Table
 
     public function getAnuncioUltimos()
     {
-
         $query = $this->find()
             ->select(['id', 'titulo', 'imagem', 'slug'])
             ->where(['Anuncios.anuncios_situation_id =' => 1])
@@ -158,9 +157,36 @@ class AnunciosTable extends Table
         return $query;
     }
 
-    public function getAnuncioDest($id = null)
+    public function getCatAnuncioUltimos($id = null)
     {
+        $query = $this->find()
+            ->select(['id', 'titulo', 'imagem', 'slug'])
+            ->where([
+                'Anuncios.anuncios_situation_id =' => 1,
+                'Anuncios.cats_anuncio_id = ' => $id
+            ])
+            ->order(['Anuncios.id' => 'DESC'])
+            ->limit(5);
 
+        return $query;
+    }
+
+    public function getCatAnuncioDest($id = null)
+    {
+        $query = $this->find()
+            ->select(['id', 'titulo', 'imagem', 'slug'])
+            ->where([
+                'Anuncios.anuncios_situation_id =' => 1,
+                'Anuncios.cats_anuncio_id = ' => $id
+            ])
+            ->order(['Anuncios.qnt_acesso' => 'DESC'])
+            ->limit(5);
+
+        return $query;
+    }
+
+    public function getAnuncioDest()
+    {
         $query = $this->find()
             ->select(['id', 'titulo', 'imagem', 'slug'])
             ->where(['Anuncios.anuncios_situation_id =' => 1])
@@ -172,13 +198,22 @@ class AnunciosTable extends Table
 
     public function getListAnuncioDest()
     {
-
         $query = $this->find()
-            ->select(['id', 'titulo','descricao', 'imagem', 'slug'])
+            ->select(['id', 'titulo', 'descricao', 'imagem', 'slug'])
             ->where(['Anuncios.anuncios_situation_id =' => 1])
             ->order(['Anuncios.id' => 'DESC'])
             ->limit(5);
 
         return $query;
+    }
+
+    public function getVerAnuncio($slug)
+    {
+        $query = $this->find()
+            ->select(['id', 'titulo', 'conteudo', 'imagem', 'created'])
+            ->where(['Anuncios.anuncios_situation_id =' => 1, 'Anuncios.slug =' => $slug])
+            ->order(['Anuncios.id' => 'ASC']);
+            
+        return $query->first();
     }
 }
