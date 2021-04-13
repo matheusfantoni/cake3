@@ -60,7 +60,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->fallbacks(DashedRoute::class);
 });
 
-//Slug listar artigos
+//Slug listar anúncios
 Router::scope('/', function ($routes) {
 
     $routes->connect(

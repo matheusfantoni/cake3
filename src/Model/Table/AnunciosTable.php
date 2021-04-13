@@ -210,7 +210,7 @@ class AnunciosTable extends Table
     public function getVerAnuncio($slug)
     {
         $query = $this->find()
-            ->select(['id', 'titulo', 'conteudo', 'imagem', 'created'])
+            ->select(['id', 'titulo', 'conteudo', 'user_id' ,'imagem', 'created'])
             ->where(['Anuncios.anuncios_situation_id =' => 1, 'Anuncios.slug =' => $slug])
             ->order(['Anuncios.id' => 'ASC']);
             
