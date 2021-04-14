@@ -10,13 +10,13 @@ use Cake\Validation\Validator;
 /**
  * Anunciants Model
  *
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
+ * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
  *
  * @method \App\Model\Entity\Anunciant get($primaryKey, $options = [])
  * @method \App\Model\Entity\Anunciant newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Anunciant[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Anunciant|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Anunciant saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Anunciant|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Anunciant|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Anunciant patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Anunciant[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Anunciant findOrCreate($search, callable $callback = null, $options = [])
@@ -25,6 +25,7 @@ use Cake\Validation\Validator;
  */
 class AnunciantsTable extends Table
 {
+
     /**
      * Initialize method
      *
@@ -36,14 +37,18 @@ class AnunciantsTable extends Table
         parent::initialize($config);
 
         $this->setTable('anunciants');
-        $this->setDisplayField('id');
+        $this->setDisplayField('nome');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->addBehavior('Upload');
+        $this->addBehavior('UploadRed');
+        $this->addBehavior('DeleteArq');
+        $this->addBehavior('SlugUrl');
 
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
-            'joinType' => 'INNER',
+            'joinType' => 'INNER'
         ]);
     }
 
@@ -57,13 +62,12 @@ class AnunciantsTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmptyString('id', null, 'create');
+            ->allowEmptyString('id', 'create');
 
         $validator
             ->scalar('nome')
             ->maxLength('nome', 220)
-            ->requirePresence('nome', 'create')
-            ->notEmptyString('nome');
+            ->notEmptyString('nome', 'Necessário preencher o campo nome');
 
         $validator
             ->scalar('descricao')
@@ -71,9 +75,11 @@ class AnunciantsTable extends Table
             ->allowEmptyString('descricao');
 
         $validator
-            ->scalar('imagem')
-            ->maxLength('imagem', 220)
-            ->allowEmptyFile('imagem');
+            ->notEmptyString('imagem', 'Necessário selecionar a foto')
+            ->add('imagem', 'file', [
+                'rule' => ['mimeType', ['image/jpeg', 'image/png']],
+                'message' => 'Extensão da foto inválida. Selecione foto JPEG ou PNG',
+            ]);
 
         $validator
             ->scalar('slug')
@@ -89,10 +95,6 @@ class AnunciantsTable extends Table
             ->scalar('description')
             ->maxLength('description', 220)
             ->allowEmptyString('description');
-
-        $validator
-            ->integer('qnt_acesso')
-            ->allowEmptyString('qnt_acesso');
 
         $validator
             ->scalar('telefone')
@@ -120,11 +122,13 @@ class AnunciantsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['email']));
+        $rules->add($rules->isUnique(['email'], 'Este e-mail já está cadastrado'));
         $rules->add($rules->existsIn(['user_id'], 'Users'));
 
         return $rules;
     }
+
+
 
     public function getVerAnunciant($user_id)
     {

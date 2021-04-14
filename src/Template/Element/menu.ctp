@@ -93,6 +93,19 @@
             ); ?>
         </li>
 
+        <li>
+            <?= $this->Html->link(
+                '<i class="fas fa-ad"></i> Anunciantes',
+                [
+                    'controller' => 'Anunciants',
+                    'action' => 'index'
+                ],
+                [
+                    'escape' => false
+                ]
+            ); ?>
+        </li>
+
 
 
         <li>

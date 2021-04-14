@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
@@ -12,15 +13,16 @@ use App\Controller\AppController;
  */
 class AnunciantsController extends AppController
 {
+
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|null
+     * @return \Cake\Http\Response|void
      */
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Users'],
+            'contain' => ['Users']
         ];
         $anunciants = $this->paginate($this->Anunciants);
 
@@ -31,13 +33,13 @@ class AnunciantsController extends AppController
      * View method
      *
      * @param string|null $id Anunciant id.
-     * @return \Cake\Http\Response|null
+     * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
         $anunciant = $this->Anunciants->get($id, [
-            'contain' => ['Users'],
+            'contain' => ['Users']
         ]);
 
         $this->set('anunciant', $anunciant);
@@ -50,15 +52,38 @@ class AnunciantsController extends AppController
      */
     public function add()
     {
+
         $anunciant = $this->Anunciants->newEntity();
         if ($this->request->is('post')) {
             $anunciant = $this->Anunciants->patchEntity($anunciant, $this->request->getData());
-            if ($this->Anunciants->save($anunciant)) {
-                $this->Flash->success(__('The anunciant has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+            if (!$anunciant->getErrors()) {
+
+                $anunciant->imagem = $this->Anunciants->slugUploadImgRed($this->request->getData()['imagem']['name']);
+                $anunciant->slug = $this->Anunciants->slugUrlSimples($this->request->getData()['slug']);
+
+                if ($resultSave = $this->Anunciants->save($anunciant)) {
+                    $id = $resultSave->id; // último id inserido
+
+                    $anunciant->slug = $this->Anunciants->slugUrlSimples($this->request->getData()['slug'] . "-" . $id);
+                    $this->Anunciants->save($anunciant);
+
+                    $destino = WWW_ROOT . "files" . DS . "anunciant" . DS . $id . DS;
+                    $imgUpload = $this->request->getData()['imagem'];
+                    $imgUpload['name'] = $anunciant->imagem;
+
+                    if ($this->Anunciants->uploadImgRed($imgUpload, $destino, 500, 400)) {
+                        $this->Flash->success(__('Anunciante cadastrado com sucesso'));
+                        return $this->redirect(['controller' => 'Anunciants', 'action' => 'view', $id]);
+                    } else {
+                        $this->Flash->danger(__('Erro: Anunciante não foi cadastrado com sucesso. Erro ao realizar o upload'));
+                    }
+                } else {
+                    $this->Flash->error(__('Erro: Anunciante não foi cadastrado com sucesso'));
+                }
+            } else {
+                $this->Flash->error(__('Erro: Anunciante não foi cadastrado com sucesso'));
             }
-            $this->Flash->error(__('The anunciant could not be saved. Please, try again.'));
         }
         $users = $this->Anunciants->Users->find('list', ['limit' => 200]);
         $this->set(compact('anunciant', 'users'));
@@ -69,24 +94,61 @@ class AnunciantsController extends AppController
      *
      * @param string|null $id Anunciant id.
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null)
     {
         $anunciant = $this->Anunciants->get($id, [
-            'contain' => [],
+            'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $anunciant = $this->Anunciants->patchEntity($anunciant, $this->request->getData());
+            $anunciant->slug = $this->Anunciants->slugUrlSimples($this->request->getData()['slug'] . "-" . $id);
             if ($this->Anunciants->save($anunciant)) {
-                $this->Flash->success(__('The anunciant has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                $this->Flash->success(__('Anunciante editado com sucesso'));
+                return $this->redirect(['controller' => 'Anunciants', 'action' => 'view', $id]);
+            } else {
+                $this->Flash->error(__('Erro: Anunciante não foi editado com sucesso'));
             }
-            $this->Flash->error(__('The anunciant could not be saved. Please, try again.'));
         }
         $users = $this->Anunciants->Users->find('list', ['limit' => 200]);
         $this->set(compact('anunciant', 'users'));
+    }
+
+    public function alterarFotoAnunciante($id = null)
+    {
+        $anunciant = $this->Anunciants->get($id);
+        $imagemAntiga = $anunciant->imagem;
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $anunciant = $this->Anunciants->newEntity();
+            $anunciant = $this->Anunciants->patchEntity($anunciant, $this->request->getData());
+            if (!$anunciant->getErrors()) {
+                $anunciant->imagem = $this->Anunciants->slugUploadImgRed($this->request->getData()['imagem']['name']);
+                $anunciant->id = $id;
+                if ($this->Anunciants->save($anunciant)) {
+                    $destino = WWW_ROOT . "files" . DS . "anunciant" . DS . $id . DS;
+                    $imgUpload = $this->request->getData()['imagem'];
+                    $imgUpload['name'] = $anunciant->imagem;
+
+                    if ($this->Anunciants->uploadImgRed($imgUpload, $destino, 500, 400)) {
+                        $this->Anunciants->deleteFile($destino, $imagemAntiga, $anunciant->imagem);
+                        $this->Flash->success(__('Imagem editada com sucesso'));
+                        return $this->redirect(['controller' => 'Anunciants', 'action' => 'view', $id]);
+                    } else {
+                        $anunciant->imagem = $imagemAntiga;
+                        $this->Users->save($anunciant);
+                        $this->Flash->danger(__('Erro: Imagem não foi editada com sucesso. Erro ao realizar o upload'));
+                    }
+                } else {
+                    $this->Flash->danger(__('Erro: Imagem não foi editada com sucesso.'));
+                }
+            } else {
+                $this->Flash->danger(__('Erro: Imagem não foi editada com sucesso.'));
+            }
+        }
+
+        $this->set(compact('anunciant'));
     }
 
     /**
@@ -100,10 +162,13 @@ class AnunciantsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $anunciant = $this->Anunciants->get($id);
+        $destino = WWW_ROOT . "files" . DS . "anunciant" . DS . $anunciant->id . DS;
+        $this->Anunciants->deleteArq($destino);
+
         if ($this->Anunciants->delete($anunciant)) {
-            $this->Flash->success(__('The anunciant has been deleted.'));
+            $this->Flash->success(__('Anunciante apagado com sucesso'));
         } else {
-            $this->Flash->error(__('The anunciant could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Erro: Anunciante não foi apagado com sucesso'));
         }
 
         return $this->redirect(['action' => 'index']);

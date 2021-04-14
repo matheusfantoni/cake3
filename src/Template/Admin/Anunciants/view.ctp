@@ -1,78 +1,110 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Anunciant $anunciant
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Anunciant'), ['action' => 'edit', $anunciant->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Anunciant'), ['action' => 'delete', $anunciant->id], ['confirm' => __('Are you sure you want to delete # {0}?', $anunciant->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Anunciants'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Anunciant'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
-    </ul>
-</nav>
-<div class="anunciants view large-9 medium-8 columns content">
-    <h3><?= h($anunciant->id) ?></h3>
-    <table class="vertical-table">
-        <tr>
-            <th scope="row"><?= __('Nome') ?></th>
-            <td><?= h($anunciant->nome) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Descricao') ?></th>
-            <td><?= h($anunciant->descricao) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Imagem') ?></th>
-            <td><?= h($anunciant->imagem) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Slug') ?></th>
-            <td><?= h($anunciant->slug) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Keywords') ?></th>
-            <td><?= h($anunciant->keywords) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Description') ?></th>
-            <td><?= h($anunciant->description) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Telefone') ?></th>
-            <td><?= h($anunciant->telefone) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Celular') ?></th>
-            <td><?= h($anunciant->celular) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Email') ?></th>
-            <td><?= h($anunciant->email) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('User') ?></th>
-            <td><?= $anunciant->has('user') ? $this->Html->link($anunciant->user->name, ['controller' => 'Users', 'action' => 'view', $anunciant->user->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($anunciant->id) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Qnt Acesso') ?></th>
-            <td><?= $this->Number->format($anunciant->qnt_acesso) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Created') ?></th>
-            <td><?= h($anunciant->created) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Modified') ?></th>
-            <td><?= h($anunciant->modified) ?></td>
-        </tr>
-    </table>
+<div class="d-flex">
+    <div class="mr-auto p-2">
+        <h2 class="display-4 titulo">Anunciante</h2>
+    </div>
+    <div class="p-2">
+        <span class="d-none d-md-block">
+            <?= $this->Html->link(__('Listar'), ['controller' => 'Anunciants', 'action' => 'index'], ['class' => 'btn btn-outline-info btn-sm']) ?>
+
+            <?= $this->Html->link(__('Editar'), ['controller' => 'Anunciants', 'action' => 'edit', $anunciant->id], ['class' => 'btn btn-outline-warning btn-sm']) ?>
+
+            <?= $this->Form->postLink(__('Apagar'), ['controller' => 'Anunciants', 'action' => 'delete', $anunciant->id], ['class' => 'btn btn-outline-danger btn-sm', 'confirm' => __('Realmente deseja apagar o anunciante # {0}?', $anunciant->id)]) ?>
+
+        </span>
+        <div class="dropdown d-block d-md-none">
+            <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="acoesListar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Ações
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="acoesListar">
+                <?= $this->Html->link(__('Listar'), ['controller' => 'Anunciants', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
+
+                <?= $this->Html->link(__('Editar'), ['controller' => 'Anunciants', 'action' => 'edit', $anunciant->id], ['class' => 'dropdown-item']) ?>
+
+                <?= $this->Form->postLink(__('Apagar'), ['controller' => 'Anunciants', 'action' => 'delete', $anunciant->id], ['class' => 'dropdown-item', 'confirm' => __('Realmente deseja apagar o anunciante # {0}?', $anunciant->id)]) ?>
+            </div>
+        </div>
+    </div>
 </div>
+<hr>
+<?= $this->Flash->render() ?>
+<dl class="row">
+    <dt class="col-sm-3">Imagem</dt>
+    <dd class="col-sm-9">
+        <div class="img-perfil">
+            <?php if (!empty($anunciant->imagem)) { ?>
+                <?= $this->Html->image('../files/anunciant/' . $anunciant->id . '/' . $anunciant->imagem, ['width' => '250', 'height' => '200']) ?>&nbsp;
+
+                <div class="edit">
+                    <?= $this->Html->link(
+                        '<i class="fas fa-pencil-alt"></i>',
+                        [
+                            'controller' => 'Anunciants',
+                            'action' => 'alterarFotoAnunciante',
+                            $anunciant->id
+                        ],
+                        [
+                            'escape' => false
+                        ]
+                    ); ?>
+                </div>
+
+            <?php } else { ?>
+                <?= $this->Html->image('../files/anunciant/preview_img.jpg', ['width' => '250', 'height' => '200']) ?>&nbsp;
+
+                <div class="edit">
+                    <?= $this->Html->link(
+                        '<i class="fas fa-pencil-alt"></i>',
+                        [
+                            'controller' => 'Anunciants',
+                            'action' => 'alterarFotoAnunciante',
+                            $anunciant->id
+                        ],
+                        [
+                            'escape' => false
+                        ]
+                    ); ?>
+                </div>
+            <?php } ?>
+        </div>
+    </dd>
+
+    <dt class="col-sm-3">ID</dt>
+    <dd class="col-sm-9"><?= $this->Number->format($anunciant->id) ?></dd>
+
+    <dt class="col-sm-3">Nome</dt>
+    <dd class="col-sm-9"><?= h($anunciant->nome) ?></dd>
+
+    <dt class="col-sm-3">Descrição</dt>
+    <dd class="col-sm-9"><?= h($anunciant->descricao) ?></dd>
+
+    <dt class="col-sm-3">Nome na URL</dt>
+    <dd class="col-sm-9"><?= h($anunciant->slug) ?></dd>
+
+    <dt class="col-sm-3">Palavra Chave</dt>
+    <dd class="col-sm-9"><?= h($anunciant->keywords) ?></dd>
+
+    <dt class="col-sm-3">Descrição para os buscadores</dt>
+    <dd class="col-sm-9"><?= h($anunciant->description) ?></dd>
+
+    <dt class="col-sm-3">Acessos</dt>
+    <dd class="col-sm-9"><?= h($anunciant->qnt_acesso) ?></dd>
+
+    <dt class="col-sm-3">Telefone</dt>
+    <dd class="col-sm-9"><?= h($anunciant->telefone) ?></dd>
+
+    <dt class="col-sm-3">Celular</dt>
+    <dd class="col-sm-9"><?= h($anunciant->celular) ?></dd>
+
+    <dt class="col-sm-3">E-mail</dt>
+    <dd class="col-sm-9"><?= h($anunciant->email) ?></dd>
+
+    <dt class="col-sm-3">Usuário</dt>
+    <dd class="col-sm-9"><?= h($anunciant->user->name) ?></dd>
+
+    <dt class="col-sm-3 text-truncate">Cadastro</dt>
+    <dd class="col-sm-9"><?= h($anunciant->created) ?></dd>
+
+    <dt class="col-sm-3 text-truncate">Alteração</dt>
+    <dd class="col-sm-9"><?= h($anunciant->modified) ?></dd>
+
+</dl>

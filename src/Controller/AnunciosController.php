@@ -35,8 +35,7 @@ class AnunciosController extends AppController
             
             $this->loadModel('Anunciants');
             $anunciant = $this->Anunciants->getVerAnunciant($anuncio->user_id);
-            debug($anunciant);
-            exit();
+            
         }
         
         $this->set(compact('anuncio', 'anunciant'));

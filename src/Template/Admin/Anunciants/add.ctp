@@ -1,35 +1,99 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Anunciant $anunciant
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Anunciants'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="anunciants form large-9 medium-8 columns content">
-    <?= $this->Form->create($anunciant) ?>
-    <fieldset>
-        <legend><?= __('Add Anunciant') ?></legend>
-        <?php
-            echo $this->Form->control('nome');
-            echo $this->Form->control('descricao');
-            echo $this->Form->control('imagem');
-            echo $this->Form->control('slug');
-            echo $this->Form->control('keywords');
-            echo $this->Form->control('description');
-            echo $this->Form->control('qnt_acesso');
-            echo $this->Form->control('telefone');
-            echo $this->Form->control('celular');
-            echo $this->Form->control('email');
-            echo $this->Form->control('user_id', ['options' => $users]);
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<div class="d-flex">
+    <div class="mr-auto p-2">
+        <h2 class="display-4 titulo">Cadastrar Anunciante</h2>
+    </div>
+    <div class="p-2">
+        <span class="d-none d-md-block">
+            <?= $this->Html->link(__('Listar'), ['controller' => 'Anunciants', 'action' => 'index'], ['class' => 'btn btn-outline-info btn-sm']) ?>
+        </span>
+        <div class="dropdown d-block d-md-none">
+            <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="acoesListar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Ações
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="acoesListar">
+                <?= $this->Html->link(__('Listar'), ['controller' => 'Anunciants', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
+            </div>
+        </div>
+    </div>
 </div>
+<hr>
+<?= $this->Flash->render() ?>
+
+<?= $this->Form->create($anunciant, ['enctype' => 'multipart/form-data']) ?>
+<div class="form-row">
+    <div class="form-group col-md-12">
+        <label><span class="text-danger">*</span> Nome</label>
+        <?= $this->Form->control('nome', ['class' => 'form-control', 'placeholder' => 'Nome do Anunciante', 'label' => false]) ?>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-12">
+        <label><span class="text-danger">*</span> Descrição Curta</label>
+        <?= $this->Form->control('descricao', ['class' => 'form-control', 'placeholder' => 'Descrição do Anunciante - Resumo do anúncio', 'label' => false]) ?>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label><span class="text-danger">*</span> Foto (500x400)</label>
+        <?= $this->Form->control('imagem', ['type' => 'file', 'label' => false, 'onchange' => 'previewImagem()']) ?>
+    </div>
+
+    <div class="form-group col-md-6">
+        <?php
+        $imagem_antiga = '../../files/anuncio/preview_img.jpg';
+        ?>
+
+        <img src='<?= $imagem_antiga ?>' alt='Preview da Imagem' id='preview-img' class='img-thumbnail' style="width: 250px; height: 200px;">
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label><span class="text-danger">*</span> Slug</label>
+        <?= $this->Form->control('slug', ['class' => 'form-control', 'placeholder' => 'Titulo do Anúncio na URL', 'label' => false]) ?>
+    </div>
+    <div class="form-group col-md-6">
+        <label><span class="text-danger">*</span> Palavra Chave</label>
+        <?= $this->Form->control('keywords', ['class' => 'form-control', 'placeholder' => 'Principais palavras do anunciante para os buscadores', 'label' => false]) ?>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-12">
+        <label><span class="text-danger">*</span> Resumo do Anunciante</label>
+        <?= $this->Form->control('description', ['class' => 'form-control', 'placeholder' => 'Resumo do anunciante - Máximo 180 caracteres', 'label' => false]) ?>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label> Telefone</label>
+        <?= $this->Form->control('telefone', ['class' => 'form-control', 'placeholder' => 'Telefone de contato', 'label' => false, 'onkeypress' => "$(this).mask('(00) 0000-00009')"]) ?>
+    </div>
+    <div class="form-group col-md-6">
+        <label> Celular</label>
+        <?= $this->Form->control('celular', ['class' => 'form-control', 'placeholder' => 'Celular de contato', 'id' => 'celular', 'label' => false, 'onkeypress' => "$(this).mask('(00) 0000-00009')"]) ?>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-12">
+        <label> E-mail</label>
+        <?= $this->Form->control('email', ['class' => 'form-control', 'placeholder' => 'E-mail de contato', 'label' => false]) ?>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-12">
+        <label><span class="text-danger">*</span> Usuário</label>
+        <?= $this->Form->control('user_id', ['options' => $users, 'class' => 'form-control', 'label' => false]) ?>
+    </div>
+</div>
+
+<p>
+    <span class="text-danger">* </span>Campo obrigatório
+</p>
+<?= $this->Form->button(__('Cadastrar'), ['class' => 'btn btn-success']) ?>
+<?= $this->Form->end() ?>
