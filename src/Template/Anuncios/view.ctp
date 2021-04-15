@@ -69,21 +69,24 @@
 
                             <hr>
 
-                            <form>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="nome" placeholder="Nome">
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control" id="email" placeholder="E-mail">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="telefone" placeholder="Telefone">
-                                </div>
-                                <div class="form-group">
-                                    <textarea class="form-control" id="mensagem" rows="3"></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-info btn-block">Enviar</button>
-                            </form>
+                            <?= $this->Form->create($contatosAnunciant) ?>
+                            <div class="form-group">
+                                <?= $this->Form->control('nome', ['class' => 'form-control', 'placeholder' => 'Nome completo', 'label' => false]) ?>
+                            </div>
+                            <div class="form-group">
+                                <?= $this->Form->control('email', ['class' => 'form-control', 'placeholder' => 'Seu melhor e-mail', 'label' => false]) ?>
+                            </div>
+                            <div class="form-group">
+                                <?= $this->Form->control('telefone', ['class' => 'form-control', 'placeholder' => 'Telefone com DDD', 'label' => false]) ?>
+                            </div>
+                            <div class="form-group">
+                                <?= $this->Form->control('mensagem', ['class' => 'form-control', 'placeholder' => 'Mensagem para o anunciante', 'label' => false]) ?>
+                            </div>
+
+                            <?= $this->Form->button(__('Enviar'), ['class' => 'btn btn-info btn-block']) ?>
+
+                            <?= $this->Form->end() ?>
+
                         </div>
                     </div>
                 </aside>
