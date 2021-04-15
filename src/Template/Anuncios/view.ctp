@@ -60,10 +60,10 @@
                             <p class="lead">Ao ligar, diga que você viu esse anúncio no ...</p>
                             <?php
                             if (!empty($anunciant->telefone)) {
-                                echo $anunciat->telefone . "<br>";
+                                echo $anunciant->telefone . "<br>";
                             }
                             if (!empty($anunciant->celular)) {
-                                echo $anunciat->celular . "<br>";
+                                echo $anunciant->celular . "<br>";
                             }
                             ?>
 
