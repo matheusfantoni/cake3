@@ -166,4 +166,14 @@ class AnunciantsTable extends Table
 
         return $query->first();
     }
+
+    public function getVerAnunciantCont($anunciant_id)
+    {
+        $query = $this->find()
+            ->select(['id', 'email'])
+            ->where(['Anunciants.id =' => $anunciant_id])
+            ->order(['Anunciants.id' => 'ASC']);
+
+        return $query->first();
+    }
 }

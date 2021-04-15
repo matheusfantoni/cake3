@@ -41,10 +41,19 @@ class AnunciosController extends AppController
             if (!$contatosAnunciant->getErrors()) {
                 if ($this->ContatosAnunciants->save($contatosAnunciant)) {
 
+                    $this->loadModel('Anunciants');
+                    $msgContAnunc = $this->Anunciants->getVerAnunciantCont($contatosAnunciant->anunciant_id);
+
+                    $msgContAnunc->nome = $contatosAnunciant->nome;
+                    $msgContAnunc->emailCliente = $contatosAnunciant->email;
+                    $msgContAnunc->telefone = $contatosAnunciant->telefone;
+                    $msgContAnunc->mensagem = $contatosAnunciant->mensagem;
+
                     $this->getMailer('ContatoAnunciant')->send('msgContatoCliente', [$contatosAnunciant]);
 
-                    $this->Flash->success(__('Mensagem enviada com sucesso.'));
+                    $this->getMailer('ContatoAnunciant')->send('msgContatoAnunciante', [$msgContAnunc]);
 
+                    $this->Flash->success(__('Mensagem enviada com sucesso.'));
                 } else {
                     $this->Flash->error(__('Erro: Mensagem não foi enviada com sucesso.'));
                 }
