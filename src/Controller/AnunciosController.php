@@ -32,24 +32,32 @@ class AnunciosController extends AppController
         $this->loadModel('ContatosAnunciants');
         $contatosAnunciant = $this->ContatosAnunciants->newEntity();
 
-        if ($this->request->is(['patch', 'post'])) {
+        if ($this->request->is(['patch', 'post', 'put'])) {
             $contatosAnunciant = $this->ContatosAnunciants->patchEntity($contatosAnunciant, $this->request->getData());
 
-            $contatosAnunciant->anuncio_id = 1;
-            $contatosAnunciant->anunciant_id = 1;
-            $this->ContatosAnunciants->save($contatosAnunciant);
+            if (!$contatosAnunciant->getErrors()) {
+                $contatosAnunciant->anuncio_id = 4;
+                $contatosAnunciant->anunciant_id = 4;
 
-        } 
+                if ($this->ContatosAnunciants->save($contatosAnunciant)) {
+                    $this->Flash->success(__('Mensagem enviada com sucesso.'));
+                    
+                    //Implementar a parte para enviar o email de confirmação 
+                    //para o cliente e para o anunciante..
+                } else {
+                    $this->Flash->error(__('Erro: Mensagem não foi enviada com sucesso.'));
+                }
+            }
+        }
 
         $this->loadModel('Anuncios');
         $anuncio = $this->Anuncios->getVerAnuncio($slug);
 
         if ($anuncio) {
-
             $this->loadModel('Anunciants');
             $anunciant = $this->Anunciants->getVerAnunciant($anuncio->user_id);
         }
 
-        $this->set(compact('anuncio', 'anunciant', 'contatosAnunciant'));
+        $this->set(compact('contatosAnunciant', 'anuncio', 'anunciant'));
     }
 }

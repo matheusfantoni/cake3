@@ -65,20 +65,21 @@ class ContatosAnunciantsTable extends Table
         $validator
             ->scalar('nome')
             ->maxLength('nome', 220)
-            ->allowEmptyString('nome');
+            ->notEmptyString('nome', 'Nome é obrigatório.');
 
         $validator
             ->email('email')
-            ->allowEmptyString('email');
+            ->notEmptyString('email', 'E-mail é obrigatório.');
 
         $validator
             ->scalar('telefone')
             ->maxLength('telefone', 45)
-            ->allowEmptyString('telefone');
+            ->notEmptyString('telefone', 'Telefone é obrigatório.');
 
         $validator
             ->scalar('mensagem')
-            ->allowEmptyString('mensagem');
+            ->minLength('mensagem', 2)
+            ->notEmptyString('mensagem', 'Mensagem é obrigatória.');
 
         return $validator;
     }

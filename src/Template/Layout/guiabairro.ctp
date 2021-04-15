@@ -22,7 +22,7 @@
 <?= $this->fetch('content') ?>
 <?= $this->element('rodape_guia_bairro') ?>
 
-<?= $this->Html->script(['jquery-3.5.1.min', 'popper.min', 'bootstrap.min']) ?>
+<?= $this->Html->script(['jquery-3.5.1.min', 'popper.min', 'bootstrap.min', 'jquery.mask.min']) ?>
 </body>
 
 </html>

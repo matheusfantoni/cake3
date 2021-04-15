@@ -68,6 +68,7 @@
                             ?>
 
                             <hr>
+                            <?= $this->Flash->render(); ?>
 
                             <?= $this->Form->create($contatosAnunciant) ?>
                             <div class="form-group">
@@ -77,7 +78,13 @@
                                 <?= $this->Form->control('email', ['class' => 'form-control', 'placeholder' => 'Seu melhor e-mail', 'label' => false]) ?>
                             </div>
                             <div class="form-group">
-                                <?= $this->Form->control('telefone', ['class' => 'form-control', 'placeholder' => 'Telefone com DDD', 'label' => false]) ?>
+                                <?= $this->Form->control('telefone', [
+                                    'class' =>
+                                    'form-control', 'placeholder' =>
+                                    'Telefone com DDD',
+                                    'label' => false,
+                                    'onkeypress' => "$(this).mask('(00) 0000-00009')"
+                                ]) ?>
                             </div>
                             <div class="form-group">
                                 <?= $this->Form->control('mensagem', ['class' => 'form-control', 'placeholder' => 'Mensagem para o anunciante', 'label' => false]) ?>
