@@ -101,6 +101,48 @@ class AnunciantsController extends AppController
         $this->set(compact('anunciant', 'users'));
     }
 
+    // Método para criação do anunciante
+
+    public function addAnunciante()
+    {
+
+        $anunciant = $this->Anunciants->newEntity();
+        if ($this->request->is('post')) {
+            $anunciant = $this->Anunciants->patchEntity($anunciant, $this->request->getData());
+
+            if (!$anunciant->getErrors()) {
+
+                $anunciant->imagem = $this->Anunciants->slugUploadImgRed($this->request->getData()['imagem']['name']);
+                $anunciant->slug = $this->Anunciants->slugUrlSimples($this->request->getData()['slug']);
+                $anunciant->user_id = $this->Auth->user('id');
+
+                if ($resultSave = $this->Anunciants->save($anunciant)) {
+                    $id = $resultSave->id; // último id inserido
+
+                    $anunciant->slug = $this->Anunciants->slugUrlSimples($this->request->getData()['slug'] . "-" . $id);
+                    $this->Anunciants->save($anunciant);
+
+                    $destino = WWW_ROOT . "files" . DS . "anunciant" . DS . $id . DS;
+                    $imgUpload = $this->request->getData()['imagem'];
+                    $imgUpload['name'] = $anunciant->imagem;
+
+                    if ($this->Anunciants->uploadImgRed($imgUpload, $destino, 500, 400)) {
+                        $this->Flash->success(__('Anunciante cadastrado com sucesso'));
+                        return $this->redirect(['controller' => 'Anunciants', 'action' => 'viewAnunciante']);
+                    } else {
+                        $this->Flash->danger(__('Erro: Anunciante não foi cadastrado com sucesso. Erro ao realizar o upload'));
+                    }
+                } else {
+                    $this->Flash->error(__('Erro: Anunciante não foi cadastrado com sucesso'));
+                }
+            } else {
+                $this->Flash->error(__('Erro: Anunciante não foi cadastrado com sucesso'));
+            }
+        }
+  
+        $this->set(compact('anunciant'));
+    }
+
     /**
      * Edit method
      *
