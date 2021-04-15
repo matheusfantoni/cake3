@@ -29,7 +29,7 @@
 
                             <?= $this->Html->link(__('Editar'), ['controller' => 'Anunciants', 'action' => 'edit', $anunciant->id], ['class' => 'btn btn-outline-warning btn-sm']) ?>
 
-                            <?= $this->Form->postLink(__('Apagar'), ['controller' => 'Anunciants', 'action' => 'delete', $anunciant->id], ['class' => 'btn btn-outline-danger btn-sm', 'confirm' => __('Relamente deseja apagar o anunciante # {0}?', $anunciant->id)]) ?>
+                            <?= $this->Form->postLink(__('Apagar'), ['controller' => 'Anunciants', 'action' => 'delete', $anunciant->id], ['class' => 'btn btn-outline-danger btn-sm', 'confirm' => __('Realmente deseja apagar o anunciante # {0}?', $anunciant->id)]) ?>
                         </span>
                         <div class="dropdown d-block d-md-none">
                             <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="acoesListar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -40,7 +40,7 @@
 
                                 <?= $this->Html->link(__('Editar'), ['controller' => 'Anunciants', 'action' => 'edit', $anunciant->id], ['class' => 'dropdown-item']) ?>
 
-                                <?= $this->Form->postLink(__('Apagar'), ['controller' => 'Anunciants', 'action' => 'delete', $anunciant->id], ['class' => 'dropdown-item', 'confirm' => __('Relamente deseja apagar o anunciante # {0}?', $anunciant->id)]) ?>
+                                <?= $this->Form->postLink(__('Apagar'), ['controller' => 'Anunciants', 'action' => 'delete', $anunciant->id], ['class' => 'dropdown-item', 'confirm' => __('Realmente deseja apagar o anunciante # {0}?', $anunciant->id)]) ?>
                             </div>
                         </div>
                     </td>

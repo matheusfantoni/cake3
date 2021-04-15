@@ -45,6 +45,18 @@ class AnunciantsController extends AppController
         $this->set('anunciant', $anunciant);
     }
 
+    public function viewAnunciante($id = null)
+    {
+        $id_user = $this->Auth->user('id');
+        $anunciant = $this->Anunciants->getVerAnunciantAdm($id_user);
+        
+        if ($anunciant) {
+            $this->set(compact('anunciant'));
+        } else {
+            return $this->redirect(['controller' => 'Anunciants', 'action' => 'addAnunciante']);
+        }
+    }
+
     /**
      * Add method
      *
@@ -137,7 +149,7 @@ class AnunciantsController extends AppController
                         return $this->redirect(['controller' => 'Anunciants', 'action' => 'view', $id]);
                     } else {
                         $anunciant->imagem = $imagemAntiga;
-                        $this->Users->save($anunciant);
+                        $this->Anunciants->save($anunciant);
                         $this->Flash->danger(__('Erro: Imagem não foi editada com sucesso. Erro ao realizar o upload'));
                     }
                 } else {

@@ -106,6 +106,19 @@
             ); ?>
         </li>
 
+        <li>
+            <?= $this->Html->link(
+                '<i class="fas fa-ad"></i> Info do Anunciante',
+                [
+                    'controller' => 'Anunciants',
+                    'action' => 'viewAnunciante'
+                ],
+                [
+                    'escape' => false
+                ]
+            ); ?>
+        </li>
+
 
 
         <li>

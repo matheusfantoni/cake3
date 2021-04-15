@@ -2,7 +2,6 @@
 
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -128,14 +127,22 @@ class AnunciantsTable extends Table
         return $rules;
     }
 
-
-
     public function getVerAnunciant($user_id)
     {
         $query = $this->find()
             ->select(['id', 'telefone', 'celular'])
             ->where(['Anunciants.user_id =' => $user_id])
             ->order(['Anunciants.user_id' => 'ASC']);
+
+        return $query->first();
+    }
+
+    public function getVerAnunciantAdm($user_id)
+    {
+        $query = $this->find()
+            ->select(['id', 'nome', 'descricao', 'imagem', 'telefone', 'celular', 'email', 'created'])
+            ->where(['Anunciants.user_id =' => $user_id])
+            ->order(['Anunciants.id' => 'ASC']);
 
         return $query->first();
     }
