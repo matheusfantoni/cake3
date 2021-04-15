@@ -36,12 +36,9 @@ class AnunciosController extends AppController
             $contatosAnunciant = $this->ContatosAnunciants->patchEntity($contatosAnunciant, $this->request->getData());
 
             if (!$contatosAnunciant->getErrors()) {
-                $contatosAnunciant->anuncio_id = 4;
-                $contatosAnunciant->anunciant_id = 4;
-
                 if ($this->ContatosAnunciants->save($contatosAnunciant)) {
                     $this->Flash->success(__('Mensagem enviada com sucesso.'));
-                    
+
                     //Implementar a parte para enviar o email de confirmação 
                     //para o cliente e para o anunciante..
                 } else {

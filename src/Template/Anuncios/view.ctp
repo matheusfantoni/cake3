@@ -71,6 +71,10 @@
                             <?= $this->Flash->render(); ?>
 
                             <?= $this->Form->create($contatosAnunciant) ?>
+
+                            <?= $this->Form->hidden('anuncio_id', ['value' => $anuncio->id, 'label' => false]) ?>
+                            <?= $this->Form->hidden('anunciant_id', ['value' => $anunciant->id, 'label' => false]) ?>
+                            
                             <div class="form-group">
                                 <?= $this->Form->control('nome', ['class' => 'form-control', 'placeholder' => 'Nome completo', 'label' => false]) ?>
                             </div>
