@@ -119,7 +119,18 @@
             ); ?>
         </li>
 
-
+        <li>
+            <?= $this->Html->link(
+                '<i class="far fa-comments"></i> Mensagem do Anúncio',
+                [
+                    'controller' => 'ContatosAnunciants',
+                    'action' => 'index'
+                ],
+                [
+                    'escape' => false
+                ]
+            ); ?>
+        </li>
 
         <li>
             <?= $this->Html->link(
