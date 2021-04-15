@@ -146,4 +146,14 @@ class AnunciantsTable extends Table
 
         return $query->first();
     }
+
+    public function getEditAnunciantAdmin($user_id)
+    {
+        $query = $this->find()
+            ->select(['id', 'nome', 'descricao', 'slug', 'keywords', 'description', 'telefone', 'celular', 'email'])
+            ->where(['Anunciants.user_id =' => $user_id])
+            ->order(['Anunciants.id' => 'ASC']);
+
+        return $query->first();
+    }
 }

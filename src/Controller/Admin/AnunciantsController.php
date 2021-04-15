@@ -169,6 +169,26 @@ class AnunciantsController extends AppController
         $this->set(compact('anunciant', 'users'));
     }
 
+    public function editAnunciante()
+    {   
+        $id_user = $this->Auth->user('id');
+        $anunciant = $this->Anunciants->getEditAnunciantAdmin($id_user);
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $anunciant = $this->Anunciants->patchEntity($anunciant, $this->request->getData());
+            $anunciant->slug = $this->Anunciants->slugUrlSimples($this->request->getData()['slug'] . "-" . $id_user);
+            
+            if ($this->Anunciants->save($anunciant)) {
+                $this->Flash->success(__('Anunciante editado com sucesso'));
+                return $this->redirect(['controller' => 'Anunciants', 'action' => 'viewAnunciante']);
+            } else {
+                $this->Flash->error(__('Erro: Anunciante não foi editado com sucesso'));
+            }
+        }
+        
+        $this->set(compact('anunciant'));
+    }
+
     public function alterarFotoAnunciante($id = null)
     {
         $anunciant = $this->Anunciants->get($id);
