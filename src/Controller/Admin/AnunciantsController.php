@@ -225,6 +225,45 @@ class AnunciantsController extends AppController
         $this->set(compact('anunciant'));
     }
 
+    public function alterarImgAnunciante()
+    {
+        $id_user = $this->Auth->user('id');
+        $anunciant = $this->Anunciants->getEditImgAnunciante($id_user);
+        $imagemAntiga = $anunciant->imagem;
+        $id = $anunciant->id;
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $anunciant = $this->Anunciants->newEntity();
+            $anunciant = $this->Anunciants->patchEntity($anunciant, $this->request->getData());
+            
+            if (!$anunciant->getErrors()) {
+                $anunciant->imagem = $this->Anunciants->slugUploadImgRed($this->request->getData()['imagem']['name']);
+                $anunciant->id = $id;
+                if ($this->Anunciants->save($anunciant)) {
+                    $destino = WWW_ROOT . "files" . DS . "anunciant" . DS . $id . DS;
+                    $imgUpload = $this->request->getData()['imagem'];
+                    $imgUpload['name'] = $anunciant->imagem;
+
+                    if ($this->Anunciants->uploadImgRed($imgUpload, $destino, 500, 400)) {
+                        $this->Anunciants->deleteFile($destino, $imagemAntiga, $anunciant->imagem);
+                        $this->Flash->success(__('Imagem editada com sucesso'));
+                        return $this->redirect(['controller' => 'Anunciants', 'action' => 'viewAnunciante']);
+                    } else {
+                        $anunciant->imagem = $imagemAntiga;
+                        $this->Anunciants->save($anunciant);
+                        $this->Flash->danger(__('Erro: Imagem não foi editada com sucesso. Erro ao realizar o upload'));
+                    }
+                } else {
+                    $this->Flash->danger(__('Erro: Imagem não foi editada com sucesso.'));
+                }
+            } else {
+                $this->Flash->danger(__('Erro: Imagem não foi editada com sucesso.'));
+            }
+        }
+
+        $this->set(compact('anunciant'));
+    }
+
     /**
      * Delete method
      *

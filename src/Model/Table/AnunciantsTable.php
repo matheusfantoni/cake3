@@ -156,4 +156,14 @@ class AnunciantsTable extends Table
 
         return $query->first();
     }
+
+    public function getEditImgAnunciante($user_id)
+    {
+        $query = $this->find()
+            ->select(['id', 'imagem'])
+            ->where(['Anunciants.user_id =' => $user_id])
+            ->order(['Anunciants.id' => 'ASC']);
+
+        return $query->first();
+    }
 }
