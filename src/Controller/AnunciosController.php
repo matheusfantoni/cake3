@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\Mailer\Email;
+use Cake\Mailer\MailerAwareTrait;
 
 /**
  * Anuncios Controller
@@ -26,6 +28,7 @@ class AnunciosController extends AppController
      *
      * @return \Cake\Http\Response|void
      */
+    use MailerAwareTrait;
     public function view($slug = null)
     {
 
@@ -37,10 +40,11 @@ class AnunciosController extends AppController
 
             if (!$contatosAnunciant->getErrors()) {
                 if ($this->ContatosAnunciants->save($contatosAnunciant)) {
+
+                    $this->getMailer('ContatoAnunciant')->send('msgContatoCliente', [$contatosAnunciant]);
+
                     $this->Flash->success(__('Mensagem enviada com sucesso.'));
 
-                    //Implementar a parte para enviar o email de confirmação 
-                    //para o cliente e para o anunciante..
                 } else {
                     $this->Flash->error(__('Erro: Mensagem não foi enviada com sucesso.'));
                 }
