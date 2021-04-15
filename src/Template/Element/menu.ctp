@@ -134,6 +134,19 @@
 
         <li>
             <?= $this->Html->link(
+                '<i class="fas fa-percent"></i> Promoções',
+                [
+                    'controller' => 'Promocoes',
+                    'action' => 'index'
+                ],
+                [
+                    'escape' => false
+                ]
+            ); ?>
+        </li>
+
+        <li>
+            <?= $this->Html->link(
                 '<i class="fas fa-sign-out-alt"></i> Sair',
                 [
                     'controller' => 'users',
