@@ -32,7 +32,7 @@
     <dd class="col-sm-9">
         <div class="img-perfil">
             <?php if (!empty($promocao->imagem)) { ?>
-                <?= $this->Html->image('../files/promocao/' . $promocao->id . '/' . $promocao->imagem, ['width' => '250', 'height' => '200']) ?>&nbsp;
+                <?= $this->Html->image('../files/promocao/' . $promocao->id . '/' . $promocao->imagem, ['width' => '250', 'height' => '127']) ?>&nbsp;
 
                 <div class="edit">
                     <?= $this->Html->link(

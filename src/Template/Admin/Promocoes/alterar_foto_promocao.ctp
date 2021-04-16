@@ -30,7 +30,7 @@
 
 <div class="form-row">
     <div class="form-group col-md-6">
-        <label><span class="text-danger">*</span> Foto (500x400)</label>
+        <label><span class="text-danger">*</span> Foto (948x481)</label>
         <?= $this->Form->control('imagem', ['type' => 'file', 'label' => false, 'onchange'=>'previewImagem()']) ?>
     </div>
 
@@ -43,7 +43,7 @@
         }
         ?>
 
-        <img src='<?= $imagem_antiga ?>' alt='<?= $promocao->name ?>' id='preview-img' class='img-thumbnail' style="width: 250px; height: 200px;">
+        <img src='<?= $imagem_antiga ?>' alt='<?= $promocao->name ?>' id='preview-img' class='img-thumbnail' style="width: 250px; height: 127px;">
     </div>
 </div>
 

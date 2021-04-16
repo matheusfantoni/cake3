@@ -130,4 +130,14 @@ class PromocoesTable extends Table
 
         return $rules;
     }
+
+    public function getListPromocao()
+    {
+        $query = $this->find()
+            ->select(['id', 'titulo', 'imagem', 'slug'])
+            ->where(['situation_id' => 1])
+            ->order(['id' => 'DESC'])
+            ->limit(20);
+        return $query;
+    }
 }

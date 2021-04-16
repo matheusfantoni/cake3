@@ -71,7 +71,7 @@ class PromocoesController extends AppController
                     $imgUpload = $this->request->getData()['imagem'];
                     $imgUpload['name'] = $promocao->imagem;
 
-                    if ($this->Promocoes->uploadImgRed($imgUpload, $destino, 500, 400)) {
+                    if ($this->Promocoes->uploadImgRed($imgUpload, $destino, 948, 481)) {
                         $this->Flash->success(__('Promoção cadastrada com sucesso'));
                         return $this->redirect(['controller' => 'Promocoes', 'action' => 'view', $id]);
                     } else {
@@ -133,7 +133,7 @@ class PromocoesController extends AppController
                     $imgUpload = $this->request->getData()['imagem'];
                     $imgUpload['name'] = $promocao->imagem;
 
-                    if ($this->Promocoes->uploadImgRed($imgUpload, $destino, 500, 400)) {
+                    if ($this->Promocoes->uploadImgRed($imgUpload, $destino, 948, 481)) {
                         $this->Promocoes->deleteFile($destino, $imagemAntiga, $promocao->imagem);
                         $this->Flash->success(__('Imagem editada com sucesso'));
                         return $this->redirect(['controller' => 'Promocoes', 'action' => 'view', $id]);
